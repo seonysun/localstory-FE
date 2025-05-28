@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "panda codegen && [ \"$HUSKY_SKIP_INSTALL\" = \"1\" ] || husky install",
-    "dev": "rm -rf .next && next dev",
+    "dev": "rimraf .next && next dev",
     "build": "panda build && next build",
     "start": "next start",
     "lint": "next lint",
@@ -38,8 +38,10 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "husky": "^9.1.7",
     "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
+    "rimraf": "^6.0.1",
     "typescript": "^5"
   }
 }
