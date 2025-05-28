@@ -4,17 +4,37 @@ on:
   push:
     branches:
       - develop
+  pull_request:
+    branches:
+      - develop
 
 jobs:
   build:
     name: Build & Test
     runs-on: ubuntu-latest
-    container: pandoc/latex
+
     steps:
+      - name: Checkout repository
       - uses: actions/checkout@v4
 
-      - name: creates output
-        run: sh ./build.sh
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint test
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Prepare output dir
+        run: |
+          mkdir -p output
+          cp -R .next public package.json next.config.js output/
 
       - name: Upload output artifact
         uses: actions/upload-artifact@v4
@@ -23,11 +43,11 @@ jobs:
           path: output/
 
   deploy:
-    name: Deploy
+    name: Deploy to personal repository
     needs: build
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    container: pandoc/latex
+
     steps:
       - name: Download output artifact
         uses: actions/download-artifact@v4
