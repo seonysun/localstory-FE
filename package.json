@@ -3,10 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "prepare": "panda codegen && [ \"$HUSKY_SKIP_INSTALL\" = \"1\" ] || husky install",
+    "dev": "rm -rf .next && next dev",
+    "build": "panda build && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix",
+      "prettier --cache --write"
+    ]
   },
   "dependencies": {
     "@tanstack/react-query": "^5.77.1",
@@ -14,9 +22,11 @@
     "next": "14.2.29",
     "react": "^18",
     "react-dom": "^18",
+    "swiper": "^11.2.8",
     "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.53.7",
     "@tanstack/eslint-plugin-query": "^5.74.7",
     "@types/node": "^20",
     "@types/react": "^18",
@@ -28,6 +38,7 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
+    "lint-staged": "^16.1.0",
     "prettier": "^3.5.3",
     "typescript": "^5"
   }
