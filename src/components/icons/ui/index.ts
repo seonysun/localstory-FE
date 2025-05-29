@@ -1,0 +1,8 @@
+export { default as BookmarkIcon } from './BookmarkIcon';
+export { default as CheckIcon } from './CheckIcon';
+export { default as CommentsIcon } from './CommentsIcon';
+export { default as DangerIcon } from './DangerIcon';
+export { default as HeartIcon } from './HeartIcon';
+export { default as ImgIcon } from './ImgIcon';
+export { default as StarIcon } from './StarIcon';
+export { default as ThemeIcon } from './ThemeIcon';
