@@ -26,10 +26,10 @@ import { BackIcon } from '@/components/icons';
  * @param onBackButtonClick 뒤로가기 버튼 클릭 시 실행할 콜백 함수 (선택)
  */
 type PageHeaderProps = {
-  /** 페이지 타이틀 텍스트 */
+  /** 페이지 타이틀 텍스트(필수) */
   title: string;
 
-  /** 뒤로가기 버튼 클릭 시 실행할 콜백 (기본: window.history.back()) */
+  /** 뒤로가기 버튼 클릭 시 실행할 콜백 (기본: window.history.back()) 선택 입니다. */
   onBackButtonClick?: () => void;
 };
 
@@ -37,6 +37,7 @@ function PageHeader({ title, onBackButtonClick }: PageHeaderProps) {
   return (
     <div className={Wrapper()}>
       <button
+        aria-label="뒤로가기"
         type="button"
         className={BackButton()}
         onClick={
