@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
 
 import '@styles/globals.css';
@@ -15,21 +16,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ko"
-      className={css({
-        minWidth: '320px',
-        px: '16px',
-        md: {
-          px: '16px',
-          maxWidth: '1024px',
-          marginX: 'auto',
-        },
-      })}
-    >
-      <body>
+    <html lang="ko" className={css({ minWidth: '320px' })}>
+      <body
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100vh',
+        })}
+      >
         <Header />
-        <main>{children}</main>
+        <main
+          className={css({
+            flexGrow: 1,
+            width: '100%',
+            maxWidth: '1024px',
+            mx: 'auto',
+            px: '16px',
+          })}
+        >
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
