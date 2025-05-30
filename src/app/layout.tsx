@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Header from '@components/layouts/Header';
 
 import '@styles/globals.css';
 import { css } from '@root/styled-system/css';
@@ -14,21 +15,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html
+      lang="ko"
+      className={css({
+        minWidth: '320px',
+        px: '16px',
+        md: {
+          px: '16px',
+          maxWidth: '1024px',
+          marginX: 'auto',
+        },
+      })}
+    >
       <body>
-        <div
-          className={css({
-            minWidth: '320px',
-            px: '16px',
-            md: {
-              px: '24px',
-              maxWidth: '1024px',
-              marginX: 'auto',
-            },
-          })}
-        >
-          {children}
-        </div>
+        <Header />
+        <main>{children}</main>
       </body>
     </html>
   );
