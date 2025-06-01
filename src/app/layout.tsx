@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
 
+import Providers from '@/providers';
+
 import '@styles/globals.css';
 import { css } from '@root/styled-system/css';
 
@@ -24,19 +26,25 @@ export default function RootLayout({
           minHeight: '100vh',
         })}
       >
-        <Header />
-        <main
-          className={css({
-            flexGrow: 1,
-            width: '100%',
-            maxWidth: '1024px',
-            mx: 'auto',
-            px: '16px',
-          })}
-        >
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main
+            className={css({
+              flexGrow: 1,
+              width: '100%',
+              maxWidth: '1024px',
+              marginTop: '3rem',
+              mx: 'auto',
+              px: '16px',
+              md: {
+                px: '24px',
+              },
+            })}
+          >
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
