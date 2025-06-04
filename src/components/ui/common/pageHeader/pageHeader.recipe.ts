@@ -8,7 +8,6 @@ export const Wrapper = cva({
     },
     alignItems: 'center',
     height: '48px',
-    paddingX: '16px',
   },
 });
 
@@ -20,7 +19,7 @@ export const BackButton = cva({
     },
     bg: 'gray.100',
     cursor: 'pointer',
-    padding: '4px',
+    padding: 2,
     borderRadius: 'full',
     position: 'absolute',
     left: '16px',

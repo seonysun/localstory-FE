@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { ReactNode } from 'react';
 import {
   BackButton,
   Title,
@@ -27,13 +27,14 @@ import { BackIcon } from '@/components/icons';
  */
 type PageHeaderProps = {
   /** 페이지 타이틀 텍스트 */
-  title: string;
+  title?: string;
 
   /** 뒤로가기 버튼 클릭 시 실행할 콜백 (기본: window.history.back()) */
   onBackButtonClick?: () => void;
+  children?: ReactNode;
 };
 
-function PageHeader({ title, onBackButtonClick }: PageHeaderProps) {
+function PageHeader({ title, onBackButtonClick, children }: PageHeaderProps) {
   return (
     <div className={Wrapper()}>
       <button
@@ -48,7 +49,7 @@ function PageHeader({ title, onBackButtonClick }: PageHeaderProps) {
       >
         <BackIcon />
       </button>
-      <h1 className={Title()}>{title}</h1>
+      {children || <h1 className={Title()}>{title}</h1>}
     </div>
   );
 }
