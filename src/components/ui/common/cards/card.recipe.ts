@@ -71,12 +71,14 @@ export const flex = cva({
       row: { flexDirection: 'row' },
       col: { flexDirection: 'column' },
     },
+    align: { center: { alignItems: 'center' } },
     gap: {
       none: { gap: '0' },
       xs: { gap: '1' },
       sm: { gap: '1.5' },
       md: { gap: '2' },
       lg: { gap: '4' },
+      xl: { gap: '6' },
     },
     p: {
       none: { p: '0' },
@@ -85,6 +87,7 @@ export const flex = cva({
       md: { p: '4' },
       lg: { p: '6' },
     },
+    px: { lg: { px: '10' } },
   },
   defaultVariants: {
     direction: 'col',
