@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  StoryButtonGroup,
-  StoryInput,
+  storyButtonGroup,
+  storyInput,
 } from '@components/story/sections/story.recipe';
 import { Button } from '@components/ui/common/buttons/Button';
 
@@ -49,9 +49,9 @@ function StorySearchSection({ keyword }: { keyword: string }) {
         value={search}
         onChange={onChange}
         onKeyDown={onKeyDown}
-        className={StoryInput()}
+        className={storyInput()}
       />
-      <div className={StoryButtonGroup()}>
+      <div className={storyButtonGroup()}>
         <Button size="sm" color="outline" onClick={onResetClick}>
           전체 보기
         </Button>

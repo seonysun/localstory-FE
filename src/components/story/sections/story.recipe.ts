@@ -1,13 +1,14 @@
 import { cva } from '@root/styled-system/css';
 
-export const StorySection = cva({
+// style
+export const storySection = cva({
   base: {
     mb: 12,
     position: 'relative',
   },
 });
 
-export const StoryInput = cva({
+export const storyInput = cva({
   base: {
     width: '100%',
     bg: 'gray.100',
@@ -17,7 +18,7 @@ export const StoryInput = cva({
   },
 });
 
-export const StoryButtonGroup = cva({
+export const storyButtonGroup = cva({
   base: {
     display: 'flex',
     alignItems: 'center',
@@ -27,7 +28,7 @@ export const StoryButtonGroup = cva({
   },
 });
 
-export const StoryImage = cva({
+export const storyImage = cva({
   base: {
     width: '100%',
     height: '500px',
@@ -35,7 +36,7 @@ export const StoryImage = cva({
   },
 });
 
-export const StoryOverlay = cva({
+export const storyOverlay = cva({
   base: {
     position: 'absolute',
     top: '100px',
