@@ -34,6 +34,7 @@ export default defineConfig({
             500: { value: '#FEE500', description: '메인 컬러 (yellow)' },
           },
           gray: {
+            50: { value: '#F9F9F9', description: 'Gray 50' },
             100: { value: '#E6E6E6', description: 'Gray 100' },
             200: { value: '#C9C9C9', description: 'Gray 200' },
             300: { value: '#A2A2A2', description: 'Gray 300' },

@@ -1,6 +1,10 @@
 'use client';
 
+import { CheckIcon } from '@/components/icons';
 import { Button } from '@/components/ui/common/buttons/Button';
+import { Input } from '@/components/ui/common/textfield/Input';
+import { Search } from '@/components/ui/common/textfield/Search';
+import { Textarea } from '@/components/ui/common/textfield/Textarea';
 
 import { css } from '@root/styled-system/css';
 
@@ -200,6 +204,123 @@ export default function TextStylePreviewPage() {
       </div>
 
       {/**
+       * Textfield 컴포넌트 스타일 가이드
+       * @section Textfields
+       * @description Search / Input / Textarea 컴포넌트의 피그마 시안 기반 스타일 구현
+       *
+       * 디자인 특징:
+       * - Search: startIcon(왼쪽 검색 아이콘), white/gray.100 배경별 색상 차이
+       * - Input: endIcon(오른쪽 체크 아이콘), 인증 상태별 조건부 렌더링
+       * - Textarea: 두 가지 스타일 - 일반(gray.50, body2, xs) / 큰 버전(white, label2, md)
+       * - 입력 텍스트는 모두 textDefault, placeholder는 gray.500 기준
+       */}
+      <div
+        className={css({
+          py: { base: 8, md: 10 },
+          px: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 6,
+        })}
+      >
+        {/* Section Title */}
+        <div className={css({ display: 'flex', alignItems: 'center', gap: 2 })}>
+          <div
+            className={css({
+              w: '24px',
+              h: '24px',
+              bg: 'blue.500',
+              borderRadius: 'xs',
+              color: 'white',
+              fontSize: '12px',
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            })}
+          >
+            abc
+          </div>
+          <h2 className={css({ textStyle: 'headline4' })}>Textfields</h2>
+        </div>
+
+        {/**
+         * Search Component - Default (White)
+         * @usage Map Search
+         * @example <Search placeholder="Search" />
+         */}
+        <Search placeholder="Search" />
+
+        {/**
+         * Search Component - Filled (Gray) - TimeLine
+         * @usage TimeLine
+         * @example <Search placeholder="어떤 곳이든" variant="filled" />
+         */}
+        <Search placeholder="어떤 곳이든" variant="filled" />
+
+        {/**
+         * Input Component (Address) - Verified State
+         * @usage Profile Edit
+         * @example
+         * <Input
+         *   value="부산광역시"
+         *   readOnly
+         *   endIcon={isVerified ? <CheckIcon /> : undefined}
+         * />
+         */}
+        <Input
+          value="부산광역시"
+          size="md"
+          radius="lg"
+          fullWidth
+          readOnly
+          endIcon={
+            <CheckIcon
+              className={css({ w: '20px', h: '20px', color: 'blue.500' })}
+            />
+          }
+        />
+
+        {/**
+         * Input Component (Address) - Default State
+         * @usage Profile Edit
+         * @example
+         * <Input placeholder="지역을 선택하세요" />
+         */}
+        <Input
+          placeholder="지역을 선택하세요"
+          size="md"
+          radius="lg"
+          fullWidth
+        />
+
+        {/**
+         * Textarea Component - Small Size (Profile Edit)
+         * @usage Profile Edit
+         * @example
+         * <Textarea placeholder="자기소개 작성" size="md" />
+         */}
+        <Textarea
+          placeholder="반 갑 습 니 다 ^^"
+          size="md"
+          radius="lg"
+          fullWidth
+        />
+
+        {/**
+         * Textarea Component - Large Size
+         * @usage TimeLine Story 작성
+         * @example
+         * <Textarea variant="large" placeholder="자세한 후기를 작성하세요" />
+         */}
+        <Textarea
+          variant="large"
+          placeholder="직전 다녀온 생생한 후기를 작성해보세요"
+          fullWidth
+        />
+      </div>
+
+      {/**
        * 버튼 스타일 섹션
        * @section ButtonStyles
        * @description Button 컴포넌트의 다양한 스타일 조합 가이드
@@ -378,7 +499,6 @@ export default function TextStylePreviewPage() {
           </div>
         </div>
       </div>
-
       {/**
        * Drop Shadow 섹션
        * @section DropShadow
