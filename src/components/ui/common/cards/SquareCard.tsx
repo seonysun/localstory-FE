@@ -13,16 +13,19 @@ import {
   titleText,
   topRightAbsolute,
 } from '@/components/ui/common/cards/card.recipe';
+import { Likes } from '@/components/ui/common/toggles';
 
 import defaultThumbnail from '@images/default-thumbnail.png';
 
 type SquareCardProps = {
+  id?: number;
   image: string;
   liked?: boolean;
   title?: string;
   location?: string;
   custom?: boolean;
   children?: ReactNode;
+  onClick?: () => void;
 };
 
 /**
@@ -46,12 +49,14 @@ type SquareCardProps = {
  */
 
 function SquareCard({
+  id,
   image,
   liked = false,
   title,
   location,
   custom = false,
   children,
+  onClick,
 }: SquareCardProps) {
   return (
     <div
@@ -60,6 +65,7 @@ function SquareCard({
         align: 'start',
         gap: 'sm',
       })}
+      onClick={onClick}
     >
       <div className={cardImageWrapper({ maxWidth: 'none' })}>
         <Image
@@ -68,16 +74,20 @@ function SquareCard({
           fill
           className={cardImage()}
         />
-        <span className={topRightAbsolute()}>{liked ? '❤️' : '🤍'}</span>
+        <span className={topRightAbsolute()}>
+          <Likes liked={liked} />
+        </span>
       </div>
       {custom ? (
         children
       ) : (
         <div className={flex({ gap: 'sm' })}>
           <p className={titleText()}>{title}</p>
-          <p className={subText()}>
+          <p className={flex({ direction: 'row', align: 'center', gap: 'xs' })}>
             <LocationIcon width={16} height={16} />
-            <span className={subText({ color: 'muted' })}>{location}</span>
+            <span className={subText({ color: 'muted', clamp: 1 })}>
+              {location}
+            </span>
           </p>
         </div>
       )}

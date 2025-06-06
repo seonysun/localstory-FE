@@ -8,7 +8,6 @@ import { flex } from '@/components/ui/common/cards/card.recipe';
 import {
   modalContent,
   modalText,
-  modalTitle,
   modalWrapper,
 } from '@/components/ui/common/modals/modal.recipe';
 import useClickOutside from '@/hooks/useClickOutside';
@@ -64,8 +63,10 @@ function Modal({
           <div className={flex({ align: 'center', gap: 'xl' })}>
             <DangerIcon width={44} height={44} fill="red" />
             <div className={flex({ gap: 'md', px: 'lg' })}>
-              <p className={modalTitle()}>{title}</p>
-              <p className={modalText()}>{content}</p>
+              <p className={modalText({ text: 'pageTitle' })}>{title}</p>
+              <p className={modalText({ text: 'body3', color: 'gray400' })}>
+                {content}
+              </p>
             </div>
           </div>
           <div className={flex({ direction: 'row', gap: 'sm' })}>

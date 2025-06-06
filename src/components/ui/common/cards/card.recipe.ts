@@ -3,6 +3,7 @@ import { cva } from '@root/styled-system/css';
 export const cardWrapper = cva({
   base: {
     display: 'flex',
+    position: 'relative',
   },
   variants: {
     direction: {
@@ -155,6 +156,9 @@ export const subText = cva({
       label1: { textStyle: 'label1' },
       label2: { textStyle: 'label2' },
     },
+    clamp: {
+      1: { lineClamp: 1, width: 'full' },
+    },
   },
   defaultVariants: {
     color: 'default',
@@ -237,7 +241,19 @@ export const gridImageWrapper = cva({
 export const topRightAbsolute = cva({
   base: {
     position: 'absolute',
-    top: '1',
-    right: '1',
+  },
+  variants: {
+    top: {
+      1: { top: '1' },
+      3: { top: '3' },
+    },
+    right: {
+      1: { right: '1' },
+      3: { right: '3' },
+    },
+  },
+  defaultVariants: {
+    top: 1,
+    right: 1,
   },
 });

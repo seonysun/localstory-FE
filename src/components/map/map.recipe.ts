@@ -65,10 +65,12 @@ export const gridLayout = cva({
     },
     gap: {
       none: { gap: 0 },
+      sm: { gap: 2 },
       lg: { gap: 6 },
     },
     p: {
       none: { padding: 0 },
+      xs: { padding: 1 },
       sm: { padding: 2 },
     },
     marginB: {

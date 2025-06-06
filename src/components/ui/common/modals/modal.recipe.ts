@@ -60,44 +60,41 @@ export const modalContent = cva({
   },
 });
 
-export const modalTitle = cva({
-  base: {
-    textStyle: 'pageTitle',
-  },
+export const modalText = cva({
   variants: {
+    flex: {
+      col: { display: 'flex', flexDirection: 'column', alignItems: 'center' },
+      row: { display: 'flex', flexDirection: 'row', alignItems: 'center' },
+    },
+    gap: {
+      1: { gap: 1 },
+    },
+    text: {
+      head3: { textStyle: 'headline3' },
+      pageTitle: { textStyle: 'pageTitle' },
+      body2: { textStyle: 'body2' },
+      body3: { textStyle: 'body3' },
+      label1: { textStyle: 'label1' },
+      label2: { textStyle: 'label2' },
+    },
     align: {
       left: { textAlign: 'left' },
       center: { textAlign: 'center' },
       right: { textAlign: 'right' },
+      justify: { textAlign: 'justify' },
     },
     color: {
       black: { color: 'black' },
       gray600: { color: 'gray.600' },
-    },
-  },
-  defaultVariants: {
-    align: 'center',
-    color: 'black',
-  },
-});
-
-export const modalText = cva({
-  base: {
-    textStyle: 'body3',
-  },
-  variants: {
-    align: {
-      left: { textAlign: 'left' },
-      center: { textAlign: 'center' },
-      right: { textAlign: 'right' },
-    },
-    color: {
-      black: { color: 'black' },
+      gray500: { color: 'gray.500' },
       gray400: { color: 'gray.400' },
+      blue500: { color: 'blue.500' },
+    },
+    cursor: {
+      pointer: { cursor: 'pointer' },
     },
   },
   defaultVariants: {
     align: 'center',
-    color: 'gray400',
   },
 });

@@ -1,15 +1,19 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { categoryTitle, gridLayout } from '@/components/map/map.recipe';
 import { flex } from '@/components/ui/common/cards/card.recipe';
 import SquareCard from '@/components/ui/common/cards/SquareCard';
 import { MAP_VIEW_TABS } from '@/constants/map';
+import { locationList } from '@/mocks/mapDetail';
 
 import { css, cx } from '@root/styled-system/css';
 
 function MapTabs() {
+  const router = useRouter();
+
   const [selectedTab, setSelectedTab] = useState('all');
 
   return (
@@ -47,14 +51,17 @@ function MapTabs() {
           }),
         )}
       >
-        <SquareCard
-          image="/images/default-thumbnail.png"
-          title="국제시장"
-          location="부산 중구"
-        />
-        <SquareCard image="" title="국제시장" location="부산 중구" liked />
-        <SquareCard image="" title="국제시장" location="부산 중구" liked />
-        <SquareCard image="" title="국제시장" location="부산 중구" liked />
+        {locationList.map(place => (
+          <SquareCard
+            key={place.id}
+            id={place.id}
+            image={place.image}
+            title={place.title}
+            location={place.location}
+            liked={place.liked}
+            onClick={() => router.push(`/map/{place.id}`)}
+          />
+        ))}
       </div>
     </>
   );
