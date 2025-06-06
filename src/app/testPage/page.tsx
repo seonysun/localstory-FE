@@ -2,9 +2,11 @@
 
 import { CheckIcon } from '@/components/icons';
 import { Button } from '@/components/ui/common/buttons/Button';
-import { Input } from '@/components/ui/common/textfield/Input';
-import { Search } from '@/components/ui/common/textfield/Search';
-import { Textarea } from '@/components/ui/common/textfield/Textarea';
+import { Input } from '@/components/ui/common/textfields/Input';
+import { Search } from '@/components/ui/common/textfields/Search';
+import { Textarea } from '@/components/ui/common/textfields/Textarea';
+import { Likes } from '@/components/ui/common/toggles/Like';
+import { Switches } from '@/components/ui/common/toggles/Switch';
 
 import { css } from '@root/styled-system/css';
 
@@ -204,15 +206,15 @@ export default function TextStylePreviewPage() {
       </div>
 
       {/**
-       * Textfield 컴포넌트 스타일 가이드
+       * Textfields 컴포넌트 스타일 가이드
        * @section Textfields
        * @description Search / Input / Textarea 컴포넌트의 피그마 시안 기반 스타일 구현
        *
        * 디자인 특징:
        * - Search: startIcon(왼쪽 검색 아이콘), white/gray.100 배경별 색상 차이
        * - Input: endIcon(오른쪽 체크 아이콘), 인증 상태별 조건부 렌더링
-       * - Textarea: 두 가지 스타일 - 일반(gray.50, body2, xs) / 큰 버전(white, label2, md)
-       * - 입력 텍스트는 모두 textDefault, placeholder는 gray.500 기준
+       * - Textarea: Small (gray.50, body2) / Large (white, label2)
+       * - 입력 텍스트는 모두 textDefault
        */}
       <div
         className={css({
@@ -249,10 +251,10 @@ export default function TextStylePreviewPage() {
          * @usage Map Search
          * @example <Search placeholder="Search" />
          */}
-        <Search placeholder="Search" />
+        <Search placeholder="Search" autoFocus />
 
         {/**
-         * Search Component - Filled (Gray) - TimeLine
+         * Search Component - Filled (Gray)
          * @usage TimeLine
          * @example <Search placeholder="어떤 곳이든" variant="filled" />
          */}
@@ -295,13 +297,13 @@ export default function TextStylePreviewPage() {
         />
 
         {/**
-         * Textarea Component - Small Size (Profile Edit)
+         * Textarea Component - Small Size
          * @usage Profile Edit
          * @example
-         * <Textarea placeholder="자기소개 작성" size="md" />
+         * <Textarea size="md" placeholder="자기소개를 입력하세요" />
          */}
         <Textarea
-          placeholder="반 갑 습 니 다 ^^"
+          placeholder="자기소개를 입력하세요"
           size="md"
           radius="lg"
           fullWidth
@@ -309,13 +311,13 @@ export default function TextStylePreviewPage() {
 
         {/**
          * Textarea Component - Large Size
-         * @usage TimeLine Story 작성
+         * @usage TimeLine Story
          * @example
-         * <Textarea variant="large" placeholder="자세한 후기를 작성하세요" />
+         * <Textarea size="lg" placeholder="후기를 작성하세요" />
          */}
         <Textarea
-          variant="large"
-          placeholder="직전 다녀온 생생한 후기를 작성해보세요"
+          size="lg"
+          placeholder="직접 다녀온 생생한 후기를 작성해보세요"
           fullWidth
         />
       </div>
@@ -499,6 +501,191 @@ export default function TextStylePreviewPage() {
           </div>
         </div>
       </div>
+
+      {/**
+       * 토글 컴포넌트 스타일 가이드
+       * @section Toggles
+       * @description Switch / Likes 토글의 시각적 스타일 및 인터랙션 가이드
+       *
+       * 디자인 특징:
+       * - Switches: On/Off 상태 시각화, 설정 화면에서 활용
+       * - Likes: 좋아요 토글, 반투명 배경과 호버 효과
+       *
+       * 사용 권장사항:
+       * - Switches: 알림 설정, 다크모드, 위치 동의 등
+       * - Likes: 맛집 카드, 여행지 카드, 콘텐츠 좋아요 등
+       */}
+      <div
+        className={css({
+          py: { base: 8, md: 10 },
+          px: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 6,
+        })}
+      >
+        {/* Section Title */}
+        <p className={css({ textStyle: 'headline4', mb: 4 })}>🎛️ Switch</p>
+
+        {/**
+         * Toggle Examples Container
+         * @description 토글 컴포넌트 예시
+         */}
+        <div
+          className={css({
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 4,
+          })}
+        >
+          {/**
+           * Switches Component Examples
+           * @usage 설정 화면의 토글 스위치
+           * @example
+           * <Switches checked={true} onChange={(value) => console.log(value)} />
+           */}
+          <div
+            className={css({
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              p: 4,
+              bg: 'white',
+              borderRadius: 'md',
+              boxShadow: 'xs',
+            })}
+          >
+            <div
+              className={css({
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                py: 2,
+              })}
+            >
+              <span className={css({ textStyle: 'label1' })}>Light Mode</span>
+              <Switches
+                aria-label="라이트 모드 설정"
+                checked
+                onChange={v => console.log('라이트 모드:', v)}
+              />
+            </div>
+
+            <div
+              className={css({
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                py: 2,
+              })}
+            >
+              <span className={css({ textStyle: 'label1' })}>위치 동의</span>
+              <Switches
+                aria-label="위치 동의 설정"
+                checked={false}
+                onChange={v => console.log('위치 동의:', v)}
+              />
+            </div>
+
+            <div
+              className={css({
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                py: 2,
+              })}
+            >
+              <span className={css({ textStyle: 'label1' })}>
+                게시물 공개 설정
+              </span>
+              <Switches
+                aria-label="게시물 공개 설정"
+                checked
+                onChange={v => console.log('게시물 공개:', v)}
+              />
+            </div>
+          </div>
+
+          {/**
+           * Likes Component Examples
+           * @usage 카드형 콘텐츠의 좋아요 버튼 예시
+           * @example
+           * <Likes liked={false} onChange={(value) => console.log(value)} />
+           */}
+          <div
+            className={css({
+              display: 'grid',
+              gridTemplateColumns: { base: '1fr', md: 'repeat(2, 1fr)' },
+              gap: 4,
+            })}
+          >
+            {/* 카드 예시 1 */}
+            <div
+              className={css({
+                position: 'relative',
+                p: 4,
+                bg: 'gray.100',
+                borderRadius: 'lg',
+                boxShadow: 'sm',
+              })}
+            >
+              <div
+                className={css({
+                  position: 'absolute',
+                  top: 3,
+                  right: 3,
+                })}
+              >
+                <Likes
+                  liked
+                  onChange={v => console.log('국제시장 좋아요:', v)}
+                />
+              </div>
+              <div className={css({ mt: 8 })}>
+                <h4 className={css({ textStyle: 'subtitle2', mb: 1 })}>
+                  국제시장
+                </h4>
+                <p className={css({ textStyle: 'body3', color: 'gray.500' })}>
+                  부산 중구 신창동 4가
+                </p>
+              </div>
+            </div>
+
+            {/* 카드 예시 2 */}
+            <div
+              className={css({
+                position: 'relative',
+                p: 4,
+                bg: 'gray.100',
+                borderRadius: 'lg',
+                boxShadow: 'sm',
+              })}
+            >
+              <div
+                className={css({
+                  position: 'absolute',
+                  top: 3,
+                  right: 3,
+                })}
+              >
+                <Likes
+                  liked={false}
+                  onChange={v => console.log('스페이스 원지 좋아요:', v)}
+                />
+              </div>
+              <div className={css({ mt: 8 })}>
+                <h4 className={css({ textStyle: 'subtitle2', mb: 1 })}>
+                  스페이스 원지
+                </h4>
+                <p className={css({ textStyle: 'body3', color: 'gray.500' })}>
+                  부산 남구 문현동 2가
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/**
        * Drop Shadow 섹션
        * @section DropShadow

@@ -17,26 +17,28 @@ export interface InputProps
   radius?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
   fullWidth?: boolean;
   endIcon?: ReactNode;
+  disabled?: boolean;
 }
 
 /**
  * Input 컴포넌트
  * @section Form
  * @description 기본 텍스트 입력 필드 컴포넌트
+ * @usage Profile Edit, 지역 선택, 이름 입력 등
  *
  * @example
- * // 기본 사용법
+ * // 기본 입력 필드
  * <Input placeholder="이름을 입력하세요" />
  *
- * // 아이콘과 함께 사용
+ * // 인증된 상태 (지역 선택)
  * <Input
  *   value="부산광역시"
  *   readOnly
  *   endIcon={<CheckIcon className="w-5 h-5 text-blue-500" />}
  * />
  *
- * // 크기 및 radius 조정
- * <Input size="sm" radius="md" placeholder="작은 입력 필드" />
+ * // 비활성화 상태
+ * <Input placeholder="로딩 중..." disabled />
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   (
@@ -44,6 +46,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       size = 'md',
       radius = 'lg',
       fullWidth = true,
+      disabled = false,
       endIcon,
       className,
       ...props
@@ -78,6 +81,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       w: fullWidth ? 'full' : 'auto',
       h: token.height,
       px: token.px,
+      opacity: disabled ? 0.5 : 1,
     });
 
     const inputStyles = css({
@@ -87,6 +91,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       bg: 'transparent',
       textStyle: token.textStyle,
       color: 'textDefault',
+      cursor: disabled ? 'not-allowed' : 'text',
       _placeholder: {
         color: 'gray.500',
       },
@@ -98,6 +103,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           id={controlId}
           ref={ref}
           className={cx(inputStyles, className)}
+          disabled={disabled}
           {...props}
         />
         {endIcon && (
