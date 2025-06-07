@@ -33,6 +33,7 @@ function MapTabs() {
             className={categoryTitle({
               textStyle: selectedTab === value ? 'label1' : 'body2',
               active: selectedTab === value,
+              cursor: 'pointer',
             })}
             onClick={() => setSelectedTab(value)}
           >
@@ -59,7 +60,7 @@ function MapTabs() {
             title={place.title}
             location={place.location}
             liked={place.liked}
-            onClick={() => router.push(`/map/{place.id}`)}
+            onClick={() => router.push(`/map/${place.id}`)}
           />
         ))}
       </div>

@@ -5,11 +5,12 @@ import { ReactNode } from 'react';
 import { CalendarIcon, LocationIcon } from '@/components/icons';
 import {
   cardWrapper,
-  flexBetween,
+  flex,
   subText,
   titleText,
+  topRightAbsolute,
 } from '@/components/ui/common/cards/card.recipe';
-import StarRating from '@/components/ui/common/ratings/StarRating';
+import StarRating from '@/components/ui/ratings/StarRating';
 
 type WideCardContentProps = {
   title: string;
@@ -19,6 +20,7 @@ type WideCardContentProps = {
   footerType?: 'feeling' | 'location';
   footerText?: string;
   action?: ReactNode;
+  onClick?: () => void;
 };
 
 /**
@@ -47,11 +49,12 @@ type WideCardContentProps = {
 function WideCardContent({
   title,
   subtitle,
-  date = true,
+  date = false,
   rating,
   footerType,
   footerText,
   action,
+  onClick,
 }: WideCardContentProps) {
   const ICON_MAP = {
     feeling: '😀',
@@ -65,31 +68,33 @@ function WideCardContent({
   return (
     <div
       className={cardWrapper({
+        position: 'static',
         direction: 'col',
         align: 'start',
         p: 'xs',
         shadow: 'none',
       })}
+      onClick={onClick}
     >
-      <div className={flexBetween()}>
-        <span className={titleText()}>{title}</span>
-        {action}
-      </div>
-      <p className={subText()}>
+      <p className={titleText()}>{title}</p>
+      <div className={topRightAbsolute({ top: 3, right: 3 })}>{action}</div>
+      <div className={subText()}>
         {date && <CalendarIcon />}
         <span>{subtitle}</span>
-      </p>
+      </div>
       {rating && (
-        <div className={subText({ gap: 'md' })}>
+        <div className={flex({ direction: 'row', align: 'center', gap: 'sm' })}>
           <StarRating value={Number(rating)} />
-          <span>{rating}</span>
+          <span className={subText()}>{rating}</span>
         </div>
       )}
       {footerText && (
-        <p className={subText({ color: 'muted' })}>
+        <div className={flex({ direction: 'row', align: 'center', gap: 'xs' })}>
           {icon}
-          <span>{footerText}</span>
-        </p>
+          <span className={subText({ color: 'muted', clamp: 1 })}>
+            {footerText}
+          </span>
+        </div>
       )}
     </div>
   );

@@ -34,7 +34,7 @@ type WideCardProps = {
 function WideCard({ image, children }: WideCardProps) {
   return (
     <div className={cardWrapper()}>
-      <div className={cardImageWrapper()}>
+      <div className={cardImageWrapper({ maxW: 130 })}>
         <Image
           src={image || defaultThumbnail}
           alt="썸네일"

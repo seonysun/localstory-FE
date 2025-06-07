@@ -1,7 +1,12 @@
 import { cva } from '@root/styled-system/css';
 
 export const iconWrapper = cva({
-  base: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+  },
   variants: {
     size: {
       sm: { width: '8', height: '8', padding: '1' },
@@ -45,6 +50,9 @@ export const categoryTitle = cva({
     active: {
       true: { color: 'black' },
       false: { color: 'gray.300' },
+    },
+    cursor: {
+      pointer: { cursor: 'pointer' },
     },
   },
   defaultVariants: {

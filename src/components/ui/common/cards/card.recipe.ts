@@ -3,9 +3,12 @@ import { cva } from '@root/styled-system/css';
 export const cardWrapper = cva({
   base: {
     display: 'flex',
-    position: 'relative',
   },
   variants: {
+    position: {
+      relative: { position: 'relative' },
+      static: { position: 'static' },
+    },
     direction: {
       row: { flexDirection: 'row' },
       col: { flexDirection: 'column' },
@@ -24,7 +27,7 @@ export const cardWrapper = cva({
     },
     p: {
       none: { p: '0' },
-      xs: { p: '2' },
+      xs: { p: '1' },
       sm: { p: '3' },
       md: { p: '4' },
       lg: { p: '6' },
@@ -42,14 +45,20 @@ export const cardWrapper = cva({
       md: { boxShadow: 'md' },
       lg: { boxShadow: 'lg' },
     },
+    cursor: {
+      none: { cursor: 'default' },
+      pointer: { cursor: 'pointer' },
+    },
   },
   defaultVariants: {
+    position: 'relative',
     direction: 'row',
     align: 'center',
     gap: 'md',
     p: 'sm',
     radius: 'lg',
     shadow: 'sm',
+    cursor: 'pointer',
   },
 });
 
@@ -94,6 +103,7 @@ export const flex = cva({
     },
     px: { sm: { paddingX: 3 }, lg: { px: '10' } },
     marginB: {
+      xs: { marginBottom: 2 },
       sm: { marginBottom: 4 },
     },
   },
@@ -193,6 +203,9 @@ export const cardImageWrapper = cva({
       lg: { borderRadius: 'lg' },
       full: { borderRadius: 'full' },
     },
+    maxW: {
+      130: { maxW: '130px' },
+    },
   },
   defaultVariants: {
     aspect: 'square',
@@ -244,12 +257,16 @@ export const topRightAbsolute = cva({
   },
   variants: {
     top: {
+      0: { top: '0' },
       1: { top: '1' },
       3: { top: '3' },
+      5: { top: '5' },
     },
     right: {
+      0: { right: '0' },
       1: { right: '1' },
       3: { right: '3' },
+      5: { right: '5' },
     },
   },
   defaultVariants: {

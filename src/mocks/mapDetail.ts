@@ -12,22 +12,28 @@ export const locationList = [
   {
     id: 1,
     title: '부산어린이대공원',
+    type: '카페',
     image: '/images/section.png',
     location: '부산 부산진구 새싹로 295',
     liked: false,
+    rating: 3.7,
   },
   {
     id: 2,
     title: '국제시장',
+    type: '관광명소',
     image: '/images/section.png',
     location: '부산 어쩌고 저쩌고 장소가 길어지면',
     liked: true,
+    rating: 4.6,
   },
   {
     id: 3,
     title: '송도해수욕장',
+    type: '관광명소',
     image: '/images/section.png',
     location: '부산 기장군',
     liked: true,
+    rating: 5.0,
   },
 ];

@@ -46,7 +46,14 @@ function BenefitCard({ icon, title, content }: BenefitCardProps) {
   };
 
   return (
-    <div className={cardWrapper({ direction: 'col', p: 'md', radius: 'sm' })}>
+    <div
+      className={cardWrapper({
+        direction: 'col',
+        p: 'md',
+        radius: 'sm',
+        cursor: 'none',
+      })}
+    >
       {renderIcon()}
       <p className={titleText({ align: 'center' })}>{title}</p>
       <p className={titleText({ align: 'center', color: 'gray600' })}>

@@ -18,3 +18,9 @@ export const MAP_VIEW_TABS = [
   { label: '전체', value: 'all', path: '/' },
   { label: '인기', value: 'popular', path: '/' },
 ];
+
+export const MAP_DROPDOWN_OPTIONS = [
+  { label: '최신 등록순', value: 'latest' },
+  { label: '인기순', value: 'popular' },
+  { label: '거리순', value: 'distance' },
+];
