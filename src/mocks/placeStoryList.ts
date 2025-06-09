@@ -1,0 +1,32 @@
+export const placeStoryList = [
+  {
+    id: 1,
+    image: '/images/story-sample.png',
+    placename: '부산어린이대공원',
+    location: '부산 진구 새싹로 295',
+    author: '홍선성현형',
+    date: '2025.04.25',
+    feeling: 'bad',
+    liked: false,
+  },
+  {
+    id: 2,
+    image: '/images/story-sample.png',
+    placename: '부산어린이대공원',
+    location: '부산 진구 새싹로 295',
+    author: '디자이너리',
+    date: '2025.04.25',
+    feeling: 'bad',
+    liked: true,
+  },
+  {
+    id: 3,
+    image: '/images/story-sample.png',
+    placename: '부산어린이대공원',
+    location: '부산 진구 새싹로 295',
+    author: '홍선성현형',
+    date: '2025.04.25',
+    feeling: 'bad',
+    liked: true,
+  },
+];

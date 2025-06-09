@@ -67,7 +67,7 @@ function SquareCard({
       })}
       onClick={onClick}
     >
-      <div className={cardImageWrapper({ maxWidth: 'none' })}>
+      <div className={cardImageWrapper({ maxWidth: 'none', aspect: 87 })}>
         <Image
           src={image || defaultThumbnail}
           alt={title || '카드이미지'}
