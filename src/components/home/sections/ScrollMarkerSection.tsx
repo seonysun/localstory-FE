@@ -25,7 +25,7 @@ function ScrollMarkerSection() {
             숨은 로컬 맛집 <br /> 찾기가 더 간편해졌어요
           </h1>
           <h2 className={css({ textStyle: 'headline3' })}>
-            여행을 하눈에, 그리고 한 번에!
+            여행을 한눈에, 그리고 한 번에!
           </h2>
           <p className={scrollDescription()}>
             다른 곳에서는 없던 현지인 로컬 명소를 <br />

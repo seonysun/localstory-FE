@@ -33,7 +33,7 @@ export default function Home() {
       <SearchStorySection />
       <SubscribeTeaserSection />
       <article>
-        <div className={css({ textAlign: 'center' })}>
+        <div className={css({ textAlign: 'center', mb: '24' })}>
           <h1 className={scrollSubText()}>함께할 준비가 되었나요?</h1>
           <Button size="lg">구독하러 가기</Button>
         </div>

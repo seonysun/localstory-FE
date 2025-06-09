@@ -94,14 +94,12 @@ export const subscribeBenefitGrid = cva({
 export const subscribeBenefitCard = cva({
   base: {
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     gap: 2,
     width: '100%',
     bg: 'white',
     borderRadius: 'md',
     textAlign: 'center',
-    boxShadow: 'sm',
   },
 });

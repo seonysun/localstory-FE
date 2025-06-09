@@ -8,7 +8,7 @@ import {
   scrollDescription,
   scrollSubText,
 } from '@components/home/recipes/text.recipe';
-import { BookIcon, HomeMarkerIcon } from '@components/icons';
+import BenefitCard from '@components/ui/common/cards/BenefitCard';
 
 import { css } from '@root/styled-system/css';
 
@@ -23,36 +23,16 @@ function SubscribeTeaserSection() {
       </div>
       <div className={subscribeBenefitGrid()}>
         <div className={subscribeBenefitCard()}>
-          <div className={css({ marginTop: '1rem' })}>
-            <BookIcon width={30} height={30} />
+          <div className={css({ width: '100%' })}>
+            <BenefitCard
+              title="스토리"
+              icon="book"
+              content="무제한 스토리 열람"
+            />
           </div>
-          <p>스토리</p>
-          <p className={css({ color: 'gray.700', marginBottom: '1rem' })}>
-            무제한{' '}
-            <span
-              className={css({
-                color: 'blue',
-              })}
-            >
-              스토리 열람
-            </span>
-          </p>
-        </div>
-        <div className={subscribeBenefitCard()}>
-          <div className={css({ marginTop: '1rem' })}>
-            <HomeMarkerIcon width={30} height={30} />
+          <div className={css({ width: '100%' })}>
+            <BenefitCard title="지도" icon="map" content="무제한 지도 열람" />
           </div>
-          <p>지도</p>
-          <p className={css({ color: 'gray.700', marginBottom: '1rem' })}>
-            무제한{' '}
-            <span
-              className={css({
-                color: 'blue',
-              })}
-            >
-              지도 열람
-            </span>
-          </p>
         </div>
       </div>
     </article>
