@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HeartIcon } from '@components/icons';
 
 import { css } from '@root/styled-system/css';
@@ -29,7 +29,13 @@ export function Likes({
 }: LikesProps) {
   const [isLiked, setIsLiked] = useState(liked);
 
-  const handleToggle = () => {
+  useEffect(() => {
+    setIsLiked(liked);
+  }, [liked]);
+
+  const handleToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (disabled) return;
     const newLiked = !isLiked;
     setIsLiked(newLiked);
@@ -39,6 +45,7 @@ export function Likes({
   return (
     <button
       type="button"
+      aria-pressed={isLiked}
       aria-label={ariaLabel}
       disabled={disabled}
       onClick={handleToggle}
