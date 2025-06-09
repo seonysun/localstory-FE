@@ -1,4 +1,5 @@
 export { default as BookmarkIcon } from './BookmarkIcon';
+export { default as ChatBotIcon } from './ChatBotIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as CommentsIcon } from './CommentsIcon';
 export { default as DangerIcon } from './DangerIcon';

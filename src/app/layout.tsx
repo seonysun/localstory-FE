@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import ChatBotModal from '@components/chatBot/ChatBotModal';
 import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
 
@@ -43,6 +44,7 @@ export default function RootLayout({
           >
             {children}
           </main>
+          <ChatBotModal />
           <Footer />
         </Providers>
       </body>
