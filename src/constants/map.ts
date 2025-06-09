@@ -4,15 +4,17 @@ import { CoffeeIcon, FoodIcon, MapLocationIcon } from '@/components/icons';
 
 type MapCategory = {
   label: string;
-  path: string;
+  value: string;
   icon: ComponentType<any>;
 }[];
 
 export const MAP_CATEGORY: MapCategory = [
-  { label: '관광명소', path: '/', icon: MapLocationIcon },
-  { label: '로컬맛집', path: '/', icon: FoodIcon },
-  { label: '카페', path: '/', icon: CoffeeIcon },
-];
+  { label: '관광명소', value: 'sight', icon: MapLocationIcon },
+  { label: '로컬맛집', value: 'food', icon: FoodIcon },
+  { label: '카페', value: 'cafe', icon: CoffeeIcon },
+] as const;
+
+export type CategoryValueType = (typeof MAP_CATEGORY)[number]['value'];
 
 export const MAP_VIEW_TABS = [
   { label: '전체', value: 'all', path: '/' },

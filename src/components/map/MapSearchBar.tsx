@@ -40,7 +40,7 @@ function MapSearchBar() {
           />
         </form>
       </div>
-      <div className={iconWrapper()}>
+      <div className={iconWrapper()} onClick={() => router.push('/map/search')}>
         <GpsLocationIcon fill="#707070" />
       </div>
     </>

@@ -3,6 +3,7 @@ import { cva } from '@root/styled-system/css';
 export const cardWrapper = cva({
   base: {
     display: 'flex',
+    backgroundColor: 'white',
   },
   variants: {
     position: {

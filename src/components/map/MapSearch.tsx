@@ -3,12 +3,17 @@
 import { useSearchParams } from 'next/navigation';
 
 import MapResults from '@/components/map/MapResults';
+import MapView from '@/components/map/MapView';
 
 function MapSearch() {
   const searchParams = useSearchParams();
-  const query = searchParams.get('query') || '';
+  const query = searchParams.get('query');
 
-  return <div>{query ? <MapResults query={query} /> : <div>지도</div>}</div>;
+  if (query) {
+    return <MapResults query={query} />;
+  }
+
+  return <MapView />;
 }
 
 export default MapSearch;

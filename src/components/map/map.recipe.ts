@@ -6,6 +6,10 @@ export const iconWrapper = cva({
     alignItems: 'center',
     justifyContent: 'center',
     cursor: 'pointer',
+    _hover: {
+      opacity: 0.8,
+      transform: 'scale(1.05)',
+    },
   },
   variants: {
     size: {
@@ -17,6 +21,10 @@ export const iconWrapper = cva({
       none: { borderWidth: '0' },
       gray: { borderWidth: '1px', borderColor: 'gray.200' },
       black: { borderWidth: '2px', borderColor: 'black' },
+    },
+    bg: {
+      black: { backgroundColor: 'black' },
+      white: { backgroundColor: 'white' },
     },
     radius: {
       md: { borderRadius: 'md' },
@@ -89,5 +97,35 @@ export const gridLayout = cva({
     columns: 2,
     gap: 'lg',
     p: 'sm',
+  },
+});
+
+export const mapOverlayWrapper = cva({
+  base: {
+    position: 'absolute',
+  },
+  variants: {
+    zindex: {
+      10: { zIndex: 10 },
+    },
+    type: {
+      category: {
+        display: 'flex',
+        padding: '1',
+        borderRadius: 'md',
+        top: '1',
+        left: '1',
+        backgroundColor: 'white',
+      },
+      card: {
+        bottom: '2',
+        left: '2.5%',
+        w: '95%',
+      },
+    },
+  },
+  defaultVariants: {
+    type: 'category',
+    zindex: 10,
   },
 });
