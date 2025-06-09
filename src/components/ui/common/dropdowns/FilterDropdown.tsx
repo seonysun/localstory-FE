@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 
 import {
   dropdownButton,
@@ -8,7 +8,7 @@ import {
 import useClickOutside from '@/hooks/useClickOutside';
 
 type Option = {
-  label: string;
+  label: ReactNode;
   value: string;
 };
 
@@ -16,9 +16,15 @@ type FilterDropdownProps = {
   options: Option[];
   selected: string;
   onChange: (value: string) => void;
+  minW?: string;
 };
 
-function FilterDropdown({ options, selected, onChange }: FilterDropdownProps) {
+function FilterDropdown({
+  options,
+  selected,
+  onChange,
+  minW,
+}: FilterDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const selectedLabel = options.find(
     option => option.value === selected,
@@ -33,6 +39,7 @@ function FilterDropdown({ options, selected, onChange }: FilterDropdownProps) {
         type="button"
         onClick={() => setIsOpen(prev => !prev)}
         className={dropdownButton()}
+        style={{ minWidth: minW }}
       >
         {selectedLabel}
         <span>▾</span>

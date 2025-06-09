@@ -22,9 +22,9 @@ function page() {
         <WideCardContent
           title="온천천 카페거리"
           subtitle="2024.12.02."
-          rating="3.0"
+          rating="0"
           footerType="feeling"
-          footerText="무난무난쓰"
+          footerText="smile"
           action={
             <Button size="xs" fullWidth={false}>
               Edit

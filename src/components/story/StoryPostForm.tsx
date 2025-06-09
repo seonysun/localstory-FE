@@ -10,6 +10,7 @@ import FilterDropdown from '@components/ui/common/dropdowns/FilterDropdown';
 import { modalText } from '@components/ui/common/modals/modal.recipe';
 import { Textarea } from '@components/ui/common/textfields';
 
+import { feelings } from '@/constants/story';
 import {
   getDayOptions,
   getMonthOptions,
@@ -24,6 +25,12 @@ function StoryPostForm() {
 
   const [date, setDate] = useState(getToday());
 
+  const renderedFeelings = feelings.map(({ label: Icon, value }) => ({
+    label: <Icon />,
+    value,
+  }));
+  const [feeling, setFeeling] = useState('smile');
+
   return (
     <div className={flex({ gap: 'xl', marginB: 'sm' })}>
       <div className={flex({ gap: 'lg', p: 'sm', marginB: 'sm' })}>
@@ -34,16 +41,25 @@ function StoryPostForm() {
             options={getYearOptions()}
             selected={date.year}
             onChange={value => setDate(prev => ({ ...prev, year: value }))}
+            minW="80px"
           />
           <FilterDropdown
             options={getMonthOptions()}
             selected={date.month}
             onChange={value => setDate(prev => ({ ...prev, month: value }))}
+            minW="80px"
           />
           <FilterDropdown
             options={getDayOptions()}
             selected={date.day}
             onChange={value => setDate(prev => ({ ...prev, day: value }))}
+            minW="80px"
+          />
+          <FilterDropdown
+            options={renderedFeelings}
+            selected={feeling}
+            onChange={value => setFeeling(value)}
+            minW="54px"
           />
         </div>
         <Textarea

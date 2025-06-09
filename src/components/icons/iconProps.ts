@@ -15,6 +15,8 @@ import type { SVGProps } from 'react';
  * 아이콘 컴포넌트 공통 Props입니다.
  */
 export interface IconProps extends SVGProps<SVGSVGElement> {
+  size?: number;
+
   /** 아이콘의 가로 크기 (기본값: 24) */
   width?: number;
 

@@ -6,7 +6,7 @@ export const placeStoryList = [
     location: '부산 진구 새싹로 295',
     author: '홍선성현형',
     date: '2025.04.25',
-    feeling: 'bad',
+    feeling: 'smile',
     liked: false,
   },
   {
@@ -16,7 +16,7 @@ export const placeStoryList = [
     location: '부산 진구 새싹로 295',
     author: '디자이너리',
     date: '2025.04.25',
-    feeling: 'bad',
+    feeling: 'angry',
     liked: true,
   },
   {
@@ -26,7 +26,7 @@ export const placeStoryList = [
     location: '부산 진구 새싹로 295',
     author: '홍선성현형',
     date: '2025.04.25',
-    feeling: 'bad',
+    feeling: 'neutral',
     liked: true,
   },
 ];

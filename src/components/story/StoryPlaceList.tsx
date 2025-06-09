@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/common/cards/card.recipe';
 import SquareCard from '@/components/ui/common/cards/SquareCard';
 import { modalText } from '@/components/ui/common/modals/modal.recipe';
+import FeelingIcon from '@/components/ui/feelings/FeelingIcon';
 import { placeStoryList } from '@/mocks/placeStoryList';
 
 import { cx } from '@root/styled-system/css';
@@ -69,7 +70,9 @@ function StoryPlaceList() {
                       {story.date}
                     </span>
                   </p>
-                  <span className={topRightAbsolute({ right: 2 })}>😀</span>
+                  <span className={topRightAbsolute({ top: 0, right: 1 })}>
+                    <FeelingIcon value={story.feeling} />
+                  </span>
                 </div>
               </SquareCard>
             ))}
