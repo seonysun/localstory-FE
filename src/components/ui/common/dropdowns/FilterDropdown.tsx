@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   dropdownButton,
   dropdownItem,
   dropdownList,
 } from '@/components/ui/common/dropdowns/dropdown.recipe';
+import useClickOutside from '@/hooks/useClickOutside';
 
 type Option = {
   label: string;
@@ -23,8 +24,11 @@ function FilterDropdown({ options, selected, onChange }: FilterDropdownProps) {
     option => option.value === selected,
   )?.label;
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  useClickOutside(dropdownRef, () => setIsOpen(false));
+
   return (
-    <div style={{ position: 'relative' }}>
+    <div ref={dropdownRef} style={{ position: 'relative' }}>
       <button
         type="button"
         onClick={() => setIsOpen(prev => !prev)}

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { LocationIcon } from '@/components/icons';
 import MapDetailStory from '@/components/map/MapDetailStory';
@@ -53,7 +54,9 @@ function page() {
         </p>
       </div>
       <MapDetailStory title={data.title} images={data.storyImg} />
-      <Button>스토리 나누러 가기</Button>
+      <Link href="/story/post">
+        <Button>스토리 나누러 가기</Button>
+      </Link>
     </div>
   );
 }

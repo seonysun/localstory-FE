@@ -13,7 +13,7 @@ export const dropdownButton = cva({
     cursor: 'pointer',
     fontSize: 'sm',
     color: 'gray.600',
-    minW: '28',
+    minW: '24',
   },
 });
 
@@ -28,6 +28,8 @@ export const dropdownList = cva({
     zIndex: '10',
     w: 'full',
     boxShadow: 'sm',
+    maxHeight: '130px',
+    overflowY: 'auto',
   },
 });
 
@@ -42,5 +44,35 @@ export const dropdownItem = cva({
     _hover: {
       bg: 'gray.50',
     },
+  },
+});
+
+export const border = cva({
+  variants: {
+    color: {
+      gray100: { borderColor: 'gray.100' },
+      gray300: { borderColor: 'gray.300' },
+    },
+    width: {
+      1: { borderWidth: '1px' },
+      2: { borderWidth: '2px' },
+    },
+    style: {
+      solid: { borderStyle: 'solid' },
+    },
+    radius: {
+      md: { borderRadius: 'md' },
+    },
+    p: {
+      none: { padding: 'none' },
+      2: { padding: '2' },
+    },
+  },
+  defaultVariants: {
+    color: 'gray300',
+    width: 1,
+    style: 'solid',
+    radius: 'md',
+    p: 'none',
   },
 });

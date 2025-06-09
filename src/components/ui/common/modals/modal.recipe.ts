@@ -71,6 +71,7 @@ export const modalText = cva({
     },
     text: {
       head3: { textStyle: 'headline3' },
+      head4: { textStyle: 'headline4' },
       pageTitle: { textStyle: 'pageTitle' },
       sub2: { textStyle: 'subtitle2' },
       body2: { textStyle: 'body2' },
