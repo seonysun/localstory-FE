@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ChatBotModal from '@components/chatBot/ChatBotModal';
 import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
+import ScrollToTopButton from '@components/layouts/ScrollToTopButton';
 
 import Providers from '@/providers';
 
@@ -44,6 +45,7 @@ export default function RootLayout({
           >
             {children}
           </main>
+          <ScrollToTopButton />
           <ChatBotModal />
           <Footer />
         </Providers>
