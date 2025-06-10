@@ -2,6 +2,7 @@ export { default as BookmarkIcon } from './BookmarkIcon';
 export { default as ChatBotIcon } from './ChatBotIcon';
 export { default as CheckIcon } from './CheckIcon';
 export { default as CommentsIcon } from './CommentsIcon';
+export { default as CreatePostIcon } from './CreatePostIcon';
 export { default as DangerIcon } from './DangerIcon';
 export { default as HeartIcon } from './HeartIcon';
 export { default as ImgIcon } from './ImgIcon';

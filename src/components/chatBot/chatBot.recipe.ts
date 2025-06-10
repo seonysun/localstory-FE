@@ -5,7 +5,7 @@ export const chatBotWrapper = cva({
     position: 'fixed',
     zIndex: 10,
     bottom: '5rem',
-    right: '4rem',
+    right: '1rem',
   },
 });
 
