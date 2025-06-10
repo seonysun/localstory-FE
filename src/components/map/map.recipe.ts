@@ -62,6 +62,13 @@ export const categoryTitle = cva({
     cursor: {
       pointer: { cursor: 'pointer' },
     },
+    hover: {
+      on: {
+        _hover: {
+          transform: 'scale(1.05)',
+        },
+      },
+    },
   },
   defaultVariants: {
     textStyle: 'body3',

@@ -81,7 +81,7 @@ function SquareCard({
       {custom ? (
         children
       ) : (
-        <div className={flex({ gap: 'sm' })}>
+        <div className={flex({ gap: 'sm', px: 'xs' })}>
           <p className={titleText()}>{title}</p>
           <p className={flex({ direction: 'row', align: 'center', gap: 'xs' })}>
             <LocationIcon width={16} height={16} />

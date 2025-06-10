@@ -27,22 +27,24 @@ function page() {
           <Likes liked={data.liked} />
         </span>
       </div>
-      <div className={flex({ gap: 'md' })}>
-        <p className={modalText({ text: 'head3', align: 'left' })}>
-          {data.title}
-        </p>
-        <p
-          className={modalText({
-            text: 'body2',
-            flex: 'row',
-            gap: 1,
-            align: 'left',
-            color: 'gray400',
-          })}
-        >
-          <LocationIcon width={20} height={20} />
-          {data.location}
-        </p>
+      <div className={flex({ gap: 'lg' })}>
+        <div className={flex({ gap: 'sm' })}>
+          <p className={modalText({ text: 'head3', align: 'left' })}>
+            {data.title}
+          </p>
+          <p
+            className={modalText({
+              text: 'body2',
+              flex: 'row',
+              gap: 1,
+              align: 'left',
+              color: 'gray400',
+            })}
+          >
+            <LocationIcon width={20} height={20} />
+            {data.location}
+          </p>
+        </div>
         <p
           className={modalText({
             text: 'body3',

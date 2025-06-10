@@ -34,6 +34,7 @@ function MapTabs() {
               textStyle: selectedTab === value ? 'label1' : 'body2',
               active: selectedTab === value,
               cursor: 'pointer',
+              hover: 'on',
             })}
             onClick={() => setSelectedTab(value)}
           >

@@ -25,7 +25,7 @@ function MapResults({ query }: { query: string }) {
       ) : (
         <div className={flex({ gap: 'lg' })}>
           <div className={flexBetween()}>
-            <span className={modalText({ text: 'sub2' })}>{query}</span>
+            <span className={modalText({ text: 'search' })}>{query}</span>
             <div>
               <FilterDropdown
                 options={MAP_DROPDOWN_OPTIONS}

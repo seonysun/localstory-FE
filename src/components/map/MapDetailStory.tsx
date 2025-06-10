@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import { gridLayout } from '@/components/map/map.recipe';
 import { flex, flexBetween } from '@/components/ui/common/cards/card.recipe';
@@ -12,6 +13,8 @@ type MapDetailStoryProps = {
 };
 
 function MapDetailStory({ title, images }: MapDetailStoryProps) {
+  const router = useRouter();
+
   return (
     <div className={flex({ gap: 'md' })}>
       <p className={flexBetween()}>
@@ -28,7 +31,11 @@ function MapDetailStory({ title, images }: MapDetailStoryProps) {
             text: 'label2',
             color: 'blue500',
             cursor: 'pointer',
+            hover: 'on',
           })}
+          onClick={() =>
+            router.push(`/story/search?query=${encodeURIComponent(title)}`)
+          }
         >
           더보기
         </span>

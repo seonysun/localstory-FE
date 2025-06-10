@@ -8,6 +8,7 @@ export const Wrapper = cva({
     },
     alignItems: 'center',
     height: '48px',
+    position: 'relative',
   },
 });
 
@@ -21,14 +22,14 @@ export const BackButton = cva({
     cursor: 'pointer',
     padding: 2,
     borderRadius: 'full',
-    position: 'absolute',
-    left: '16px',
   },
 });
 
 export const Title = cva({
   base: {
-    marginX: 'auto',
+    position: 'absolute',
+    left: '50%',
+    transform: 'translateX(-50%)',
     textAlign: 'center',
     textStyle: 'pageTitle',
   },
