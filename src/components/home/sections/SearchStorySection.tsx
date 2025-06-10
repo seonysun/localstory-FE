@@ -60,6 +60,7 @@ function SearchStorySection() {
                   alt="story"
                   width={500}
                   height={675}
+                  loading="lazy"
                   className={css({
                     objectFit: 'cover',
                     width: '100%',

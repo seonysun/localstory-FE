@@ -1,13 +1,35 @@
+import { Suspense } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { scrollSectionInner } from '@components/home/recipes/HomeSection.recipe';
 import { scrollSubText } from '@components/home/recipes/text.recipe';
 import HeroSection from '@components/home/sections/HeroSection';
 import ScrollMarkerSection from '@components/home/sections/ScrollMarkerSection';
-import SearchStorySection from '@components/home/sections/SearchStorySection';
 import SubscribeTeaserSection from '@components/home/sections/SubscribeTeaserSection';
 import { Button } from '@components/ui/common/buttons/Button';
 
 import { css } from '@root/styled-system/css';
+
+const SearchStorySection = dynamic(
+  () => import('@components/home/sections/SearchStorySection'),
+  {
+    loading: () => (
+      <div
+        className={css({
+          height: '500px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          bg: 'gray.100',
+          borderRadius: 'sm',
+        })}
+      >
+        <p>로딩 중...</p>
+      </div>
+    ),
+    ssr: false,
+  },
+);
 
 export default function Home() {
   return (
@@ -21,6 +43,7 @@ export default function Home() {
             alt="section"
             width={1200}
             height={500}
+            loading="lazy"
             className={css({
               width: '100%',
               height: '100%',
@@ -30,7 +53,9 @@ export default function Home() {
           />
         </div>
       </article>
-      <SearchStorySection />
+      <Suspense fallback={<div>...로딩중 </div>}>
+        <SearchStorySection />
+      </Suspense>
       <SubscribeTeaserSection />
       <article>
         <div className={css({ textAlign: 'center', mb: '24' })}>
