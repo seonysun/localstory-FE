@@ -92,6 +92,7 @@ export const buttonStyle = cva({
           color: 'blue.600',
         },
       },
+      custom: {},
     },
     size: {
       xs: {

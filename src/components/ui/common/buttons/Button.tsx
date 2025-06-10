@@ -8,7 +8,7 @@ import type { Responsive } from '@/types/responsive';
 import { cx } from '@root/styled-system/css';
 
 type ButtonProps = Omit<ComponentProps<'button'>, 'type'> & {
-  color?: 'primary' | 'black' | 'outline' | 'outlineSoft';
+  color?: 'primary' | 'black' | 'outline' | 'outlineSoft' | 'custom';
   size?: Responsive<'xs' | 'sm' | 'md' | 'lg' | 'xl'>;
   radius?: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
   fullWidth?: boolean;
