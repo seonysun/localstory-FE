@@ -15,7 +15,7 @@ type FeelingIcons = {
   description: string;
 }[];
 
-export const feelings: FeelingIcons = [
+export const FEELINGS: FeelingIcons = [
   { label: Smiling, value: 'smile', description: '좋았어요.' },
   { label: Grinning, value: 'grinning', description: '즐거운 추억!' },
   { label: Neutral, value: 'neutral', description: '무난무난쓰.' },

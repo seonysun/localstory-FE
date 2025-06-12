@@ -10,7 +10,7 @@ import FilterDropdown from '@components/ui/common/dropdowns/FilterDropdown';
 import { modalText } from '@components/ui/common/modals/modal.recipe';
 import { Textarea } from '@components/ui/common/textfields';
 
-import { feelings } from '@/constants/story';
+import { FEELINGS } from '@/constants/story';
 import {
   getDayOptions,
   getMonthOptions,
@@ -25,7 +25,7 @@ function StoryPostForm() {
 
   const [date, setDate] = useState(getToday());
 
-  const renderedFeelings = feelings.map(({ label: Icon, value }) => ({
+  const renderedFeelings = FEELINGS.map(({ label: Icon, value }) => ({
     label: <Icon />,
     value,
   }));

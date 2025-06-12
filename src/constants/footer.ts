@@ -9,8 +9,7 @@ type FooterMenu = {
   path: string;
 }[];
 
-export const FIGMA_LINK: string =
-  'https://www.figma.com/file/JSccwQkynWD8Eyzr9HRJ8I';
+const FIGMA_LINK: string = 'https://www.figma.com/file/JSccwQkynWD8Eyzr9HRJ8I';
 const GITHUB_URL: string = 'https://github.com/orgs/LocalStoryMap/repositories';
 
 export const FOOTER_CONTACT: FooterContactItem = [

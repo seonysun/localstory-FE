@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/common/cards/card.recipe';
 import FeelingIcon from '@/components/ui/feelings/FeelingIcon';
 import StarRating from '@/components/ui/ratings/StarRating';
-import { feelings } from '@/constants/story';
+import { FEELINGS } from '@/constants/story';
 
 type WideCardContentProps = {
   title: string;
@@ -101,7 +101,7 @@ function WideCardContent({
           {renderFooterIcon(footerType, footerText)}
           <span className={subText({ color: 'muted', clamp: 1 })}>
             {footerType === 'feeling'
-              ? (feelings.find(f => f.value === footerText)?.description ??
+              ? (FEELINGS.find(f => f.value === footerText)?.description ??
                 footerText)
               : footerText}
           </span>
