@@ -52,6 +52,7 @@ function BenefitCard({ icon, title, content }: BenefitCardProps) {
         p: 'md',
         radius: 'sm',
         cursor: 'none',
+        hover: 'off',
       })}
     >
       {renderIcon()}

@@ -48,16 +48,14 @@ function StoryCard({ images, userProfile, title, content }: StoryCardProps) {
 
   return (
     <div
-      className={cx(
-        css({ position: 'relative' }),
-        cardWrapper({
-          direction: 'col',
-          align: 'start',
-          gap: 'none',
-          p: 'none',
-          radius: 'sm',
-        }),
-      )}
+      className={cardWrapper({
+        position: 'relative',
+        direction: 'col',
+        align: 'start',
+        gap: 'none',
+        p: 'none',
+        radius: 'sm',
+      })}
     >
       <div
         className={gridImageWrapper({

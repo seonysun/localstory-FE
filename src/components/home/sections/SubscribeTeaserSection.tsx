@@ -23,16 +23,26 @@ function SubscribeTeaserSection() {
       </div>
       <div className={subscribeBenefitGrid()}>
         <div className={subscribeBenefitCard()}>
-          <div className={css({ width: '100%' })}>
-            <BenefitCard
-              title="스토리"
-              icon="book"
-              content="무제한 스토리 열람"
-            />
-          </div>
-          <div className={css({ width: '100%' })}>
-            <BenefitCard title="지도" icon="map" content="무제한 지도 열람" />
-          </div>
+          <BenefitCard
+            title="스토리"
+            icon="book"
+            content={
+              <>
+                <span>무제한</span>&nbsp;
+                <span className={css({ color: 'primary' })}>스토리 열람</span>
+              </>
+            }
+          />
+          <BenefitCard
+            title="지도"
+            icon="map"
+            content={
+              <>
+                <span>무제한</span>&nbsp;
+                <span className={css({ color: 'primary' })}>지도 열람</span>
+              </>
+            }
+          />
         </div>
       </div>
     </article>
