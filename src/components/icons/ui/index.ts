@@ -4,6 +4,7 @@ export { default as CheckIcon } from './CheckIcon';
 export { default as CommentsIcon } from './CommentsIcon';
 export { default as CreatePostIcon } from './CreatePostIcon';
 export { default as DangerIcon } from './DangerIcon';
+export { default as EyeIcons } from './EyeIcons';
 export { default as HeartIcon } from './HeartIcon';
 export { default as ImgIcon } from './ImgIcon';
 export { default as StarIcon } from './StarIcon';

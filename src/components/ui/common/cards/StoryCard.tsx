@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import { Likes } from '@components/ui/common/toggles';
 
+import { EyeIcons, HeartIcon } from '@/components/icons';
 import {
   cardImage,
   cardWrapper,
@@ -9,6 +11,7 @@ import {
   gridImageWrapper,
   subText,
   titleText,
+  topRightAbsolute,
 } from '@/components/ui/common/cards/card.recipe';
 
 import defaultUserProfile from '@images/default-userImage.png';
@@ -97,7 +100,17 @@ function StoryCard({ images, userProfile, title, content }: StoryCardProps) {
         <p className={subText({ textStyle: 'label2', color: 'black' })}>
           {content}
         </p>
-        <p className={subText()}>#부산 #여행</p>
+        <span className={topRightAbsolute()}>
+          <Likes />
+        </span>
+        <div
+          className={css({ display: 'flex', alignItems: 'center', gap: '2' })}
+        >
+          <HeartIcon aria-label="좋아요 1개" />
+          <span>1</span>
+          <EyeIcons aria-label="조회수 1개" />
+          <span>1</span>
+        </div>
       </div>
     </div>
   );

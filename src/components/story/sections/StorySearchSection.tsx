@@ -2,11 +2,9 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  storyButtonGroup,
-  storyInput,
-} from '@components/story/sections/story.recipe';
+import { storyButtonGroup } from '@components/story/sections/story.recipe';
 import { Button } from '@components/ui/common/buttons/Button';
+import { Search } from '@components/ui/common/textfields';
 
 import { css } from '@root/styled-system/css';
 
@@ -35,54 +33,34 @@ function StorySearchSection({ keyword }: { keyword: string }) {
     router.replace('/story');
   };
 
-  const onRegionClick = (region: string) => {
+  const onSortClick = (sortValue: string) => {
     const params = new URLSearchParams();
-    params.set('region', region);
+    params.set('sort', sortValue);
     setSearch('');
     router.push(`/story?${params.toString()}`);
   };
 
   return (
     <article className={css({ mb: 12 })}>
-      <input
-        type="text"
+      <Search
         value={search}
+        placeholder="게시물을 검색해보세요"
         onChange={onChange}
         onKeyDown={onKeyDown}
-        className={storyInput()}
       />
       <div className={storyButtonGroup()}>
         <Button size="sm" color="outline" onClick={onResetClick}>
           전체 보기
         </Button>
-
         <Button
           size="sm"
           color="outline"
-          onClick={e => onRegionClick(e.currentTarget.innerText)}
+          onClick={() => onSortClick('popular')}
         >
-          서울
+          인기순
         </Button>
-        <Button
-          size="sm"
-          color="outline"
-          onClick={e => onRegionClick(e.currentTarget.innerText)}
-        >
-          부산
-        </Button>
-        <Button
-          size="sm"
-          color="outline"
-          onClick={e => onRegionClick(e.currentTarget.innerText)}
-        >
-          전주
-        </Button>
-        <Button
-          size="sm"
-          color="outline"
-          onClick={e => onRegionClick(e.currentTarget.innerText)}
-        >
-          화성
+        <Button size="sm" color="outline" onClick={() => onSortClick('latest')}>
+          최신순
         </Button>
       </div>
     </article>

@@ -3,7 +3,7 @@ export const mockStoryList = [
     id: 1,
     img: '/images/story-sample.png',
     title: '홍선성현형님 서울 후기',
-    content: '#서울',
+    content: '사진찍기 좋은 명소!',
   },
   {
     id: 2,

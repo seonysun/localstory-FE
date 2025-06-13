@@ -38,13 +38,22 @@ function StoryListSection({
       </div>
       {filteredData.length > 0 ? (
         filteredData.map(item => (
-          <Link href={`/story/${item.id}`} key={item.id}>
-            <StoryCard
-              images={[item.img]}
-              title={item.title}
-              content={item.content}
-            />
-          </Link>
+          <div
+            key={item.id}
+            className={css({
+              display: 'flex',
+              flexDirection: 'column',
+              mb: 8,
+            })}
+          >
+            <Link href={`/story/${item.id}`}>
+              <StoryCard
+                images={[item.img]}
+                title={item.title}
+                content={item.content}
+              />
+            </Link>
+          </div>
         ))
       ) : (
         <p>스토리가 없습니다.</p>
