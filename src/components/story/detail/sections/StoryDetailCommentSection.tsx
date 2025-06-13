@@ -17,14 +17,28 @@ import { css } from '@root/styled-system/css';
  */
 function StoryDetailCommentSection() {
   const { rootInputValue, setRootInputValue, onSubmitRoot } = useCommentStore();
-
   return (
     <article>
       <div className={css({ display: 'flex', alignItems: 'center' })}>
         <UserHeaderInfo userName="이관용" createdAt="2025-05-27" />
         <div className={css({ marginLeft: 'auto' })}>
-          <div className={css({ display: 'flex', gap: 4 })}>
+          <div
+            className={css({
+              display: 'flex',
+              gap: 4,
+              alignItems: 'center',
+            })}
+          >
             <Button
+              aria-label="팔로우 버튼"
+              size="sm"
+              color="outline"
+              onClick={() => alert('팔로우 하는 버튼')}
+            >
+              Follow
+            </Button>
+            <Button
+              aria-label="글수정 버튼"
               size="sm"
               color="outline"
               onClick={() => alert('글 쓰기 수정으로 가는 버튼')}
@@ -32,6 +46,7 @@ function StoryDetailCommentSection() {
               수정
             </Button>
             <Button
+              aria-label="글삭제 버튼"
               size="sm"
               color="outline"
               onClick={() => alert('글을 삭제하는 버튼')}
