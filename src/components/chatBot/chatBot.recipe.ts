@@ -12,20 +12,26 @@ export const chatBotWrapper = cva({
 export const chatBotPanel = cva({
   base: {
     backgroundColor: 'gray.50',
-    width: '25rem',
-    height: '30rem',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    overflow: 'hidden',
+    bottom: { base: '1rem', md: '5rem' },
+    right: { base: '1rem', md: '1rem' },
+    width: { base: 'min(calc(100vw - 2rem), 25rem)', md: '25rem' },
+    height: { base: 'min(calc(100vh - 2rem), 30rem)', md: '30rem' },
+    borderRadius: 'md',
+    px: '1rem',
   },
 });
 
 export const chatBubble = cva({
   base: {
-    p: '1rem',
+    p: { base: '0.75rem', md: '1rem' },
     borderRadius: '1rem',
-    maxWidth: '80%',
-    fontSize: '0.95rem',
+    maxWidth: { base: '90%', md: '80%' },
+    fontSize: { base: '0.875rem', md: '0.95rem' },
+    wordBreak: 'break-word',
   },
   variants: {
     variant: {
@@ -61,8 +67,8 @@ export const chatBotDesc = cva({
 export const chatInputWrapper = cva({
   base: {
     display: 'flex',
-    gap: '1rem',
-    p: '1rem',
+    gap: { base: '0.5rem', md: '1rem' },
+    p: { base: '0.5rem', md: '1rem' },
     borderTop: '1px solid',
     borderColor: 'gray.200',
     bg: 'white',

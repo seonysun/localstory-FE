@@ -20,7 +20,7 @@ function ChatBotModal() {
   useClickOutside(chatbotRef, onClose);
 
   return (
-    <section className={css({ position: 'relative' })} ref={chatbotRef}>
+    <section ref={chatbotRef}>
       <article className={chatBotWrapper()}>
         {!isModalOpen && (
           <button

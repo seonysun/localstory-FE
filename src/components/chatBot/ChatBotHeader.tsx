@@ -26,6 +26,8 @@ function ChatBotHeader({ openModal }: Props) {
         className={css({
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%',
           gap: '1rem',
         })}
       >
@@ -33,19 +35,19 @@ function ChatBotHeader({ openModal }: Props) {
         <p className={css({ fontSize: '1.2rem', fontWeight: 'bold' })}>
           Ai 챗봇 문의
         </p>
+        <Button
+          type="button"
+          size="sm"
+          color="outline"
+          aria-label="닫기"
+          onClick={openModal}
+          className={css({
+            width: 'auto',
+          })}
+        >
+          <LogoutIcon />
+        </Button>
       </div>
-      <Button
-        type="button"
-        size="sm"
-        color="outline"
-        aria-label="닫기"
-        onClick={openModal}
-        className={css({
-          width: 'auto',
-        })}
-      >
-        <LogoutIcon />
-      </Button>
     </div>
   );
 }

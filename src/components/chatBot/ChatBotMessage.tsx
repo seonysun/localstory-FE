@@ -53,6 +53,8 @@ function ChatBotMessage({ openModal }: Props) {
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
+        width: '100%',
+        maxWidth: '393px',
         bg: 'white',
       })}
     >
@@ -61,7 +63,8 @@ function ChatBotMessage({ openModal }: Props) {
         className={css({
           flex: 1,
           overflowY: 'auto',
-          p: '1rem',
+          p: { base: '0.75rem', md: '1rem' },
+          pb: { base: '4rem', md: '1rem' },
         })}
       >
         {/* 초기 메시지 표시 */}
@@ -82,7 +85,8 @@ function ChatBotMessage({ openModal }: Props) {
           aria-label="전송하기"
           className={css({
             width: 'auto',
-            px: '1.5rem',
+            px: { base: '1rem', md: '1.5rem' },
+            flexShrink: 0,
           })}
         >
           전송
