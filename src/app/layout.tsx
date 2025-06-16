@@ -5,7 +5,9 @@ import Header from '@components/layouts/Header';
 import ScrollToTopButton from '@components/layouts/ScrollToTopButton';
 
 import Providers from '@/providers';
+import AuthInitializer from '@/providers/AuthInitializer';
 
+// import GlobalAuthGuard from '@/providers/GlobalAuthGuard';
 import '@styles/globals.css';
 import { css } from '@root/styled-system/css';
 
@@ -29,6 +31,8 @@ export default function RootLayout({
         })}
       >
         <Providers>
+          <AuthInitializer />
+          {/* <GlobalAuthGuard> */}
           <Header />
           <main
             className={css({
@@ -48,6 +52,7 @@ export default function RootLayout({
           <ScrollToTopButton />
           <ChatBotModal />
           <Footer />
+          {/* </GlobalAuthGuard> */}
         </Providers>
       </body>
     </html>

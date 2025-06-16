@@ -17,14 +17,12 @@ import {
 import { GoogleIcon } from '@/components/icons/shared/GoogleIcon';
 import { KakaoIcon } from '@/components/icons/shared/KakaoIcon';
 import { Button } from '@/components/ui/common/buttons/Button';
+import { KAKAO_AUTH_URL } from '@/constants/auth';
 
-/**
- * @component LoginPage
- * @description 소셜 로그인 페이지 컴포넌트
- */
 export default function LoginPage() {
-  const [isKakaoLoading, setIsKakaoLoading] = useState(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  const [loadingProvider, setLoadingProvider] = useState<
+    'kakao' | 'google' | null
+  >(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -32,23 +30,17 @@ export default function LoginPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleKakaoLogin = async () => {
-    setIsKakaoLoading(true);
-    try {
-      console.log('카카오 로그인');
-    } finally {
-      setIsKakaoLoading(false);
+  const handleLogin = (provider: 'kakao' | 'google') => {
+    setLoadingProvider(provider);
+    if (provider === 'kakao') {
+      window.location.href = KAKAO_AUTH_URL;
+    } else {
+      setTimeout(() => setLoadingProvider(null), 1000);
     }
   };
 
-  const handleGoogleLogin = async () => {
-    setIsGoogleLoading(true);
-    try {
-      console.log('구글 로그인');
-    } finally {
-      setIsGoogleLoading(false);
-    }
-  };
+  const isLoading = (provider: 'kakao' | 'google') =>
+    loadingProvider === provider;
 
   return (
     <div className={loginContainer()}>
@@ -70,20 +62,20 @@ export default function LoginPage() {
                 size="lg"
                 radius="sm"
                 fullWidth
-                disabled={isKakaoLoading}
+                disabled={isLoading('kakao')}
                 className={loginButton({
                   provider: 'kakao',
-                  loading: isKakaoLoading,
+                  loading: isLoading('kakao'),
                 })}
-                onClick={handleKakaoLogin}
+                onClick={() => handleLogin('kakao')}
                 aria-label={
-                  isKakaoLoading ? '카카오 로그인 중' : '카카오 로그인'
+                  isLoading('kakao') ? '카카오 로그인 중' : '카카오 로그인'
                 }
-                aria-disabled={isKakaoLoading}
+                aria-disabled={isLoading('kakao')}
               >
                 <KakaoIcon className={loginIcon()} />
                 <span className={loginButtonText()}>
-                  {isKakaoLoading ? '로그인 중...' : '카카오 로그인'}
+                  {isLoading('kakao') ? '로그인 중...' : '카카오 로그인'}
                 </span>
               </Button>
 
@@ -92,18 +84,20 @@ export default function LoginPage() {
                 size="lg"
                 radius="sm"
                 fullWidth
-                disabled={isGoogleLoading}
+                disabled={isLoading('google')}
                 className={loginButton({
                   provider: 'google',
-                  loading: isGoogleLoading,
+                  loading: isLoading('google'),
                 })}
-                onClick={handleGoogleLogin}
-                aria-label={isGoogleLoading ? '구글 로그인 중' : '구글 로그인'}
-                aria-disabled={isGoogleLoading}
+                onClick={() => handleLogin('google')}
+                aria-label={
+                  isLoading('google') ? '구글 로그인 중' : '구글 로그인'
+                }
+                aria-disabled={isLoading('google')}
               >
                 <GoogleIcon className={loginIcon()} />
                 <span className={loginButtonText()}>
-                  {isGoogleLoading ? '로그인 중...' : '구글 로그인'}
+                  {isLoading('google') ? '로그인 중...' : '구글 로그인'}
                 </span>
               </Button>
             </div>

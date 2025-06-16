@@ -8,6 +8,7 @@ export const navWrapper = cva({
     zIndex: 1000,
     width: '100%',
     bg: 'white',
+    shadow: 'xs',
   },
 });
 
@@ -15,77 +16,49 @@ export const headerWrapper = cva({
   base: {
     display: 'flex',
     alignItems: 'center',
-    alignContent: 'center',
     justifyContent: 'space-between',
-    paddingX: '4',
-    height: '16',
-    marginX: 'auto',
-    maxWidth: '1024px',
+    px: 4,
+    h: 16,
+    mx: 'auto',
+    maxW: '1024px',
     position: 'relative',
   },
 });
+
 export const navMenu = cva({
   base: {
-    padding: '4',
-    gap: '6',
+    p: 4,
+    gap: 6,
     textAlign: 'center',
     position: 'absolute',
-    top: '0',
-    right: '0',
+    top: 16,
+    right: 0,
+    left: 0,
     bg: 'white',
-    width: {
-      base: '100%',
-      md: 'auto',
-    },
-    flexDirection: {
-      base: 'column',
-      md: 'row',
-    },
+    w: 'full',
+    flexDirection: 'column',
     zIndex: 999,
-    transition: 'all 300ms ease-in-out',
     overflow: 'hidden',
+    shadow: 'md',
+    borderTopWidth: 1,
+    borderColor: 'gray.100',
+    transition: 'all 0.3s ease-out',
     display: {
-      base: 'none',
-      md: 'flex',
-    },
-    opacity: {
-      base: 0,
-      md: 1,
-    },
-    transform: {
-      base: 'translateY(-150%)',
-      md: 'translateY(0)',
-    },
-    maxHeight: {
-      base: '0',
+      base: 'flex',
       md: 'none',
-    },
-    pointerEvents: {
-      base: 'none',
-      md: 'auto',
-    },
-    visibility: {
-      base: 'hidden',
-      md: 'visible',
     },
   },
   variants: {
     isOpen: {
       true: {
-        display: { base: 'flex' },
-        opacity: { base: 1 },
-        transform: { base: 'translateY(32%)' },
-        maxHeight: { base: '500px' },
-        pointerEvents: { base: 'auto' },
-        visibility: { base: 'visible' },
+        maxHeight: '400px',
+        opacity: 1,
+        transform: 'translateY(0)',
       },
       false: {
-        display: { base: 'none' },
-        opacity: { base: 0 },
-        transform: { base: 'translateY(-150%)' },
-        maxHeight: { base: '0' },
-        pointerEvents: { base: 'none' },
-        visibility: { base: 'hidden' },
+        maxHeight: '0px',
+        opacity: 0,
+        transform: 'translateY(-8px)',
       },
     },
   },
@@ -96,13 +69,35 @@ export const dimOverlay = cva({
     position: 'fixed',
     top: 0,
     left: 0,
-    width: '100vw',
-    height: '100vh',
-    bg: 'rgba(0, 0, 0, 0.4)',
+    w: 'full',
+    h: 'full',
+    bg: 'black/40',
     zIndex: 998,
+    transitionProperty: 'opacity',
+    transitionDuration: 'normal',
+    transitionTimingFunction: 'ease-out',
     display: {
       base: 'block',
       md: 'none',
     },
+  },
+});
+
+export const menuItem = cva({
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    paddingY: 2,
+    _hover: {
+      textDecoration: 'underline',
+    },
+  },
+});
+
+export const menuLink = cva({
+  base: {
+    display: 'block',
+    width: '100%',
+    paddingY: 2,
   },
 });
