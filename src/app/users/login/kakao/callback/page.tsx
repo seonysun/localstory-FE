@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { postKakaoLoginCode } from '@/app/api/login/loginApi';
@@ -8,13 +8,14 @@ import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { useAuthStore } from '@/store/useAuthStore';
 
 function KakaoCallbackContent() {
-  const params = useSearchParams();
+  const code = useSearchParams().get('code');
   const router = useRouter();
   const setAuth = useAuthStore(state => state.setAuth);
+  const isRequested = useRef(false);
 
   useEffect(() => {
-    const code = params.get('code');
-    if (!code) return;
+    if (!code || isRequested.current) return;
+    isRequested.current = true;
 
     postKakaoLoginCode(code)
       .then(({ access, refresh, user }) => {
@@ -27,7 +28,7 @@ function KakaoCallbackContent() {
       .catch(err => {
         console.error('카카오 로그인 실패:', err);
       });
-  }, [params, router, setAuth]);
+  }, [code, router, setAuth]);
 
   return <SpinnerMessage message="로그인 중입니다..." />;
 }
