@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { chatBotOptions } from '@api/options/chateBot';
+import { chatBotOptions } from '@api/options/chatBotOption';
 import { chatInputWrapper } from '@components/chatBot/chatBot.recipe';
 import ChatBotHeader from '@components/chatBot/ChatBotHeader';
 import ChatBotIntro from '@components/chatBot/ChatBotIntro';
