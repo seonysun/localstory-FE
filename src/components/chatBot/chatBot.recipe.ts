@@ -35,7 +35,7 @@ export const chatBubble = cva({
   },
   variants: {
     variant: {
-      bot: {
+      assistant: {
         bg: 'gray.100',
         color: 'black',
       },
@@ -54,7 +54,7 @@ export const chatBotDesc = cva({
   },
   variants: {
     variant: {
-      bot: {
+      assistant: {
         color: 'white',
       },
       user: {

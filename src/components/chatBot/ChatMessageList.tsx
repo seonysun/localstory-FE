@@ -14,32 +14,45 @@ type Props = {
 function ChatMessageList({ messages, image }: Props) {
   return (
     <div>
-      {messages.map(message => (
+      {messages.map((message, idx) => (
         <div
-          key={`message-${message.type}-${message.content}`}
+          key={`message-${idx}`}
           className={css({
             display: 'flex',
-            justifyContent: message.type === 'user' ? 'flex-end' : 'flex-start',
+            justifyContent: message.role === 'user' ? 'flex-end' : 'flex-start',
             mb: '1rem',
           })}
         >
-          {message.type === 'bot' && (
-            <Image
-              src={image}
-              alt="챗봇 프로필"
-              width={40}
-              height={40}
+          {message.role === 'assistant' && (
+            <div
               className={css({
+                width: '40px',
+                height: '40px',
+                flexShrink: 0,
                 borderRadius: 'full',
-                objectFit: 'cover',
+                overflow: 'hidden',
                 mr: '1rem',
               })}
-            />
+            >
+              <Image
+                src={image}
+                alt="챗봇 프로필"
+                width={40}
+                height={40}
+                className={css({
+                  borderRadius: 'full',
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '100%',
+                  mr: '1rem',
+                })}
+              />
+            </div>
           )}
-          <div className={chatBubble({ variant: message.type })}>
+          <div className={chatBubble({ variant: message.role })}>
             <p>{message.content}</p>
             {message.desc && (
-              <p className={chatBotDesc({ variant: message.type })}>
+              <p className={chatBotDesc({ variant: message.role })}>
                 {message.desc}
               </p>
             )}

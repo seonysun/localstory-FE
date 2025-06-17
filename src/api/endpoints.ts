@@ -1,7 +1,7 @@
 export const ENDPOINTS = {
   AI: {
-    CHAT: '/Ai/chat/',
-    SUMMARY: '/Ai/summarize/',
+    CHAT: '/ai/chat/',
+    SUMMARY: '/ai/summarize/',
   },
   FOLLOWS: {
     LIST: '/follows/', // get, post

@@ -14,7 +14,7 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   config => {
-    const token = 'token'; // 전역 상태 로직으로 변경
+    const token = localStorage.getItem('token'); // 전역 상태 로직으로 변경
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
