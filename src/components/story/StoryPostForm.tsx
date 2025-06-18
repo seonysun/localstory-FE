@@ -49,7 +49,7 @@ function StoryPostForm() {
   const onSubmit = () => {
     const payload: PostStoryPayload = {
       story: {
-        marker: 1,
+        marker,
         title,
         content,
         emoji: feeling,

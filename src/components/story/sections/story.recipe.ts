@@ -44,3 +44,15 @@ export const storyOverlay = cva({
     color: 'white',
   },
 });
+
+export const searchWrapper = cva({
+  base: {
+    width: '100%',
+    position: 'absolute',
+    top: 12,
+    zIndex: 100,
+    bgColor: 'white',
+    maxHeight: '200px',
+    overflowY: 'auto',
+  },
+});

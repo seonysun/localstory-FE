@@ -103,6 +103,9 @@ export const modalText = cva({
         },
       },
     },
+    clamp: {
+      1: { lineClamp: 1, width: 'full' },
+    },
   },
   defaultVariants: {
     align: 'center',
