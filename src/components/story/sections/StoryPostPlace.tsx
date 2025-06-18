@@ -1,30 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
+import { markerOption } from '@/api/options/markerOption';
 import { CloseIcon, LocationIcon } from '@/components/icons';
 import { flex, flexBetween } from '@/components/ui/common/cards/card.recipe';
 import { border } from '@/components/ui/common/dropdowns/dropdown.recipe';
 import { modalText } from '@/components/ui/common/modals/modal.recipe';
 import { Search } from '@/components/ui/common/textfields';
-import { searchPlace } from '@/mocks/searchPlace';
 
 import { css, cx } from '@root/styled-system/css';
 
-function StoryPostPlace() {
+function StoryPostPlace({
+  setMarker,
+}: {
+  setMarker: (id: number | null) => void;
+}) {
   const [search, setSearch] = useState('');
   const [selectedPlace, setSelectedPlace] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  useEffect(() => {
-    if (!search) {
-      setSuggestions([]);
-      return;
-    }
-
-    const data = searchPlace;
-    setSuggestions(data);
-  }, [search]);
+  const { queryKey, queryFn } = markerOption.getMarkerList({
+    search_term: search,
+  });
+  const { data: suggestions } = useQuery({
+    queryKey,
+    queryFn,
+    enabled: !!search,
+  });
 
   return (
     <div>
@@ -34,7 +37,13 @@ function StoryPostPlace() {
             <LocationIcon width={20} height={20} />
             {selectedPlace}
           </p>
-          <button type="button" onClick={() => setSelectedPlace(null)}>
+          <button
+            type="button"
+            onClick={() => {
+              setSelectedPlace(null);
+              setMarker(null);
+            }}
+          >
             <CloseIcon width={20} height={20} />
           </button>
         </div>
@@ -46,7 +55,7 @@ function StoryPostPlace() {
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
-          {suggestions.length > 0 && (
+          {suggestions && (
             <div
               className={cx(
                 border({ color: 'gray100' }),
@@ -59,35 +68,39 @@ function StoryPostPlace() {
                 }),
               )}
             >
-              {suggestions.map((item, i) => (
-                <div
-                  key={i}
-                  onClick={() => {
-                    setSelectedPlace(item);
-                    setSearch('');
-                    setSuggestions([]);
-                  }}
-                  className={cx(
-                    flex({
-                      direction: 'row',
-                      align: 'center',
-                      gap: 'xs',
-                      p: 'sm',
-                    }),
-                    css({
-                      cursor: 'pointer',
-                      _hover: {
-                        bg: 'gray.50',
-                      },
-                    }),
-                  )}
-                >
-                  <LocationIcon width={20} height={20} />
-                  <span className={modalText({ color: 'gray500' })}>
-                    {item}
-                  </span>
-                </div>
-              ))}
+              {suggestions.length > 0 ? (
+                suggestions.map((item, i) => (
+                  <div
+                    key={i}
+                    onClick={() => {
+                      setSelectedPlace(item);
+                      setSearch('');
+                      setMarker(1);
+                    }}
+                    className={cx(
+                      flex({
+                        direction: 'row',
+                        align: 'center',
+                        gap: 'xs',
+                        p: 'sm',
+                      }),
+                      css({
+                        cursor: 'pointer',
+                        _hover: {
+                          bg: 'gray.50',
+                        },
+                      }),
+                    )}
+                  >
+                    <LocationIcon width={20} height={20} />
+                    <span className={modalText({ color: 'gray500' })}>
+                      {item}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <div style={{ padding: 10 }}>검색 결과가 없습니다.</div>
+              )}
             </div>
           )}
         </div>

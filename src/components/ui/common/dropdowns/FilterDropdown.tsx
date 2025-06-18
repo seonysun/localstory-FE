@@ -17,6 +17,7 @@ type FilterDropdownProps = {
   selected: string;
   onChange: (value: string) => void;
   minW?: string;
+  disabled?: boolean;
 };
 
 function FilterDropdown({
@@ -24,6 +25,7 @@ function FilterDropdown({
   selected,
   onChange,
   minW,
+  disabled = false,
 }: FilterDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const selectedLabel = options.find(
@@ -40,6 +42,7 @@ function FilterDropdown({
         onClick={() => setIsOpen(prev => !prev)}
         className={dropdownButton()}
         style={{ minWidth: minW }}
+        disabled={disabled}
       >
         {selectedLabel}
         <span>▾</span>

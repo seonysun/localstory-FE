@@ -9,8 +9,11 @@ import { flex } from '@components/ui/common/cards/card.recipe';
 import FilterDropdown from '@components/ui/common/dropdowns/FilterDropdown';
 import { modalText } from '@components/ui/common/modals/modal.recipe';
 import { Textarea } from '@components/ui/common/textfields';
+import { useMutation } from '@tanstack/react-query';
 
+import { storyOption } from '@/api/options/storyOption';
 import { FEELINGS } from '@/constants/story';
+import { PostStoryPayload } from '@/types/story';
 import {
   getDayOptions,
   getMonthOptions,
@@ -31,29 +34,57 @@ function StoryPostForm() {
   }));
   const [feeling, setFeeling] = useState('smile');
 
+  const [marker, setMarker] = useState<number | null>(null);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [images, setImages] = useState<File[]>([]);
+
+  const { mutate } = useMutation({
+    ...storyOption.postStory(),
+    onSuccess: () => {
+      router.push('/story');
+    },
+  });
+
+  const onSubmit = () => {
+    const payload: PostStoryPayload = {
+      story: {
+        marker: 1,
+        title,
+        content,
+        emoji: feeling,
+      },
+      images,
+    };
+    mutate(payload);
+  };
+
   return (
     <div className={flex({ gap: 'xl', marginB: 'sm' })}>
       <div className={flex({ gap: 'lg', p: 'sm', marginB: 'sm' })}>
         <p className={modalText({ text: 'head4', align: 'left' })}>글작성</p>
-        <StoryPostPlace />
+        <StoryPostPlace setMarker={setMarker} />
         <div className={flex({ direction: 'row', gap: 'md' })}>
           <FilterDropdown
             options={getYearOptions()}
             selected={date.year}
             onChange={value => setDate(prev => ({ ...prev, year: value }))}
             minW="80px"
+            disabled
           />
           <FilterDropdown
             options={getMonthOptions()}
             selected={date.month}
             onChange={value => setDate(prev => ({ ...prev, month: value }))}
             minW="80px"
+            disabled
           />
           <FilterDropdown
             options={getDayOptions()}
             selected={date.day}
             onChange={value => setDate(prev => ({ ...prev, day: value }))}
             minW="80px"
+            disabled
           />
           <FilterDropdown
             options={renderedFeelings}
@@ -66,12 +97,16 @@ function StoryPostForm() {
           size="lg"
           radius="md"
           placeholder="제목을 작성해보세요"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
           style={{ height: '50px' }}
         />
         <Textarea
           size="lg"
           radius="md"
           placeholder="직접 다녀온 생생한 후기를 작성해보세요"
+          value={content}
+          onChange={e => setContent(e.target.value)}
           className={css({
             minH: {
               base: '150px',
@@ -87,7 +122,7 @@ function StoryPostForm() {
           이미지 미리보기 영역
         </div>
       </div>
-      <Button onClick={() => router.push(`/story`)} color="black">
+      <Button onClick={onSubmit} color="black">
         작성 완료
       </Button>
     </div>
