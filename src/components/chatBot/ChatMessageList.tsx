@@ -9,12 +9,20 @@ import { Message } from '@components/chatBot/types';
 type Props = {
   image: string;
   messages: Message[];
+  isPending: boolean;
 };
 
-function ChatMessageList({ messages, image }: Props) {
+function ChatMessageList({ messages, image, isPending }: Props) {
+  const combinedMessages = isPending
+    ? [
+        ...messages,
+        { role: 'assistant' as const, content: '잠시만 기다려주세요...' },
+      ]
+    : messages;
+
   return (
     <div>
-      {messages.map((message, idx) => (
+      {combinedMessages.map((message, idx) => (
         <div
           key={`message-${idx}`}
           className={css({
