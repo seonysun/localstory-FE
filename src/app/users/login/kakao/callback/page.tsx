@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
+import { setAuthHeader } from '@/api/instance';
 import { postKakaoLoginCode } from '@/app/api/login/loginApi';
 import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { useAuthStore } from '@/store/useAuthStore';
@@ -23,6 +24,7 @@ function KakaoCallbackContent() {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('access', access);
         localStorage.setItem('refresh', refresh);
+        setAuthHeader(access);
         router.push('/');
       })
       .catch(err => {
