@@ -1,8 +1,5 @@
-import { queryOptions } from '@tanstack/react-query';
-
 import { ENDPOINTS } from '@/api/endpoints';
-import { mutationFetcher, queryFetcher } from '@/api/fetcher';
-import { instance } from '@/api/instance';
+import { mutationFetcher } from '@/api/fetcher';
 import { PostStoryPayload } from '@/types/story';
 
 export const storyOption = {
@@ -26,6 +23,14 @@ export const storyOption = {
       // });
 
       return storyRes;
+    },
+  }),
+  postLikeStory: (storyId: string) => ({
+    mutationFn: (liked: boolean) => {
+      if (liked) {
+        return mutationFetcher('post', ENDPOINTS.STORYLIKE.LIKE(storyId), {});
+      }
+      return mutationFetcher('delete', ENDPOINTS.STORYLIKE.LIKE(storyId), {});
     },
   }),
 };

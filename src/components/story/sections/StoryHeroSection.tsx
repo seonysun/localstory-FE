@@ -1,4 +1,4 @@
-import React from 'react';
+// ✅ StoryHeroSection.tsx
 import Image from 'next/image';
 import {
   storyImage,
@@ -9,7 +9,11 @@ import PageHeader from '@components/ui/common/pageHeader/PageHeader';
 
 import { css } from '@root/styled-system/css';
 
-function StoryHeroSection() {
+type StoryHeroSectionProps = {
+  userName: string | undefined;
+};
+
+function StoryHeroSection({ userName }: StoryHeroSectionProps) {
   return (
     <article className={storySection()}>
       <PageHeader title="스토리" />
@@ -22,7 +26,7 @@ function StoryHeroSection() {
       />
       <div className={storyOverlay()}>
         <p className={css({ textStyle: 'body2', mb: '4' })}>
-          안녕하세요, 홍선성현형님
+          안녕하세요, {userName}님
         </p>
         <h1 className={css({ textStyle: 'headline2' })}>
           서울 여행 <br />

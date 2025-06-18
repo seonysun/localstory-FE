@@ -1,7 +1,9 @@
 'use client';
 
 import Image from 'next/image';
+import { storyOption } from '@api/options/storyOption';
 import { Likes } from '@components/ui/common/toggles';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { EyeIcons, HeartIcon } from '@/components/icons';
 import {
@@ -19,35 +21,79 @@ import defaultUserProfile from '@images/default-userImage.png';
 import { css, cx } from '@root/styled-system/css';
 
 type StoryCardProps = {
+  storyId: string;
   images?: string[];
   userProfile?: string;
   title?: string;
   content?: string;
+  likeCount?: number;
+  viewCount?: number;
+  liked?: boolean;
+  userNickname?: string;
+  createdAt?: string;
 };
 
-/**
- * StoryCard 컴포넌트
- *
- * @component
- * @example
- * <StoryCard
- *   images={[
- *     '/images/story-sample.png',
- *   ]}
- *   userProfile="/images/default-userImage.png"
- *   title="홍선성현형님 서울 후기"
- *   content="사진찍기 좋은 명소!"
- * />
- *
- * @param {string[]} [images] - 카드 상단에 표시할 이미지 리스트 (최대 5개까지 렌더링)
- * @param {string} [userProfile] - 프로필 이미지 경로 (없으면 기본 이미지 표시)
- * @param {string} [title] - 카드 제목 텍스트
- * @param {string} [content] - 카드 설명 텍스트
- */
+type StoryListResponse = {
+  data: StoryCardProps[];
+};
 
-function StoryCard({ images, userProfile, title, content }: StoryCardProps) {
+function StoryCard({
+  images,
+  userProfile,
+  title,
+  content,
+  storyId,
+  likeCount,
+  viewCount,
+  liked,
+  userNickname,
+  createdAt,
+}: StoryCardProps) {
+  const queryClient = useQueryClient();
   const imageCount = images?.length ?? 0;
   const layout = String(Math.min(imageCount, 5));
+
+  const queryKey = ['story'] as const;
+
+  const mutation = useMutation({
+    ...storyOption.postLikeStory(storyId),
+
+    onMutate: async newLiked => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previous = queryClient.getQueryData<StoryListResponse>(queryKey);
+
+      queryClient.setQueryData<StoryListResponse>(queryKey, old => {
+        if (!old) return old;
+        return {
+          ...old,
+          data: old.data.map(item =>
+            item.storyId === storyId
+              ? {
+                  ...item,
+                  liked: newLiked,
+                  likeCount: (item.likeCount ?? 0) + (newLiked ? 1 : -1),
+                }
+              : item,
+          ),
+        };
+      });
+
+      return { previous };
+    },
+
+    onError: (err, newLiked, context) => {
+      queryClient.setQueryData<StoryListResponse>(queryKey, context?.previous);
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey });
+    },
+  });
+
+  const onToggle = (newLiked: boolean) => {
+    mutation.mutate(newLiked);
+  };
 
   return (
     <div
@@ -60,6 +106,16 @@ function StoryCard({ images, userProfile, title, content }: StoryCardProps) {
         radius: 'sm',
       })}
     >
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          mb: 2,
+          ml: 4,
+          mt: 2,
+        })}
+      />
       <div
         className={gridImageWrapper({
           layout: layout as '1' | '2' | '3' | '4' | '5',
@@ -95,21 +151,37 @@ function StoryCard({ images, userProfile, title, content }: StoryCardProps) {
       >
         <Image src={userProfile || defaultUserProfile} alt="프로필" fill />
       </div>
+      <div className={cx(css({ mt: 4, pl: '4' }))}>
+        {userNickname && (
+          <span className={subText({ color: 'muted' })}>{userNickname}</span>
+        )}
+        {createdAt && (
+          <span>
+            <span className={subText({ color: 'default' })}>
+              {new Date(createdAt).toLocaleDateString()}
+            </span>
+          </span>
+        )}
+      </div>
       <div className={cx(css({ mt: 2 }), flex({ gap: 'md', p: 'lg' }))}>
         <p className={titleText({ color: 'gray600' })}>{title}</p>
         <p className={subText({ textStyle: 'label2', color: 'black' })}>
           {content}
         </p>
         <span className={topRightAbsolute()}>
-          <Likes />
+          <Likes liked={liked} onChange={onToggle} />
         </span>
         <div
-          className={css({ display: 'flex', alignItems: 'center', gap: '2' })}
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            gap: '2',
+          })}
         >
-          <HeartIcon aria-label="좋아요 1개" />
-          <span>1</span>
-          <EyeIcons aria-label="조회수 1개" />
-          <span>1</span>
+          <HeartIcon aria-label={`좋아요 ${likeCount ?? 0}개`} />
+          <span>{likeCount ?? 0}</span>
+          <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
+          <span>{viewCount ?? 0}</span>
         </div>
       </div>
     </div>

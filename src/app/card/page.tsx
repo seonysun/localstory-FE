@@ -86,6 +86,7 @@ function page() {
         />
       </div>
       <StoryCard
+        storyId="sample-story"
         images={[
           '/images/story-sample.png',
           '/images/story-sample.png',

@@ -5,15 +5,17 @@ import { useSearchParams } from 'next/navigation';
 import StoryHeroSection from '@components/story/sections/StoryHeroSection';
 import StoryListSection from '@components/story/sections/StoryListSection';
 import StorySearchSection from '@components/story/sections/StorySearchSection';
+import { useAuthStore } from '@store/useAuthStore';
 
 function StoryListPage() {
+  const { user } = useAuthStore();
   const searchParams = useSearchParams();
   const keyword = searchParams.get('q') ?? '';
   const region = searchParams.get('region') ?? '';
 
   return (
     <section>
-      <StoryHeroSection />
+      <StoryHeroSection userName={user?.nickname} />
       <StorySearchSection keyword={keyword} />
       <StoryListSection keyword={keyword} region={region} />
     </section>

@@ -1,12 +1,26 @@
 import React from 'react';
 import Link from 'next/link';
-import isMatchedByKeywordAndRegion from '@components/story/utils/isMatchedByKeywordAndRegion';
-import normalizeText from '@components/story/utils/normalizeText';
+import { ENDPOINTS } from '@api/endpoints';
+import { instance } from '@api/instance';
 import StoryCard from '@components/ui/common/cards/StoryCard';
-
-import { mockStoryList } from '@/mocks/mockStoryList';
+import { useQuery } from '@tanstack/react-query';
 
 import { css } from '@root/styled-system/css';
+
+type StoryCardProps = {
+  storyId: number;
+  createdAt: string;
+  title: string;
+  content: string;
+  userNickname: string;
+  userProfileImage: string;
+  viewCount: number;
+  likeCount: number;
+};
+
+type StoryResponse = {
+  data: StoryCardProps[];
+};
 
 function StoryListSection({
   keyword,
@@ -15,17 +29,9 @@ function StoryListSection({
   keyword: string;
   region: string;
 }) {
-  const filteredData = mockStoryList.filter(item => {
-    const lowerKeyword = normalizeText(keyword);
-    const lowerRegion = normalizeText(region);
-    const title = normalizeText(item.title);
-    const content = normalizeText(item.content);
-    return isMatchedByKeywordAndRegion(
-      title,
-      content,
-      lowerKeyword,
-      lowerRegion,
-    );
+  const { data } = useQuery<StoryResponse>({
+    queryKey: ['story'],
+    queryFn: () => instance.get(ENDPOINTS.STORY.LIST),
   });
 
   return (
@@ -36,21 +42,27 @@ function StoryListSection({
           직접 다녀온 생생한 후기를 확인해보세요
         </p>
       </div>
-      {filteredData.length > 0 ? (
-        filteredData.map(item => (
+      {data && data?.data.length > 0 ? (
+        data?.data.map(item => (
           <div
-            key={item.id}
+            key={item.storyId}
             className={css({
               display: 'flex',
               flexDirection: 'column',
               mb: 8,
             })}
           >
-            <Link href={`/story/${item.id}`}>
+            <Link href={`/story/${item.storyId}`}>
               <StoryCard
-                images={[item.img]}
+                images={[item.userProfileImage]}
+                storyId={item.storyId ? String(item.storyId) : 'mock-id'}
                 title={item.title}
                 content={item.content}
+                userProfile={item.userProfileImage}
+                viewCount={item.viewCount}
+                likeCount={item.likeCount}
+                userNickname={item.userNickname}
+                createdAt={item.createdAt}
               />
             </Link>
           </div>
