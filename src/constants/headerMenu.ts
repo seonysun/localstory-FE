@@ -21,6 +21,6 @@ export const AUTH_MENU = (
   if (isMobile) return [isLoggedIn ? logout : login];
 
   return isLoggedIn
-    ? [...NAVIGATE_MENU, { title: '마이 페이지', path: '/mypage' }, logout]
+    ? [...NAVIGATE_MENU, { title: '마이페이지', path: '/mypage' }, logout]
     : [...NAVIGATE_MENU, login];
 };

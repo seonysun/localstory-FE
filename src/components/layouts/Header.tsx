@@ -93,7 +93,7 @@ const Header = () => {
               {[
                 ...NAVIGATE_MENU,
                 ...(isLoggedIn
-                  ? [{ title: '마이 페이지', path: '/mypage' }]
+                  ? [{ title: '마이페이지', path: '/mypage' }]
                   : []),
               ].map(menu => (
                 <li

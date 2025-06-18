@@ -7,6 +7,7 @@ import { setAuthHeader } from '@/api/instance';
 import { postKakaoLoginCode } from '@/app/api/login/loginApi';
 import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { useAuthStore } from '@/store/useAuthStore';
+import { ApiUser, apiUserToClientUser } from '@/types/user';
 
 function KakaoCallbackContent() {
   const code = useSearchParams().get('code');
@@ -20,13 +21,15 @@ function KakaoCallbackContent() {
 
     postKakaoLoginCode(code)
       .then(({ access, refresh, user }) => {
-        setAuth(user, access, refresh);
-        localStorage.setItem('user', JSON.stringify(user));
+        const clientUser = apiUserToClientUser(user as ApiUser);
+        setAuth(clientUser, access, refresh);
+        localStorage.setItem('user', JSON.stringify(clientUser));
         localStorage.setItem('access', access);
         localStorage.setItem('refresh', refresh);
         setAuthHeader(access);
         router.push('/');
       })
+
       .catch(err => {
         console.error('카카오 로그인 실패:', err);
       });
