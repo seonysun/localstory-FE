@@ -46,7 +46,11 @@ export default function CommentCard({ comment, depth }: Props) {
     >
       <div className={css({ mt: 6 })}>
         <div className={css({ display: 'flex' })}>
-          <UserHeaderInfo userName="이관용" createdAt="2025-05-27" />
+          <UserHeaderInfo
+            userName="이관용"
+            createdAt="2025-05-27"
+            userProfileImage="ㅇㅁㄴㅇㄴㅁ"
+          />
           <ActionButtons
             isPendingDelete={isPendingDelete}
             onReply={() =>

@@ -10,17 +10,30 @@ import { useCommentStore } from '@store/useCommentStore';
 
 import { css } from '@root/styled-system/css';
 
+type Props = {
+  story: {
+    likeCount: number | undefined;
+    userNickname: string;
+    userProfileImage: string;
+    createdAt: string;
+  };
+};
+
 /**
  * 댓글 전체 기능을 담당하는 컴포넌트로,
  * 유저 정보, 공감 버튼, 댓글 리스트 및 입력창을 포함하며
  * 댓글 상태 및 입력 모드를 useComment와 useInputMode 훅을 통해 관리한다.
  */
-function StoryDetailCommentSection() {
+function StoryDetailCommentSection({ story }: Props) {
   const { rootInputValue, setRootInputValue, onSubmitRoot } = useCommentStore();
   return (
     <article>
       <div className={css({ display: 'flex', alignItems: 'center' })}>
-        <UserHeaderInfo userName="이관용" createdAt="2025-05-27" />
+        <UserHeaderInfo
+          userProfileImage={story?.userProfileImage}
+          userName={story?.userNickname}
+          createdAt={story?.createdAt}
+        />
         <div className={css({ marginLeft: 'auto' })}>
           <div
             className={css({
@@ -57,7 +70,7 @@ function StoryDetailCommentSection() {
         </div>
       </div>
 
-      <PostReactionButtons />
+      <PostReactionButtons likeCount={story?.likeCount} />
       <StoryDetailCommentCard />
 
       <CommentInputBox

@@ -34,7 +34,7 @@ type StoryCardProps = {
 };
 
 type StoryListResponse = {
-  data: StoryCardProps[];
+  results: StoryCardProps[];
 };
 
 function StoryCard({
@@ -50,9 +50,6 @@ function StoryCard({
   createdAt,
 }: StoryCardProps) {
   const queryClient = useQueryClient();
-  const imageCount = images?.length ?? 0;
-  const layout = String(Math.min(imageCount, 5));
-
   const queryKey = ['story'] as const;
 
   const mutation = useMutation({
@@ -67,7 +64,7 @@ function StoryCard({
         if (!old) return old;
         return {
           ...old,
-          data: old.data.map(item =>
+          results: old.results.map(item =>
             item.storyId === storyId
               ? {
                   ...item,
@@ -82,7 +79,7 @@ function StoryCard({
       return { previous };
     },
 
-    onError: (err, newLiked, context) => {
+    onError: (_err, _newLiked, context) => {
       queryClient.setQueryData<StoryListResponse>(queryKey, context?.previous);
     },
 
@@ -95,6 +92,11 @@ function StoryCard({
     mutation.mutate(newLiked);
   };
 
+  const safeLiked = liked ?? false;
+
+  const imageCount = images?.length ?? 0;
+  const layout = String(Math.max(1, Math.min(imageCount, 5)));
+
   return (
     <div
       className={cardWrapper({
@@ -106,16 +108,6 @@ function StoryCard({
         radius: 'sm',
       })}
     >
-      <div
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          mb: 2,
-          ml: 4,
-          mt: 2,
-        })}
-      />
       <div
         className={gridImageWrapper({
           layout: layout as '1' | '2' | '3' | '4' | '5',
@@ -138,6 +130,7 @@ function StoryCard({
           </div>
         ))}
       </div>
+
       <div
         className={css({
           position: 'absolute',
@@ -151,6 +144,7 @@ function StoryCard({
       >
         <Image src={userProfile || defaultUserProfile} alt="프로필" fill />
       </div>
+
       <div className={cx(css({ mt: 4, pl: '4' }))}>
         {userNickname && (
           <span className={subText({ color: 'muted' })}>{userNickname}</span>
@@ -163,14 +157,17 @@ function StoryCard({
           </span>
         )}
       </div>
+
       <div className={cx(css({ mt: 2 }), flex({ gap: 'md', p: 'lg' }))}>
         <p className={titleText({ color: 'gray600' })}>{title}</p>
         <p className={subText({ textStyle: 'label2', color: 'black' })}>
           {content}
         </p>
+
         <span className={topRightAbsolute()}>
-          <Likes liked={liked} onChange={onToggle} />
+          <Likes liked={safeLiked} onChange={onToggle} disabled={false} />
         </span>
+
         <div
           className={css({
             display: 'flex',

@@ -19,7 +19,10 @@ type StoryCardProps = {
 };
 
 type StoryResponse = {
-  data: StoryCardProps[];
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: StoryCardProps[];
 };
 
 function StoryListSection({
@@ -31,7 +34,7 @@ function StoryListSection({
 }) {
   const { data } = useQuery<StoryResponse>({
     queryKey: ['story'],
-    queryFn: () => instance.get(ENDPOINTS.STORY.LIST),
+    queryFn: () => instance.get(ENDPOINTS.STORY.LIST).then(res => res.data),
   });
 
   return (
@@ -42,8 +45,8 @@ function StoryListSection({
           직접 다녀온 생생한 후기를 확인해보세요
         </p>
       </div>
-      {data && data?.data.length > 0 ? (
-        data?.data.map(item => (
+      {data && data?.results.length > 0 ? (
+        data?.results.map(item => (
           <div
             key={item.storyId}
             className={css({
