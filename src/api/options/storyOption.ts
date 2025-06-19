@@ -1,5 +1,6 @@
 import { ENDPOINTS } from '@/api/endpoints';
 import { mutationFetcher } from '@/api/fetcher';
+import { instance } from '@/api/instance';
 import { PostStoryPayload } from '@/types/story';
 
 export const storyOption = {
@@ -11,16 +12,17 @@ export const storyOption = {
         story,
       );
 
-      // const storyId = storyRes.id;
-      // const formData = new FormData();
-      // formData.append('story_id', storyId);
-      // images.forEach(image => formData.append('image_url', image));
+      const formData = new FormData();
 
-      // await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD, formData, {
-      //   headers: {
-      //     'Content-Type': undefined,
-      //   },
-      // });
+      const { storyId } = storyRes;
+      formData.append('story_id', storyId);
+      images.forEach(image => formData.append('image_file', image));
+
+      await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD, formData, {
+        headers: {
+          'Content-Type': undefined,
+        },
+      });
 
       return storyRes;
     },
