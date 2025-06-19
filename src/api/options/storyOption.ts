@@ -18,7 +18,7 @@ export const storyOption = {
       formData.append('story_id', storyId);
       images.forEach(image => formData.append('image_file', image));
 
-      await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD, formData, {
+      await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD(storyId), formData, {
         headers: {
           'Content-Type': undefined,
         },

@@ -36,8 +36,9 @@ export const ENDPOINTS = {
     DETAIL: (id: string) => `/stories/${id}/`, // get, put, delete
   },
   STORY_IMAGE: {
-    UPLOAD: '/images/',
-    DELETE: (id: number) => `/images/${id}/`,
+    UPLOAD: (id: number) => `/stories/${id}/images/`,
+    DELETE: (storyId: number, imageId: number) =>
+      `/stories/${storyId}/images/${imageId}/`,
     LIST: (id: number) => `/stories/${id}/images/`,
   },
   COMMENT: {
