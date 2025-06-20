@@ -30,11 +30,12 @@ export const markerOption = {
           pagination: res.pagination,
         })),
     }),
-  getMarkerDetail: (id: number) =>
-    queryOptions<Marker>({
+  getMarkerDetail: (id: number) => {
+    return {
       queryKey: ['marker', id],
-      queryFn: queryFetcher(ENDPOINTS.MARKER.DETAIL(id)),
-    }),
+      queryFn: () => queryFetcher<Marker>(ENDPOINTS.MARKER.DETAIL(id))(),
+    };
+  },
   getMarkerStory: (id: number) =>
     queryOptions<MarkerStoryResponse>({
       queryKey: ['marker', 'story', id],

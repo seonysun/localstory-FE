@@ -15,7 +15,7 @@ import StarRating from '@/components/ui/ratings/StarRating';
 import { FEELINGS } from '@/constants/story';
 
 type WideCardContentProps = {
-  title: string;
+  title?: string;
   subtitle?: string;
   date?: boolean;
   rating?: number | string;

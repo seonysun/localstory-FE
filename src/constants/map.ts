@@ -1,6 +1,6 @@
 import { ComponentType } from 'react';
 
-import { CoffeeIcon, FoodIcon, MapLocationIcon } from '@/components/icons';
+import { FoodIcon, MapLocationIcon, TravelIcon } from '@/components/icons';
 
 type MapCategory = {
   label: string;
@@ -9,9 +9,9 @@ type MapCategory = {
 }[];
 
 export const MAP_CATEGORY: MapCategory = [
-  { label: '관광명소', value: 'sight', icon: MapLocationIcon },
+  { label: '관광명소', value: 'tour', icon: TravelIcon },
   { label: '로컬맛집', value: 'food', icon: FoodIcon },
-  { label: '카페', value: 'cafe', icon: CoffeeIcon },
+  { label: '인프라', value: 'infra', icon: MapLocationIcon },
 ] as const;
 
 export type CategoryValueType = (typeof MAP_CATEGORY)[number]['value'];

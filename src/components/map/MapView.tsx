@@ -3,7 +3,9 @@
 import { useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
+import { markerOption } from '@/api/options/markerOption';
 import { mapOverlayWrapper } from '@/components/map/map.recipe';
 import WideCard from '@/components/ui/common/cards/WideCard';
 import WideCardContent from '@/components/ui/common/cards/WideCardContent';
@@ -11,7 +13,6 @@ import { Likes } from '@/components/ui/common/toggles';
 import MarkerContainer from '@/components/ui/maps/MarkerContainer';
 import MarkerIcon from '@/components/ui/maps/MarkerIcon';
 import { CategoryValueType, MAP_CATEGORY } from '@/constants/map';
-import { mapDetail, mapMarkers } from '@/mocks/mapDetail';
 import { isValidCategory } from '@/util/map';
 
 import { css } from '@root/styled-system/css';
@@ -31,12 +32,18 @@ function MapView() {
   const selectedCategory: CategoryValueType = isValidCategory(type)
     ? (type as CategoryValueType)
     : MAP_CATEGORY[0].value;
-  const data = mapMarkers;
+  const { data } = useQuery(
+    markerOption.getMarkerList({ layer: selectedCategory }),
+  );
+  const mapMarker = data?.data ?? [];
 
   const [selectedMarker, setSelectedMarker] = useState<
-    null | (typeof mapMarkers)[number]
+    null | (typeof mapMarker)[number]
   >(null);
-  const place = mapDetail;
+  const { data: place } = useQuery({
+    ...markerOption.getMarkerDetail(selectedMarker?.id || 0),
+    enabled: !!selectedMarker?.id,
+  });
 
   return (
     <div className={css({ position: 'relative' })}>
@@ -57,28 +64,27 @@ function MapView() {
         ))}
       </div>
       <Map center={center} style={{ width: '100%', height: '600px' }} level={5}>
-        {data?.map(marker => (
+        {mapMarker?.map(marker => (
           <MarkerContainer
             key={marker.id}
-            position={marker.latlng}
+            position={{ lat: marker.latitude, lng: marker.longitude }}
             type={selectedCategory}
-            content={marker.place}
+            content={marker.markerName}
             onClick={() => setSelectedMarker(marker)}
           />
         ))}
       </Map>
       {selectedMarker && (
         <div className={mapOverlayWrapper({ type: 'card' })}>
-          <WideCard image={place.image}>
+          <WideCard image={place?.image}>
             <WideCardContent
-              title={place.title}
-              subtitle={place.type}
+              title={place?.markerName}
+              subtitle={place?.layer}
               date={false}
-              rating={place.rating}
               footerType="location"
-              footerText={place.location}
-              action={<Likes liked={place.liked} />}
-              onClick={() => router.push(`/map/${place.id}`)}
+              footerText={place?.adress}
+              action={<Likes liked={place?.isLiked} />}
+              onClick={() => router.push(`/map/${place?.id}`)}
             />
           </WideCard>
         </div>

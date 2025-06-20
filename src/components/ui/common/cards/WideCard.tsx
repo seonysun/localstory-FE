@@ -14,7 +14,7 @@ import defaultThumbnail from '@images/default-thumbnail.png';
 import { css } from '@root/styled-system/css';
 
 type WideCardProps = {
-  image: string;
+  image?: string;
   children: ReactNode;
 };
 
