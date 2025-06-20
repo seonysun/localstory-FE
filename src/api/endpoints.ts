@@ -33,6 +33,7 @@ export const ENDPOINTS = {
   },
   STORY: {
     LIST: '/stories/', // get, post
+    MARKER: (id: number) => `/stories/marker/${id}/`,
     DETAIL: (id: string) => `/stories/${id}/`, // get, put, delete
   },
   STORY_IMAGE: {
@@ -58,7 +59,11 @@ export const ENDPOINTS = {
   MARKER: {
     LIST: '/markers/', // get, post
     DETAIL: (id: number) => `/markers/${id}/`, // get, put, delete
-    LIKE: (id: number) => `/markers/${id}/likes/`, // get, post, delete
+    LIKE: {
+      LIST: (id: number) => `/markers/${id}/likes/`,
+      STATUS: (id: number) => `/markers/${id}/likes/status/`,
+      TOGGLE: (id: number) => `/markers/${id}/likes/toggle/`,
+    },
   },
   ROUTE: {
     LIST: '/routes/', // get, post

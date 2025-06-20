@@ -1,9 +1,25 @@
+import { queryOptions } from '@tanstack/react-query';
+
 import { ENDPOINTS } from '@/api/endpoints';
-import { mutationFetcher } from '@/api/fetcher';
+import { mutationFetcher, queryFetcher } from '@/api/fetcher';
 import { instance } from '@/api/instance';
-import { PostStoryPayload } from '@/types/story';
+import { PostStoryPayload, StoryImage } from '@/types/story';
+
+type StoryImageResponse = {
+  data: StoryImage[];
+  count: number;
+};
 
 export const storyOption = {
+  getStoryImage: (id: number) =>
+    queryOptions<StoryImageResponse>({
+      queryKey: ['story', 'image', id],
+      queryFn: () =>
+        queryFetcher(ENDPOINTS.STORY_IMAGE.LIST(id))().then(res => ({
+          data: res.results,
+          count: res.count,
+        })),
+    }),
   postStory: () => ({
     mutationFn: async ({ story, images }: PostStoryPayload) => {
       const storyRes = await mutationFetcher(

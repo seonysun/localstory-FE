@@ -9,4 +9,5 @@ export type Marker = {
   created_at: string;
   layer: 'tour' | 'food' | 'infra' | string;
   likeCount: number;
+  isLiked: boolean;
 };

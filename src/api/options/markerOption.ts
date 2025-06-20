@@ -3,6 +3,7 @@ import { queryOptions } from '@tanstack/react-query';
 import { ENDPOINTS } from '@/api/endpoints';
 import { mutationFetcher, queryFetcher } from '@/api/fetcher';
 import { Marker } from '@/types/marker';
+import { Story } from '@/types/story';
 
 type MarkerListResponse = {
   data: Marker[];
@@ -12,6 +13,11 @@ type MarkerListResponse = {
     totalItems: number;
     itemsPerPage: number;
   };
+};
+
+type MarkerStoryResponse = {
+  data: Story[];
+  count: number;
 };
 
 export const markerOption = {
@@ -24,8 +30,25 @@ export const markerOption = {
           pagination: res.pagination,
         })),
     }),
+  getMarkerDetail: (id: number) =>
+    queryOptions<Marker>({
+      queryKey: ['marker', id],
+      queryFn: queryFetcher(ENDPOINTS.MARKER.DETAIL(id)),
+    }),
+  getMarkerStory: (id: number) =>
+    queryOptions<MarkerStoryResponse>({
+      queryKey: ['marker', 'story', id],
+      queryFn: () =>
+        queryFetcher(ENDPOINTS.STORY.MARKER(id))().then(res => ({
+          data: res.results,
+          count: res.count,
+        })),
+    }),
   postMarker: () => ({
     mutationFn: (data: any) =>
       mutationFetcher('post', ENDPOINTS.MARKER.LIST, data),
+  }),
+  postMarkerLike: (id: number) => ({
+    mutationFn: () => mutationFetcher('post', ENDPOINTS.MARKER.LIKE.TOGGLE(id)),
   }),
 };

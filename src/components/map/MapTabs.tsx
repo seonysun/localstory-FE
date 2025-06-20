@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
+import { markerOption } from '@/api/options/markerOption';
 import { categoryTitle, gridLayout } from '@/components/map/map.recipe';
 import { flex } from '@/components/ui/common/cards/card.recipe';
 import SquareCard from '@/components/ui/common/cards/SquareCard';
 import { MAP_VIEW_TABS } from '@/constants/map';
-import { locationList } from '@/mocks/mapDetail';
 
 import { css, cx } from '@root/styled-system/css';
 
@@ -15,6 +16,9 @@ function MapTabs() {
   const router = useRouter();
 
   const [selectedTab, setSelectedTab] = useState('all');
+
+  const { data } = useQuery(markerOption.getMarkerList());
+  const locationList = data?.data ?? [];
 
   return (
     <>
@@ -58,9 +62,9 @@ function MapTabs() {
             key={place.id}
             id={place.id}
             image={place.image}
-            title={place.title}
-            location={place.location}
-            liked={place.liked}
+            title={place.markerName}
+            location={place.adress}
+            liked={place.isLiked}
             onClick={() => router.push(`/map/${place.id}`)}
           />
         ))}
