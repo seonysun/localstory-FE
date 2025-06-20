@@ -19,75 +19,76 @@ import defaultUserProfile from '@images/default-userImage.png';
 import { css, cx } from '@root/styled-system/css';
 
 type StoryCardProps = {
-  storyId: string;
-  images?: string[];
-  userProfile?: string;
-  title?: string;
-  content?: string;
-  likeCount?: number;
-  viewCount?: number;
-  isLiked?: boolean;
-  userNickname?: string;
-  createdAt?: string;
+  story: {
+    storyId: string;
+    images?: string[];
+    userProfile?: string;
+    title?: string;
+    content?: string;
+    likeCount?: number;
+    viewCount?: number;
+    isLiked?: boolean;
+    userNickname?: string;
+    createdAt?: string;
+  };
 };
 
-type StoryListResponse = {
-  results: StoryCardProps[];
+type Story = StoryCardProps['story'];
+
+type StoryPage = {
+  results: Story[];
 };
 
-function StoryCard({
-  images,
-  userProfile,
-  title,
-  content,
-  storyId,
-  likeCount,
-  viewCount,
-  isLiked,
-  userNickname,
-  createdAt,
-}: StoryCardProps) {
+type StoryQueryData = {
+  pages: StoryPage[];
+  pageParams: unknown[];
+};
+
+function StoryCard({ story }: StoryCardProps) {
+  const {
+    storyId,
+    likeCount,
+    viewCount,
+    isLiked,
+    userNickname,
+    createdAt,
+    images,
+    userProfile,
+    title,
+    content,
+  } = story;
   const queryClient = useQueryClient();
-  const queryKey = ['story'] as const;
 
   const mutation = useMutation({
     ...storyOption.postLikeStory(storyId),
-
-    onMutate: async newLiked => {
-      await queryClient.cancelQueries({ queryKey });
-
-      const previous = queryClient.getQueryData<StoryListResponse>(queryKey);
-
-      queryClient.setQueryData<StoryListResponse>(queryKey, old => {
+    onMutate: async () => {
+      queryClient.setQueryData<StoryQueryData>(['story'], old => {
         if (!old) return old;
         return {
           ...old,
-          results: old.results.map(item =>
-            item.storyId === storyId
-              ? {
-                  ...item,
-                  liked: newLiked,
-                  likeCount: (item.likeCount ?? 0) + (newLiked ? 1 : -1),
-                }
-              : item,
-          ),
+          pages: old.pages.map(page => ({
+            ...page,
+            results: page.results.map(item =>
+              item.storyId === storyId
+                ? {
+                    ...item,
+                    likeCount:
+                      Number(item.likeCount ?? 0) + (item.isLiked ? -1 : 1),
+                    isLiked: !item.isLiked,
+                  }
+                : item,
+            ),
+          })),
         };
       });
-
-      return { previous };
     },
-
-    onError: (_err, _newLiked, context) => {
-      queryClient.setQueryData<StoryListResponse>(queryKey, context?.previous);
-    },
-
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey });
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ['story'] });
     },
   });
 
   const onToggle = (newLiked: boolean | undefined) => {
-    if (!newLiked) return;
+    if (newLiked === undefined) return;
     mutation.mutate(newLiked);
   };
 
@@ -123,6 +124,10 @@ function StoryCard({
               alt={`스토리 이미지 ${i + 1}`}
               fill
               className={cardImage()}
+              onError={e => {
+                const target = e.target as HTMLImageElement;
+                target.src = '/images/default.jpg';
+              }}
             />
           </div>
         ))}
@@ -171,9 +176,12 @@ function StoryCard({
           <button
             type="button"
             className={css({ cursor: 'pointer' })}
-            onClick={() => onToggle(isLiked)}
+            onClick={() => onToggle(!isLiked)}
           >
-            <HeartIcon aria-label={`좋아요 ${likeCount ?? 0}개`} />
+            <HeartIcon
+              fill={isLiked ? 'red' : 'none'}
+              aria-label={`좋아요 ${likeCount ?? 0}개`}
+            />
           </button>
           <span>{likeCount ?? 0}</span>
           <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />

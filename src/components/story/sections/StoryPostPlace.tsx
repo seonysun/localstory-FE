@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { searchWrapper } from '@components/story/sections/story/recipe';
+import { searchWrapper } from '@components/story/sections/recipe';
 import { useQuery } from '@tanstack/react-query';
 
 import { markerOption } from '@/api/options/markerOption';

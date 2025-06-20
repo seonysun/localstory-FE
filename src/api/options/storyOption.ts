@@ -44,8 +44,8 @@ export const storyOption = {
     },
   }),
   postLikeStory: (storyId: string) => ({
-    mutationFn: (liked: boolean) => {
-      if (liked) {
+    mutationFn: (isLiked: boolean) => {
+      if (isLiked) {
         return mutationFetcher('post', ENDPOINTS.STORYLIKE.LIKE(storyId), {});
       }
       return mutationFetcher('delete', ENDPOINTS.STORYLIKE.LIKE(storyId), {});

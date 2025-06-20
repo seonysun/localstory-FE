@@ -36,7 +36,9 @@ function StoryCardListSection() {
     isFetchingNextPage,
   );
   const storyList = data?.pages.flatMap(p => p.results ?? []);
-  console.log(storyList);
+
+  if (isError) return <p>...Error</p>;
+  if (isLoading) return <p>Loading...</p>;
   return (
     <article
       className={css({
@@ -49,18 +51,7 @@ function StoryCardListSection() {
     >
       {storyList && storyList?.length > 0 ? (
         storyList?.map(story => (
-          <StoryCard
-            key={story?.storyId}
-            storyId={story?.storyId}
-            title={story?.title}
-            content={story?.content}
-            likeCount={story?.likeCount}
-            viewCount={story?.viewCount}
-            userNickname={story?.userNickname}
-            userProfile={story?.userProfile}
-            createdAt={story?.createdAt}
-            isLiked={story?.isLiked}
-          />
+          <StoryCard key={story?.storyId} story={story} />
         ))
       ) : (
         <p>스토리가 없습니다.</p>
@@ -70,8 +61,6 @@ function StoryCardListSection() {
         style={{
           height: '50px',
           width: '100%',
-          background: 'red',
-          marginTop: '12px',
         }}
       />
     </article>

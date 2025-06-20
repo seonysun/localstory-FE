@@ -1,9 +1,14 @@
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
+import { useAuthStore } from '@store/useAuthStore';
 
 import { css } from '@root/styled-system/css';
 
 function StoryHeroSection() {
+  const { user } = useAuthStore();
+
   return (
     <article>
       <div className={css({ position: 'relative' })}>
@@ -27,7 +32,7 @@ function StoryHeroSection() {
           })}
         >
           <p className={css({ textStyle: 'headline3', lineHeight: 2 })}>
-            안녕하세요 님
+            {user ? `안녕하세요 ${user.nickname} 님` : '안녕하세요'}
           </p>
           <p className={css({ textStyle: 'body2' })}>일로일로와 떠나요</p>
         </div>

@@ -16,22 +16,27 @@ import {
 import { css } from '@root/styled-system/css';
 
 async function Page() {
-  // 카카오, 구글 로그인이 붙었을 떄 쿠키로 가져오기
-  // const cookie = cookies();
-  // const token = cookie.get('access')?.value;
-  // const user = await instance.get(ENDPOINTS.USERS.ME, {
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // });
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ['story'],
-    queryFn: ({ pageParam = 1 }) =>
-      ssrFetcher(`${ENDPOINTS.STORY.LIST}?page=${pageParam}`),
-    initialPageParam: 1,
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000,
+        retry: false,
+      },
+    },
   });
+
+  try {
+    await queryClient.prefetchInfiniteQuery({
+      queryKey: ['story'],
+      queryFn: ({ pageParam = 1 }) =>
+        ssrFetcher(`${ENDPOINTS.STORY.LIST}?page=${pageParam}`),
+      initialPageParam: 1,
+    });
+  } catch (e) {
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Story prefetch error:', e);
+    }
+  }
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section className={css({ mt: 12 })}>
