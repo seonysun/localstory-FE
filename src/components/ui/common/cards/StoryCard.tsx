@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { storyOption } from '@api/options/storyOption';
-import { Likes } from '@components/ui/common/toggles';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { EyeIcons, HeartIcon } from '@/components/icons';
@@ -13,7 +12,6 @@ import {
   gridImageWrapper,
   subText,
   titleText,
-  topRightAbsolute,
 } from '@/components/ui/common/cards/card.recipe';
 
 import defaultUserProfile from '@images/default-userImage.png';
@@ -28,7 +26,7 @@ type StoryCardProps = {
   content?: string;
   likeCount?: number;
   viewCount?: number;
-  liked?: boolean;
+  isLiked?: boolean;
   userNickname?: string;
   createdAt?: string;
 };
@@ -45,7 +43,7 @@ function StoryCard({
   storyId,
   likeCount,
   viewCount,
-  liked,
+  isLiked,
   userNickname,
   createdAt,
 }: StoryCardProps) {
@@ -88,11 +86,10 @@ function StoryCard({
     },
   });
 
-  const onToggle = (newLiked: boolean) => {
+  const onToggle = (newLiked: boolean | undefined) => {
+    if (!newLiked) return;
     mutation.mutate(newLiked);
   };
-
-  const safeLiked = liked ?? false;
 
   const imageCount = images?.length ?? 0;
   const layout = String(Math.max(1, Math.min(imageCount, 5)));
@@ -145,7 +142,7 @@ function StoryCard({
         <Image src={userProfile || defaultUserProfile} alt="프로필" fill />
       </div>
 
-      <div className={cx(css({ mt: 4, pl: '4' }))}>
+      <div className={cx(css({ mt: 8, pl: '4' }))}>
         {userNickname && (
           <span className={subText({ color: 'muted' })}>{userNickname}</span>
         )}
@@ -164,10 +161,6 @@ function StoryCard({
           {content}
         </p>
 
-        <span className={topRightAbsolute()}>
-          <Likes liked={safeLiked} onChange={onToggle} disabled={false} />
-        </span>
-
         <div
           className={css({
             display: 'flex',
@@ -175,7 +168,13 @@ function StoryCard({
             gap: '2',
           })}
         >
-          <HeartIcon aria-label={`좋아요 ${likeCount ?? 0}개`} />
+          <button
+            type="button"
+            className={css({ cursor: 'pointer' })}
+            onClick={() => onToggle(isLiked)}
+          >
+            <HeartIcon aria-label={`좋아요 ${likeCount ?? 0}개`} />
+          </button>
           <span>{likeCount ?? 0}</span>
           <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
           <span>{viewCount ?? 0}</span>

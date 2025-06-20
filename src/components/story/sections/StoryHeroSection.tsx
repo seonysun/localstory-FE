@@ -1,37 +1,36 @@
-// ✅ StoryHeroSection.tsx
+import React from 'react';
 import Image from 'next/image';
-import {
-  storyImage,
-  storyOverlay,
-  storySection,
-} from '@components/story/sections/story.recipe';
-import PageHeader from '@components/ui/common/pageHeader/PageHeader';
 
 import { css } from '@root/styled-system/css';
 
-type StoryHeroSectionProps = {
-  userName: string | undefined;
-};
-
-function StoryHeroSection({ userName }: StoryHeroSectionProps) {
+function StoryHeroSection() {
   return (
-    <article className={storySection()}>
-      <PageHeader title="스토리" />
-      <Image
-        src="/images/mainStory.png"
-        alt="story"
-        width={1200}
-        height={500}
-        className={storyImage()}
-      />
-      <div className={storyOverlay()}>
-        <p className={css({ textStyle: 'body2', mb: '4' })}>
-          안녕하세요, {userName}님
-        </p>
-        <h1 className={css({ textStyle: 'headline2' })}>
-          서울 여행 <br />
-          일로일로와 떠나요
-        </h1>
+    <article>
+      <div className={css({ position: 'relative' })}>
+        <Image
+          src="/images/mainStory.png"
+          alt="Story"
+          width={1080}
+          height={600}
+          className={css({
+            objectFit: 'cover',
+            width: '100%',
+            height: '800px',
+          })}
+        />
+        <div
+          className={css({
+            position: 'absolute',
+            top: '20%',
+            left: '5%',
+            color: 'white',
+          })}
+        >
+          <p className={css({ textStyle: 'headline3', lineHeight: 2 })}>
+            안녕하세요 님
+          </p>
+          <p className={css({ textStyle: 'body2' })}>일로일로와 떠나요</p>
+        </div>
       </div>
     </article>
   );
