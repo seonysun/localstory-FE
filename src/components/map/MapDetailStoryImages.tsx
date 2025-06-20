@@ -32,8 +32,8 @@ function MapDetailStoryImages({ id, title }: { id: number; title: string }) {
           key={i}
           src={img.imageUrl}
           alt={title}
-          width={0}
-          height={0}
+          width={100}
+          height={100}
           style={{
             width: '100%',
             height: 'auto',
