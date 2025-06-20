@@ -18,7 +18,7 @@ const useIntersectionObserver = (
       },
       { threshold: 0.5 },
     );
-  }, [hasNextPage, fetchNextPage]);
+  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   useEffect(() => {
     const target = observerRef.current;
