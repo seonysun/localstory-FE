@@ -82,7 +82,7 @@ function WideCardContent({
       })}
       onClick={onClick}
     >
-      <p className={titleText()}>{title}</p>
+      {title && <p className={titleText()}>{title}</p>}
       <div className={topRightAbsolute({ top: 3, right: 3 })}>{action}</div>
       {subtitle && (
         <div className={subText()}>

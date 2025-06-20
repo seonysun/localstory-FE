@@ -23,7 +23,7 @@ async function page({ params }: { params: { id: string } }) {
 
   return (
     <div className={flex({ marginB: 'sm', gap: 'xl' })}>
-      <div className={cardImageWrapper({ maxWidth: 'none', aspect: 'wide' })}>
+      <div className={cardImageWrapper({ maxWidth: 'none', aspect: 'video' })}>
         <Image src={data.image} alt={data.markerName} fill />
         <span
           className={topRightAbsolute({ top: 3, right: 3 })}
@@ -37,18 +37,27 @@ async function page({ params }: { params: { id: string } }) {
           <p className={modalText({ text: 'head3', align: 'left' })}>
             {data.markerName}
           </p>
-          <p
-            className={modalText({
-              text: 'body2',
-              flex: 'row',
-              gap: 1,
-              align: 'left',
-              color: 'gray400',
-            })}
-          >
-            <LocationIcon width={20} height={20} />
-            {data.adress}
-          </p>
+          <Link href={`/map/search?id=${data.id}`}>
+            <p
+              className={modalText({
+                text: 'body2',
+                flex: 'row',
+                gap: 1,
+                align: 'left',
+                color: 'gray400',
+              })}
+            >
+              <LocationIcon width={20} height={20} />
+              <span
+                className={modalText({
+                  align: 'left',
+                  clamp: 1,
+                })}
+              >
+                {data.adress}
+              </span>
+            </p>
+          </Link>
         </div>
         <p
           className={modalText({

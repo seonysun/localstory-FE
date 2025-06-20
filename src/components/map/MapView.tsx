@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -26,7 +25,7 @@ function MapView() {
     libraries: ['clusterer', 'drawing', 'services'],
   });
 
-  const center = { lat: 35.115045, lng: 129.041519 };
+  const center = { lat: 35.179554, lng: 129.075642 };
 
   const type = searchParams.get('type');
   const selectedCategory: CategoryValueType = isValidCategory(type)
@@ -35,15 +34,19 @@ function MapView() {
   const { data } = useQuery(
     markerOption.getMarkerList({ layer: selectedCategory }),
   );
-  const mapMarker = data?.data ?? [];
+  const markers = data?.data ?? [];
 
-  const [selectedMarker, setSelectedMarker] = useState<
-    null | (typeof mapMarker)[number]
-  >(null);
+  const markerId = Number(searchParams.get('id'));
   const { data: place } = useQuery({
-    ...markerOption.getMarkerDetail(selectedMarker?.id || 0),
-    enabled: !!selectedMarker?.id,
+    ...markerOption.getMarkerDetail(markerId ?? 0),
+    enabled: !!markerId,
   });
+
+  const markerClick = (param: string, value: string) => {
+    const next = new URLSearchParams(searchParams);
+    next.set(param, value);
+    router.push(`/map/search?${next.toString()}`);
+  };
 
   return (
     <div className={css({ position: 'relative' })}>
@@ -55,26 +58,22 @@ function MapView() {
             icon={category.icon}
             size="md"
             selected={selectedCategory === category.value}
-            onClick={() => {
-              const next = new URLSearchParams(searchParams);
-              next.set('type', category.value);
-              router.push(`/map/search?${next.toString()}`);
-            }}
+            onClick={() => markerClick('type', category.value)}
           />
         ))}
       </div>
-      <Map center={center} style={{ width: '100%', height: '600px' }} level={5}>
-        {mapMarker?.map(marker => (
+      <Map center={center} style={{ width: '100%', height: '600px' }} level={8}>
+        {markers?.map(marker => (
           <MarkerContainer
             key={marker.id}
             position={{ lat: marker.latitude, lng: marker.longitude }}
             type={selectedCategory}
             content={marker.markerName}
-            onClick={() => setSelectedMarker(marker)}
+            onClick={() => markerClick('id', marker.id.toString())}
           />
         ))}
       </Map>
-      {selectedMarker && (
+      {place && (
         <div className={mapOverlayWrapper({ type: 'card' })}>
           <WideCard image={place?.image}>
             <WideCardContent

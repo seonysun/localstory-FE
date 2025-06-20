@@ -32,3 +32,8 @@ export function getToday() {
 
   return { year, month, day };
 }
+
+export function formatDate(date: string | Date): string {
+  const day = new Date(date);
+  return day.toISOString().slice(0, 10);
+}

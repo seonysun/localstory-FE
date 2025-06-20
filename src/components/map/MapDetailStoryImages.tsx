@@ -23,7 +23,7 @@ function MapDetailStoryImages({ id, title }: { id: number; title: string }) {
 
   if (!storyIds.length) return <div>작성된 스토리가 없습니다</div>;
   if (!storyImages.length)
-    return <div>스토리는 있지만 등록된 이미지가 없습니다</div>;
+    return <div>해당 장소의 스토리에 등록된 이미지가 없습니다</div>;
 
   return (
     <div className={gridLayout({ columns: 4, gap: 'sm', p: 'xs' })}>

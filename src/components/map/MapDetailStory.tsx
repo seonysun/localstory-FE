@@ -33,7 +33,9 @@ function MapDetailStory({ id, title }: MapDetailStoryProps) {
             hover: 'on',
           })}
           onClick={() =>
-            router.push(`/story/search?query=${encodeURIComponent(title)}`)
+            router.push(
+              `/story/search?query=${encodeURIComponent(title)}&id=${id}`,
+            )
           }
         >
           더보기

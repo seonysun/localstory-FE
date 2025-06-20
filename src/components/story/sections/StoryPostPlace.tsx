@@ -24,12 +24,10 @@ function StoryPostPlace({
   const [selectedPlace, setSelectedPlace] = useState<Marker | null>(null);
 
   const debouncedSearch = useDebounce(search, 300);
-  const { queryKey, queryFn } = markerOption.getMarkerList({
-    search_term: debouncedSearch,
-  });
   const { data } = useQuery({
-    queryKey,
-    queryFn,
+    ...markerOption.getMarkerList({
+      search_term: debouncedSearch,
+    }),
     enabled: !!debouncedSearch,
   });
   const suggestions = data?.data;
