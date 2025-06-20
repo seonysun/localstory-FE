@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '@/api/endpoints';
 import { mutationFetcher } from '@/api/fetcher';
 
-interface KakaoLoginResponse {
+interface SocialLoginResponse {
   access: string;
   refresh: string;
   user: {
@@ -19,8 +19,16 @@ interface KakaoLoginResponse {
 
 export const postKakaoLoginCode = (
   code: string,
-): Promise<KakaoLoginResponse> => {
-  return mutationFetcher<KakaoLoginResponse>('post', ENDPOINTS.USERS.KAKAO, {
+): Promise<SocialLoginResponse> => {
+  return mutationFetcher<SocialLoginResponse>('post', ENDPOINTS.USERS.KAKAO, {
+    code,
+  });
+};
+
+export const postGoogleLoginCode = (
+  code: string,
+): Promise<SocialLoginResponse> => {
+  return mutationFetcher<SocialLoginResponse>('post', ENDPOINTS.USERS.GOOGLE, {
     code,
   });
 };

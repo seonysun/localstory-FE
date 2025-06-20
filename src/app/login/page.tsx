@@ -17,7 +17,7 @@ import {
 import { GoogleIcon } from '@/components/icons/shared/GoogleIcon';
 import { KakaoIcon } from '@/components/icons/shared/KakaoIcon';
 import { Button } from '@/components/ui/common/buttons/Button';
-import { KAKAO_AUTH_URL } from '@/constants/auth';
+import { GOOGLE_AUTH_URL, KAKAO_AUTH_URL } from '@/constants/auth';
 
 export default function LoginPage() {
   const [loadingProvider, setLoadingProvider] = useState<
@@ -34,8 +34,8 @@ export default function LoginPage() {
     setLoadingProvider(provider);
     if (provider === 'kakao') {
       window.location.href = KAKAO_AUTH_URL;
-    } else {
-      setTimeout(() => setLoadingProvider(null), 1000);
+    } else if (provider === 'google') {
+      window.location.href = GOOGLE_AUTH_URL;
     }
   };
 
