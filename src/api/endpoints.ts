@@ -33,6 +33,7 @@ export const ENDPOINTS = {
   },
   STORY: {
     LIST: '/stories/', // get, post
+    ME: '/stories/me/',
     MARKER: (id: number) => `/stories/marker/${id}/`,
     DETAIL: (id: string) => `/stories/${id}`, // get, put, delete
   },

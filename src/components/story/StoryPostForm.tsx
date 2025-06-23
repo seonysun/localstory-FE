@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { gridLayout } from '@components/map/map.recipe';
 import StoryPostPlace from '@components/story/sections/StoryPostPlace';
@@ -14,7 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { storyOption } from '@/api/options/storyOption';
 import FileUploadButton from '@/components/ui/maps/FileUploadButton';
 import { FEELINGS } from '@/constants/story';
-import { PostStoryPayload } from '@/types/story';
+import { PostStoryPayload, StoryImage } from '@/types/story';
 import {
   getDayOptions,
   getMonthOptions,
@@ -24,28 +24,56 @@ import {
 
 import { css } from '@root/styled-system/css';
 
-function StoryPostForm() {
-  const router = useRouter();
+type Props = {
+  initialData?: {
+    marker: number | null;
+    title: string;
+    content: string;
+    emoji: string;
+    storyImages?: StoryImage[];
+  };
+  storyId?: number;
+};
 
+function StoryPostForm({ initialData, storyId }: Props) {
+  const router = useRouter();
   const [date, setDate] = useState(getToday());
 
   const renderedFeelings = FEELINGS.map(({ label: Icon, value }) => ({
     label: <Icon />,
     value,
   }));
-  const [feeling, setFeeling] = useState('smile');
 
-  const [marker, setMarker] = useState<number | null>(null);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [marker, setMarker] = useState<number | null>(
+    initialData?.marker ?? null,
+  );
+  const [title, setTitle] = useState(initialData?.title ?? '');
+  const [content, setContent] = useState(initialData?.content ?? '');
+  const [feeling, setFeeling] = useState(initialData?.emoji ?? 'smile');
+  // 신규로 추가하는 이미지 (파일 객체만 관리)
   const [images, setImages] = useState<File[]>([]);
+  // 기존에 등록된 이미지 (수정 시 미리보기 용도)
+  const [originImages] = useState<StoryImage[]>(initialData?.storyImages ?? []);
 
-  const { mutate } = useMutation({
-    ...storyOption.postStory(),
+  // 신규 작성
+  const postMutation = useMutation({
+    mutationFn: storyOption.postStory().mutationFn,
+    onSuccess: () => router.push('/story'),
+  });
+  // 수정
+  const patchMutation = useMutation({
+    mutationFn: storyOption.patchStory().mutationFn,
     onSuccess: () => {
-      router.push('/story');
+      router.push(`/story/${storyId}`);
     },
   });
+  useEffect(() => {
+    if (!initialData) return;
+    setMarker(initialData.marker ?? null);
+    setTitle(initialData.title ?? '');
+    setContent(initialData.content ?? '');
+    setFeeling(initialData.emoji ?? 'smile');
+  }, [initialData]);
 
   const onSubmit = () => {
     const payload: PostStoryPayload = {
@@ -57,13 +85,19 @@ function StoryPostForm() {
       },
       images,
     };
-    mutate(payload);
+    if (storyId) {
+      patchMutation.mutate({ ...payload, storyId });
+    } else {
+      postMutation.mutate(payload);
+    }
   };
 
   return (
     <div className={flex({ gap: 'xl', marginB: 'sm' })}>
       <div className={flex({ gap: 'lg', p: 'sm', marginB: 'sm' })}>
-        <p className={modalText({ text: 'head4', align: 'left' })}>글작성</p>
+        <p className={modalText({ text: 'head4', align: 'left' })}>
+          {storyId ? '글 수정' : '글작성'}
+        </p>
         <StoryPostPlace setMarker={setMarker} />
         <div className={flex({ direction: 'row', gap: 'md' })}>
           <FilterDropdown
@@ -116,6 +150,20 @@ function StoryPostForm() {
             fontWeight: '400',
           })}
         />
+        {/* 기존 이미지 미리보기 */}
+        {originImages.length > 0 && (
+          <div className={gridLayout({ columns: 3, p: 'xs', gap: 'sm' })}>
+            {originImages.map((img, idx) => (
+              <img
+                key={img.imageId}
+                src={img.imageUrl}
+                alt={`업로드 이미지 ${idx + 1}`}
+                style={{ width: '100%', objectFit: 'cover', borderRadius: 8 }}
+              />
+            ))}
+          </div>
+        )}
+        {/* 새로 업로드하는 이미지 */}
         <FileUploadButton setImages={setImages} />
         <div className={gridLayout({ columns: 3, p: 'xs', gap: 'sm' })}>
           {images.map((file, idx) => (
@@ -131,8 +179,12 @@ function StoryPostForm() {
           ))}
         </div>
       </div>
-      <Button onClick={onSubmit} color="black">
-        작성 완료
+      <Button
+        onClick={onSubmit}
+        color="black"
+        disabled={postMutation.isPending || patchMutation.isPending}
+      >
+        {storyId ? '수정 완료' : '작성 완료'}
       </Button>
     </div>
   );

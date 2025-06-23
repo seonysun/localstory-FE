@@ -21,6 +21,7 @@ export type Story = {
   createdAt: string;
   updatedAt: string;
   isLiked: boolean;
+  storyImages?: StoryImage[];
 };
 
 export type StoryImage = {

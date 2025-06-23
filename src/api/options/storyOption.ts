@@ -51,6 +51,31 @@ export const storyOption = {
       return mutationFetcher('delete', ENDPOINTS.STORYLIKE.LIKE(storyId), {});
     },
   }),
+  patchStory: () => ({
+    mutationFn: async ({
+      storyId,
+      story,
+      images,
+    }: PostStoryPayload & { storyId: number }) => {
+      const storyRes = await mutationFetcher(
+        'patch',
+        ENDPOINTS.STORY.DETAIL(String(storyId)),
+        story,
+      );
+
+      // 이미지 추가 업로드 있을 때만
+      if (images && images.length > 0) {
+        const formData = new FormData();
+        formData.append('story_id', String(storyId));
+        images.forEach(image => formData.append('image_file', image));
+        await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD(storyId), formData, {
+          headers: { 'Content-Type': undefined },
+        });
+      }
+
+      return storyRes;
+    },
+  }),
   postComment: (storyId: string) => ({
     mutationFn: ({
       content,

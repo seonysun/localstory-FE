@@ -37,25 +37,25 @@ export default function MypageMenuList() {
     {
       title: '북마크',
       icon: BookmarkIcon,
-      route: '/bookmarks',
+      route: '/mypage/bookmarks',
       colorMode: 'stroke',
     },
     {
       title: 'Feelings and Thoughts',
       icon: TravelIcon,
-      route: '/feelings',
+      route: '/mypage/feelings',
       colorMode: 'stroke',
     },
     {
       title: '구독',
       icon: VersionIcon,
-      route: '/subscribe',
+      route: '/mypage/subscribe',
       colorMode: 'stroke',
     },
     {
       title: '설정',
       icon: SettingsIcon,
-      route: '/settings',
+      route: '/mypage/settings',
       colorMode: 'fill',
     },
     {
