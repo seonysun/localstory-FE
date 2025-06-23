@@ -18,7 +18,24 @@ export default defineConfig({
         base: '0px',
         md: '768px',
       },
-
+      keyframes: {
+        /**
+         * 흔들림(shake) 효과를 주는 애니메이션
+         * - 주로 에러/실패/경고 MODAL에서 사용
+         * - 사용 예시: animation: 'shake 0.5s'
+         * @example
+         * <div className={css({ animation: 'shake 0.4s' }) />
+         */
+        shake: {
+          '0%': { transform: 'translateX(0)' },
+          '10%': { transform: 'translateX(10px)' },
+          '20%': { transform: 'translateX(-10px)' },
+          '40%': { transform: 'translateX(10px)' },
+          '60%': { transform: 'translateX(-10px)' },
+          '80%': { transform: 'translateX(10px)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+      },
       tokens: {
         colors: {
           blue: {

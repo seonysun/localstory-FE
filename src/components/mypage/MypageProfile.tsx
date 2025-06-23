@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { PenIcon } from '@/components/icons';
+import Modal from '@/components/ui/common/modals/Modal';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { useAuthStore } from '@/store/useAuthStore';
 
@@ -36,6 +37,9 @@ export default function MypageProfile() {
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
+  // 에러 관리
+  const [error, setError] = useState<string | null>(null);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const nicknameInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,6 +70,16 @@ export default function MypageProfile() {
     }
   }, [profile?.profileImage, user?.profile_image]);
 
+  // 에러 모달 닫기
+  const handleErrorModalClose = () => {
+    setError(null);
+  };
+
+  // 에러 모달 띄우기
+  const showError = (message: string) => {
+    setError(message);
+  };
+
   const handleImageClick = () => {
     fileInputRef.current?.click();
   };
@@ -78,7 +92,7 @@ export default function MypageProfile() {
 
         const maxSize = 2 * 1024 * 1024;
         if (file.size > maxSize) {
-          alert('파일 크기는 2MB 이하여야 합니다.');
+          showError('파일 크기는 2MB 이하여야 합니다.');
           return;
         }
 
@@ -86,8 +100,7 @@ export default function MypageProfile() {
         await refetch();
         setProfileImageUrl(`${newImageUrl}?t=${Date.now()}`);
       } catch (error) {
-        console.error('프로필 이미지 업로드 실패:', error);
-        alert(
+        showError(
           error instanceof Error
             ? error.message
             : '프로필 이미지 업로드에 실패했습니다.',
@@ -109,8 +122,7 @@ export default function MypageProfile() {
           await updateUserNickname(nicknameValue);
           await refetch();
         } catch (error) {
-          console.error('닉네임 변경 실패:', error);
-          alert('닉네임 변경에 실패했습니다.');
+          showError('닉네임 변경에 실패했습니다.');
           setNicknameValue(profile?.nickname || user?.nickname || '');
         } finally {
           setIsUpdating(false);
@@ -136,6 +148,15 @@ export default function MypageProfile() {
 
   return (
     <div className={profileSection()}>
+      {/* 에러 모달 */}
+      {error && (
+        <Modal
+          title="에러"
+          content={error}
+          type="one"
+          onConfirm={handleErrorModalClose}
+        />
+      )}
       <div className={avatarWrapper()}>
         <button
           type="button"

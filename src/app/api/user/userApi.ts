@@ -55,9 +55,23 @@ export const updateUserProfileImage = async (file: File): Promise<User> => {
   });
 
   if (!response.ok) {
-    console.error('Profile image update response:', response);
     throw new Error('Failed to update profile image');
   }
 
   return response.json();
+};
+
+export const withdrawUser = async (refresh: string): Promise<boolean> => {
+  const response = await apiRequest(`${BASE_URL}${ENDPOINTS.USERS.WITHDRAW}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ refresh }),
+  });
+
+  if (response.status !== 204) {
+    throw new Error('회원 탈퇴 실패');
+  }
+  return true;
 };

@@ -4,7 +4,7 @@ export const modalWrapper = cva({
   base: {
     position: 'fixed',
     inset: 0,
-    zIndex: '50',
+    zIndex: '9999',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

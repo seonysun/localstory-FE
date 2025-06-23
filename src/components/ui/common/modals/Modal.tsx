@@ -19,6 +19,7 @@ type ModalProps = {
   type?: 'one' | 'two';
   onConfirm?: () => void;
   children?: ReactNode;
+  className?: string;
 };
 
 /**
@@ -45,6 +46,7 @@ type ModalProps = {
  */
 
 function Modal({
+  className = '',
   title,
   content,
   type = 'two',
@@ -58,7 +60,7 @@ function Modal({
 
   return (
     <div className={modalWrapper()}>
-      <div ref={modalRef} className={modalContent()}>
+      <div ref={modalRef} className={`${modalContent()} ${className || ''}`}>
         {children || (
           <>
             <div className={flex({ align: 'center', gap: 'xl' })}>

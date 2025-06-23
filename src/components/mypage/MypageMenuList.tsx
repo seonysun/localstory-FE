@@ -12,6 +12,7 @@ import {
   VersionIcon,
 } from '@/components/icons';
 import IconWrapper from '@/components/icons/IconWrapper';
+import { useModalStore } from '@/store/useModalStore';
 
 import {
   menuButton,
@@ -32,6 +33,7 @@ interface MenuItem {
 
 export default function MypageMenuList() {
   const router = useRouter();
+  const { open } = useModalStore();
 
   const menuItems: MenuItem[] = [
     {
@@ -63,8 +65,7 @@ export default function MypageMenuList() {
       icon: LogoutIcon,
       colorMode: 'stroke',
       action: () => {
-        // 회원 탈퇴 로직
-        router.push('/');
+        open();
       },
     },
   ];
