@@ -114,52 +114,57 @@ function CommentCard({
       })}
     >
       <UserInfo
+        mode="comment"
         createdAt={comment?.createdAt}
         userNickname={comment?.userNickname}
         userProfileImage={comment?.userProfileImage}
       />
-      <div className={css({ mb: 2, mt: 2 })}>
+      <div className={css({ mb: 4, mt: 4, ml: 4 })}>
         <p>{comment?.content}</p>
       </div>
-      <div
+      <Button
+        size="sm"
+        onClick={() => onToggle(!comment?.isLiked)}
+        color="custom"
+        disabled={mutation.isPending}
         className={css({
-          borderBottom: '1px solid #c9c9c9',
-          pb: 4,
           display: 'flex',
           alignItems: 'center',
-          gap: { base: 4, sm: 2 },
-          fontSize: { base: 'sm', sm: 'sm' },
+          justifyContent: 'start',
+          gap: 2,
+        })}
+      >
+        <HeartIcon
+          width={20}
+          height={20}
+          fill={comment?.isLiked ? 'red' : 'none'}
+          aria-label={`좋아요 ${comment?.likeCount ?? 0}개`}
+        />
+        <span>{comment?.likeCount}</span>
+      </Button>
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'start',
+          width: '40%',
         })}
       >
         <Button
+          onClick={onReplyClick}
           size="sm"
-          onClick={() => onToggle(!comment?.isLiked)}
+          className={css({
+            _hover: {
+              bg: 'blue.50',
+            },
+          })}
           color="custom"
-          disabled={mutation.isPending}
+          aria-label="댓글 달기"
         >
-          <HeartIcon
-            width={20}
-            height={20}
-            fill={comment?.isLiked ? 'red' : 'none'}
-            aria-label={`좋아요 ${comment?.likeCount ?? 0}개`}
-          />
+          답글
         </Button>
-        <span>{comment?.likeCount}</span>
         {isMine && (
           <>
-            <Button
-              onClick={onReplyClick}
-              size="sm"
-              className={css({
-                _hover: {
-                  bg: 'blue.50',
-                },
-              })}
-              color="custom"
-              aria-label="댓글 달기"
-            >
-              답글
-            </Button>
             <Button
               onClick={onEditClick}
               size="sm"
@@ -191,6 +196,7 @@ function CommentCard({
           </>
         )}
       </div>
+      <div className={css({ borderBottom: '2px solid #e5e7eb', mt: 2 })} />
       {isReplyFormOpen && (
         <CommentForm
           storyId={storyId}

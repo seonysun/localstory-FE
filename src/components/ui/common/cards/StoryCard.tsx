@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { storyOption } from '@api/options/storyOption';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { formatDate } from '@util/date';
 
 import { EyeIcons, HeartIcon } from '@/components/icons';
 import {
@@ -180,7 +181,7 @@ function StoryCard({ story }: StoryCardProps) {
           {createdAt && (
             <span>
               <span className={subText({ color: 'default' })}>
-                {new Date(createdAt).toLocaleDateString()}
+                {formatDate(createdAt)}
               </span>
             </span>
           )}

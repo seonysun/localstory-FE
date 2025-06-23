@@ -4,16 +4,18 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import StoryContentActions from '@components/story/detail/StoryContentActions';
 import { useAuthStore } from '@store/useAuthStore';
+import { formatDate } from '@util/date';
 
 import { css } from '@root/styled-system/css';
 
 type Props = {
+  mode: 'story' | 'comment';
   createdAt: string | undefined;
   userNickname: string | undefined;
   userProfileImage: string | undefined;
 };
 
-function UserInfo({ createdAt, userNickname, userProfileImage }: Props) {
+function UserInfo({ mode, createdAt, userNickname, userProfileImage }: Props) {
   const { user } = useAuthStore();
   const isMine = user?.nickname === userNickname;
   const defaultUserImage = '/images/default-userImage.png';
@@ -33,7 +35,6 @@ function UserInfo({ createdAt, userNickname, userProfileImage }: Props) {
           height={40}
           className={css({
             objectFit: 'cover',
-            height: '100%',
             borderRadius: 'full',
           })}
           onError={() => setProfileSrc(defaultUserImage)}
@@ -46,12 +47,10 @@ function UserInfo({ createdAt, userNickname, userProfileImage }: Props) {
             },
           })}
         >
-          <p>
-            {createdAt ? new Date(createdAt).toLocaleDateString() : undefined}
-          </p>
+          <p>{createdAt ? formatDate(createdAt) : undefined}</p>
           <p>{userNickname}</p>
         </div>
-        <StoryContentActions isMine={isMine} />
+        <StoryContentActions isMine={isMine} mode={mode} />
       </div>
     </article>
   );

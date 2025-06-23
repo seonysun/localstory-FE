@@ -5,7 +5,12 @@ import { Button } from '@components/ui/common/buttons/Button';
 
 import { css } from '@root/styled-system/css';
 
-function StoryContentActions({ isMine }: { isMine: boolean }) {
+type Props = {
+  mode: 'comment' | 'story';
+  isMine: boolean;
+};
+
+function StoryContentActions({ mode, isMine }: Props) {
   return (
     <div
       className={css({
@@ -18,7 +23,7 @@ function StoryContentActions({ isMine }: { isMine: boolean }) {
       <Button size="sm" color="outlineSoft" aria-label="팔로우 버튼">
         Follows
       </Button>
-      {isMine && (
+      {mode === 'story' && isMine && (
         <>
           <Button
             size="sm"

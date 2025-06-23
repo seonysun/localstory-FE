@@ -79,6 +79,7 @@ function CommentForm({
         alignItems: 'center',
         justifyContent: 'space-between',
         mb: 24,
+        mt: 2,
       })}
     >
       <Input
@@ -98,8 +99,6 @@ function CommentForm({
           py: '18px',
           _hover: {
             bg: 'blue.50',
-            px: '20px',
-            py: '18px',
           },
         })}
       >
@@ -108,9 +107,18 @@ function CommentForm({
       {onCancel && (mode === 'edit' || mode === 'reply') && (
         <Button
           type="button"
-          color="outlineSoft"
+          color="custom"
           onClick={onCancel}
-          className={css({ ml: 2 })}
+          aria-label="댓글 등록 취소"
+          className={css({
+            width: '20%',
+            px: '20px',
+            py: '18px',
+            _hover: {
+              bg: 'blue.50',
+              color: 'red',
+            },
+          })}
         >
           취소
         </Button>

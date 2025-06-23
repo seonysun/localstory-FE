@@ -34,7 +34,7 @@ export const ENDPOINTS = {
   STORY: {
     LIST: '/stories/', // get, post
     MARKER: (id: number) => `/stories/marker/${id}/`,
-    DETAIL: (id: string) => `/stories/${id}/`, // get, put, delete
+    DETAIL: (id: string) => `/stories/${id}`, // get, put, delete
   },
   STORY_IMAGE: {
     UPLOAD: (id: number) => `/stories/${id}/images/`,
