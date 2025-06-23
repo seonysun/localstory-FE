@@ -9,11 +9,11 @@ interface SocialLoginResponse {
     email: string;
     nickname: string;
     provider: string;
-    social_id: string;
-    profile_image?: string;
-    is_paid_user?: boolean;
-    date_joined: string;
-    last_login?: string;
+    socialId: string;
+    profileImage?: string;
+    isPaidUser?: boolean;
+    dateJoined: string;
+    lastLogin?: string;
   };
 }
 

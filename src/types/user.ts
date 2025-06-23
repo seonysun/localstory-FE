@@ -4,11 +4,11 @@ export interface ApiUser {
   email: string;
   nickname: string | null;
   provider: 'google' | 'kakao';
-  social_id: string | null;
-  profile_image: string | null;
-  is_paid_user: boolean;
-  date_joined: string;
-  last_login: string | null;
+  socialId: string | null;
+  profileImage: string | null;
+  isPaidUser: boolean;
+  dateJoined: string;
+  lastLogin: string | null;
 }
 
 // 클라이언트 상태 관리용 유저 타입
@@ -35,8 +35,8 @@ export const apiUserToClientUser = (apiUser: ApiUser): ClientUser => ({
   email: apiUser.email,
   nickname: apiUser.nickname || '사용자',
   provider: apiUser.provider,
-  profile_image: apiUser.profile_image,
-  is_paid_user: apiUser.is_paid_user,
+  profile_image: apiUser.profileImage,
+  is_paid_user: apiUser.isPaidUser,
 });
 
 export const clientUserToProfile = (user: ClientUser): UserProfile => ({

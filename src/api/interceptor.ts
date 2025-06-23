@@ -1,19 +1,18 @@
 import { useAuthStore } from '@/store/useAuthStore';
 
-const API_BASE_URL = 'https://localstorymap.com/api';
+const BASE_URL = 'https://localstorymap.com/api';
 
 // 토큰 갱신 함수
-async function refreshAccessToken(): Promise<string | null> {
+export async function refreshAccessToken(): Promise<string | null> {
   const { refresh, setAuth, clearAuth, user } = useAuthStore.getState();
 
   if (!refresh) {
     clearAuth();
-    window.location.href = '/login';
     return null;
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/users/token/refresh/`, {
+    const response = await fetch(`${BASE_URL}/users/token/refresh/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,8 +39,6 @@ async function refreshAccessToken(): Promise<string | null> {
   } catch (error) {
     console.error('Failed to refresh token:', error);
     clearAuth();
-    localStorage.clear();
-    window.location.href = '/login';
     return null;
   }
 }
@@ -51,7 +48,7 @@ export async function apiRequest(
   url: string,
   options: RequestInit = {},
 ): Promise<Response> {
-  const { access, clearAuth } = useAuthStore.getState();
+  const { access } = useAuthStore.getState();
 
   // 첫 번째 시도
   let response = await fetch(url, {

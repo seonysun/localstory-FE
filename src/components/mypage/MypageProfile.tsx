@@ -30,9 +30,9 @@ export default function MypageProfile() {
     useUserProfile();
 
   const [profileImageUrl, setProfileImageUrl] = useState(
-    '/images/default-userImage.png',
+    profile?.profileImage ?? '/images/default-userImage.png',
   );
-  const [nicknameValue, setNicknameValue] = useState('');
+  const [nicknameValue, setNicknameValue] = useState(profile?.nickname ?? '');
   const [isEditingNickname, setIsEditingNickname] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -58,7 +58,7 @@ export default function MypageProfile() {
     const validUserImage = user?.profile_image?.trim();
 
     if (validProfileImage) {
-      setProfileImageUrl(`${validProfileImage}?t=${Date.now()}`);
+      setProfileImageUrl(validProfileImage);
     } else if (validUserImage) {
       setProfileImageUrl(validUserImage);
     } else {
