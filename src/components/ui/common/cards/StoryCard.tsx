@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { storyOption } from '@api/options/storyOption';
@@ -70,6 +71,11 @@ function StoryCard({ story }: StoryCardProps) {
   const images = storyImages.map(img => img.imageUrl);
   const imageCount = images.length;
   const layout = String(Math.max(1, Math.min(imageCount, 5)));
+  const [profileSrc, setProfileSrc] = useState(
+    userProfileImage && userProfileImage.trim() !== ''
+      ? userProfileImage
+      : defaultUserImage,
+  );
 
   return (
     <div
@@ -156,7 +162,12 @@ function StoryCard({ story }: StoryCardProps) {
             overflow: 'hidden',
           })}
         >
-          <Image src={userProfileImage || defaultUserImage} alt="프로필" fill />
+          <Image
+            src={profileSrc}
+            alt="프로필"
+            fill
+            onError={() => setProfileSrc(defaultUserImage)}
+          />
         </div>
 
         <div className={cx(css({ mt: 8, pl: '4' }))}>

@@ -4,6 +4,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@components/ui/common/buttons/Button';
 import { useMutation } from '@tanstack/react-query';
 
+import { followsOption } from '@/api/options/followsOption';
 import { storyOption } from '@/api/options/storyOption';
 import Modal from '@/components/ui/common/modals/Modal';
 import { useModalStore } from '@/store/useModalStore';
@@ -13,12 +14,21 @@ import { css } from '@root/styled-system/css';
 type Props = {
   mode: 'comment' | 'story';
   isMine: boolean;
+  userNickname?: string;
 };
 
-function StoryContentActions({ mode, isMine }: Props) {
+function StoryContentActions({ mode, isMine, userNickname }: Props) {
   const router = useRouter();
   const params = useParams();
   const id = params?.storyId as string;
+
+  const followMutation = useMutation({
+    ...followsOption.postFollows(),
+  });
+
+  const handleFollow = () => {
+    followMutation.mutate({ nickname: userNickname });
+  };
 
   const deleteMutation = useMutation({
     ...storyOption.deleteStory(id),
@@ -40,9 +50,16 @@ function StoryContentActions({ mode, isMine }: Props) {
           ml: 'auto',
         })}
       >
-        <Button size="sm" color="outlineSoft" aria-label="팔로우 버튼">
-          Follows
+        {/* 팔로우 버튼 */}
+        <Button
+          size="sm"
+          color="outlineSoft"
+          aria-label="팔로우 버튼"
+          onClick={handleFollow}
+        >
+          {followMutation.isPending ? '로딩중...' : 'Follows'}
         </Button>
+        {/* 수정/삭제 버튼 */}
         {mode === 'story' && isMine && (
           <>
             <Button

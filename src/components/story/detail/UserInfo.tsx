@@ -50,7 +50,11 @@ function UserInfo({ mode, createdAt, userNickname, userProfileImage }: Props) {
           <p>{createdAt ? formatDate(createdAt) : undefined}</p>
           <p>{userNickname}</p>
         </div>
-        <StoryContentActions isMine={isMine} mode={mode} />
+        <StoryContentActions
+          isMine={isMine}
+          mode={mode}
+          userNickname={userNickname}
+        />
       </div>
     </article>
   );
