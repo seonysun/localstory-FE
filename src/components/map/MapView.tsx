@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
@@ -25,7 +26,23 @@ function MapView() {
     libraries: ['clusterer', 'drawing', 'services'],
   });
 
-  const center = { lat: 35.179554, lng: 129.075642 };
+  const [center, setCenter] = useState({ lat: 35.179554, lng: 129.075642 });
+
+  const position = searchParams.get('position') === 'true';
+  useEffect(() => {
+    if (position && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const { latitude, longitude } = position.coords;
+          setCenter({ lat: latitude, lng: longitude });
+        },
+        error => {
+          console.warn('위치 정보를 가져올 수 없습니다:', error.message);
+        },
+        { timeout: 5000 },
+      );
+    }
+  }, [position]);
 
   const type = searchParams.get('type');
   const selectedCategory: CategoryValueType = isValidCategory(type)
@@ -45,6 +62,7 @@ function MapView() {
   const markerClick = (param: string, value: string) => {
     const next = new URLSearchParams(searchParams);
     next.set(param, value);
+    next.set('position', 'false');
     router.push(`/map/search?${next.toString()}`);
   };
 
@@ -58,7 +76,10 @@ function MapView() {
             icon={category.icon}
             size="md"
             selected={selectedCategory === category.value}
-            onClick={() => markerClick('type', category.value)}
+            onClick={() => {
+              markerClick('type', category.value);
+              setCenter({ lat: 35.179554, lng: 129.075642 });
+            }}
           />
         ))}
       </div>
@@ -72,6 +93,7 @@ function MapView() {
             onClick={() => markerClick('id', marker.id.toString())}
           />
         ))}
+        {position && <MarkerContainer position={center} type="current" />}
       </Map>
       {place && (
         <div className={mapOverlayWrapper({ type: 'card' })}>

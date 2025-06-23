@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { MapMarker, MapMarkerProps, useMap } from 'react-kakao-maps-sdk';
 
+import { modalText } from '@/components/ui/common/modals/modal.recipe';
 import { CategoryValueType } from '@/constants/map';
 
 type MarkerContainerProps = {
   position: MapMarkerProps['position'];
-  type?: CategoryValueType;
+  type?: CategoryValueType | 'current';
   content?: string;
   onClick?: () => void;
 };
@@ -36,7 +37,9 @@ function MarkerContainer({
         onClick?.();
       }}
     >
-      {isVisible && <div>{content}</div>}
+      {isVisible && (
+        <div className={modalText({ text: 'body3' })}>{content}</div>
+      )}
     </MapMarker>
   );
 }

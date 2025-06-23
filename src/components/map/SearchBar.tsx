@@ -60,7 +60,7 @@ function SearchBar({
       {basePath === 'map' && (
         <div
           className={iconWrapper()}
-          onClick={() => router.push('/map/search')}
+          onClick={() => router.push('/map/search?position=true')}
         >
           <GpsLocationIcon fill="#707070" />
         </div>
