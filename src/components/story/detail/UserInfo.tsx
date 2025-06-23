@@ -1,6 +1,9 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Image from 'next/image';
 import StoryContentActions from '@components/story/detail/StoryContentActions';
+import { useAuthStore } from '@store/useAuthStore';
 
 import { css } from '@root/styled-system/css';
 
@@ -11,28 +14,44 @@ type Props = {
 };
 
 function UserInfo({ createdAt, userNickname, userProfileImage }: Props) {
+  const { user } = useAuthStore();
+  const isMine = user?.nickname === userNickname;
   const defaultUserImage = '/images/default-userImage.png';
+  const [profileSrc, setProfileSrc] = useState(
+    userProfileImage && userProfileImage.trim() !== ''
+      ? userProfileImage
+      : defaultUserImage,
+  );
 
   return (
     <article>
-      <div className={css({ display: 'flex', gap: 4 })}>
+      <div className={css({ display: 'flex', alignItems: 'center', gap: 4 })}>
         <Image
-          src={userProfileImage || defaultUserImage}
+          src={profileSrc}
           alt="userImage"
           width={40}
           height={40}
-          onError={e => {
-            const target = e.target as HTMLImageElement;
-            target.src = defaultUserImage;
-          }}
+          className={css({
+            objectFit: 'cover',
+            height: '100%',
+            borderRadius: 'full',
+          })}
+          onError={() => setProfileSrc(defaultUserImage)}
         />
-        <div>
+        <div
+          className={css({
+            fontSize: {
+              base: 'sm',
+              md: 'sm',
+            },
+          })}
+        >
           <p>
             {createdAt ? new Date(createdAt).toLocaleDateString() : undefined}
           </p>
           <p>{userNickname}</p>
         </div>
-        <StoryContentActions />
+        <StoryContentActions isMine={isMine} />
       </div>
     </article>
   );

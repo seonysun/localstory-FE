@@ -88,14 +88,11 @@ function page() {
       <StoryCard
         story={{
           storyId: 'sample-story',
-          images: [
-            '/images/story-sample.png',
-            '/images/story-sample.png',
-            '/images/story-sample.png',
-            '/images/story-sample.png',
-            '/images/story-sample.png',
+          storyImages: [
+            { imageId: 1, imageUrl: '/images/story-sample.png' },
+            { imageId: 2, imageUrl: '/images/story-sample.png' },
           ],
-          userProfile: '/images/default-userImage.png',
+          userProfileImage: '/images/default-userImage.png',
           title: '홍선성현형님 서울 후기',
           content: '사진찍기 좋은 명소!',
           userNickname: '홍선성현님',

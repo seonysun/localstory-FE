@@ -1,3 +1,8 @@
+type StoryImageType = {
+  imageUrl: string;
+  imageId: number;
+};
+
 export type StoryType = {
   createdAt: string;
   title: string;
@@ -7,13 +12,14 @@ export type StoryType = {
   isLiked: boolean;
   likeCount: number;
   viewCount: number;
+  storyImages: StoryImageType[];
 };
 
 export type StoryCardProps = {
   story: {
     storyId: string;
-    images?: string[];
-    userProfile?: string;
+    storyImages: StoryImageType[];
+    userProfileImage?: string;
     title: string;
     content: string;
     likeCount?: number;
@@ -33,4 +39,26 @@ type StoryPage = {
 export type StoryQueryData = {
   pages: StoryPage[];
   pageParams: unknown[];
+};
+
+export type CommentStory = {
+  commentId: number | null;
+  content: string;
+  createdAt: string;
+  isLiked: boolean;
+  likeCount: number;
+  storyId: string;
+  parent: number | null;
+  updatedAt: string;
+  userNickname: string;
+  userProfileImage: string;
+};
+
+export type InputMode = {
+  mode: 'edit' | 'reply' | 'none';
+  payload: {
+    content?: string;
+    targetId: number | null;
+    parent: number | null;
+  };
 };

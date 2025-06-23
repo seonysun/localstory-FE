@@ -43,11 +43,15 @@ export const ENDPOINTS = {
     LIST: (id: number) => `/stories/${id}/images/`,
   },
   COMMENT: {
-    LIST: (id: number) => `/stories/${id}/comments/`, // get, post
-    DETAIL: (storyId: number, commentId: number) =>
+    LIST: (id: string) => `/stories/${id}/comments/`, // get, post
+    DETAIL: (storyId: string, commentId: string) =>
       `/stories/${storyId}/comments/${commentId}/`, // get, put, delete
     IMAGE: (storyId: number, commentId: number) =>
       `/stories/${storyId}/comments/${commentId}/images/`, // get, post,
+  },
+  COMMENTLIKE: {
+    DETAIL: (storyId: string, commentId: string) =>
+      `/stories/${storyId}/comments/${commentId}/likes/`,
   },
   BOOKMARK: {
     LIST: '/bookmarks/', // get, post

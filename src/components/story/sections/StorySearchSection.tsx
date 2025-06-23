@@ -9,7 +9,7 @@ function StorySearchSection() {
   return (
     <article className={css({ mt: 24 })}>
       <div>
-        <Search />
+        <Search placeholder="유저 이름을 검색해주세요..." />
       </div>
     </article>
   );

@@ -6,8 +6,11 @@ import { ENDPOINTS } from '@api/endpoints';
 import { instance } from '@api/instance';
 import { storyOption } from '@api/options/storyOption';
 import { EyeIcons, HeartIcon } from '@components/icons';
+import CommentSection from '@components/story/detail/comment/CommentSection';
 import UserInfo from '@components/story/detail/UserInfo';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { StoryType } from '@/types/story.types';
 
@@ -34,7 +37,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
 
   const mutation = useMutation({
     ...storyOption.postLikeStory(storyId),
-    onMutate: async () => {
+    onMutate: () => {
       queryClient.setQueryData<StoryType>(['storyDetail'], old => {
         if (!old) return old;
         return {
@@ -61,21 +64,33 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
   return (
     <article>
       <div className={css({ mb: 12 })}>
-        <Image
-          src="/images/section.png"
-          alt="StoryDetail"
-          width={1080}
-          height={600}
-          className={css({
-            objectFit: 'cover',
-            width: '100%',
-            height: '500px',
-          })}
-          onError={e => {
-            const target = e.target as HTMLImageElement;
-            target.src = errorDefaultImg;
-          }}
-        />
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={1.2}
+          modules={[Pagination]}
+          pagination={{ clickable: true }}
+          navigation={false}
+        >
+          {data?.storyImages.map(image => (
+            <SwiperSlide key={image.imageId}>
+              <Image
+                src={image.imageUrl}
+                alt="StoryDetail"
+                width={1080}
+                height={600}
+                className={css({
+                  objectFit: 'cover',
+                  width: '100%',
+                  height: '100%',
+                })}
+                onError={e => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = errorDefaultImg;
+                }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
         <div>
           <p className={css({ mt: 12, mb: 1, textStyle: 'body2' })}>
             {createdAt ? new Date(createdAt).toLocaleDateString() : undefined}
@@ -112,6 +127,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
         <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
         <span>{viewCount ?? 0}</span>
       </div>
+      <CommentSection storyId={storyId} />
     </article>
   );
 }

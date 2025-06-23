@@ -44,9 +44,10 @@ function StoryCardListSection() {
       className={css({
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        gap: 4,
+        gap: 8,
         mt: 12,
+        width: '100%',
+        margin: '0 auto',
       })}
     >
       {storyList && storyList?.length > 0 ? (

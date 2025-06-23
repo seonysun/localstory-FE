@@ -51,4 +51,58 @@ export const storyOption = {
       return mutationFetcher('delete', ENDPOINTS.STORYLIKE.LIKE(storyId), {});
     },
   }),
+  postComment: (storyId: string) => ({
+    mutationFn: ({
+      content,
+      parent,
+    }: {
+      content?: string;
+      parent?: number | null;
+    }) => {
+      return mutationFetcher('post', ENDPOINTS.COMMENT.LIST(storyId), {
+        content,
+        parent,
+      });
+    },
+  }),
+  deleteComment: (storyId: string, commentId: string) => ({
+    mutationFn: () => {
+      return mutationFetcher(
+        'delete',
+        ENDPOINTS.COMMENT.DETAIL(storyId, commentId),
+      );
+    },
+  }),
+  patchComment: (storyId: string, commentId: string) => ({
+    mutationFn: ({
+      content,
+      parent,
+    }: {
+      content?: string;
+      parent?: number | null;
+    }) => {
+      return mutationFetcher(
+        'patch',
+        ENDPOINTS.COMMENT.DETAIL(storyId, commentId),
+        {
+          content,
+          parent,
+        },
+      );
+    },
+  }),
+  postCommentLike: (storyId: string, commentId: string) => ({
+    mutationFn: (newLiked: boolean) => {
+      if (newLiked) {
+        return mutationFetcher(
+          'post',
+          ENDPOINTS.COMMENTLIKE.DETAIL(storyId, commentId),
+        );
+      }
+      return mutationFetcher(
+        'delete',
+        ENDPOINTS.COMMENTLIKE.DETAIL(storyId, commentId),
+      );
+    },
+  }),
 };
