@@ -58,29 +58,36 @@ function Modal({
 
   return (
     <div className={modalWrapper()}>
-      {children || (
-        <div ref={modalRef} className={modalContent()}>
-          <div className={flex({ align: 'center', gap: 'xl' })}>
-            <DangerIcon width={44} height={44} fill="red" />
-            <div className={flex({ gap: 'md', px: 'lg' })}>
-              <p className={modalText({ text: 'pageTitle' })}>{title}</p>
-              <p className={modalText({ text: 'body3', color: 'gray400' })}>
-                {content}
-              </p>
+      <div ref={modalRef} className={modalContent()}>
+        {children || (
+          <>
+            <div className={flex({ align: 'center', gap: 'xl' })}>
+              <DangerIcon width={44} height={44} fill="red" />
+              <div className={flex({ gap: 'md', px: 'lg' })}>
+                <p className={modalText({ text: 'pageTitle' })}>{title}</p>
+                <p className={modalText({ text: 'body3', color: 'gray400' })}>
+                  {content}
+                </p>
+              </div>
             </div>
-          </div>
-          <div className={flex({ direction: 'row', gap: 'sm' })}>
-            {type === 'two' && (
-              <Button onClick={close} color="outlineSoft" size="md" radius="md">
-                취소
+            <div className={flex({ direction: 'row', gap: 'sm' })}>
+              {type === 'two' && (
+                <Button
+                  onClick={close}
+                  color="outlineSoft"
+                  size="md"
+                  radius="md"
+                >
+                  취소
+                </Button>
+              )}
+              <Button onClick={onConfirm} color="primary" size="md" radius="md">
+                확인
               </Button>
-            )}
-            <Button onClick={onConfirm} color="primary" size="md" radius="md">
-              확인
-            </Button>
-          </div>
-        </div>
-      )}
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }

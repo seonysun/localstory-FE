@@ -124,7 +124,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
           <p className={css({ mt: 12, mb: 1, textStyle: 'body2' })}>
             {createdAt ? formatDate(createdAt) : undefined}
           </p>
-          <h1 className={css({ textStyle: 'headline3', mb: 12 })}>{title}</h1>
+          <h1 className={css({ textStyle: 'headline3', mb: 8 })}>{title}</h1>
           <p>{content}</p>
         </div>
       </div>

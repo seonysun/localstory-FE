@@ -34,10 +34,10 @@ async function page({ params }: { params: { id: string } }) {
       </div>
       <div className={flex({ gap: 'lg' })}>
         <div className={flex({ gap: 'sm' })}>
-          <p className={modalText({ text: 'head3', align: 'left' })}>
-            {data.markerName}
-          </p>
           <Link href={`/map/search?id=${data.id}`}>
+            <p className={modalText({ text: 'head3', align: 'left' })}>
+              {data.markerName}
+            </p>
             <p
               className={modalText({
                 text: 'body2',

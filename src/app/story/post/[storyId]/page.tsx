@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { ENDPOINTS } from '@/api/endpoints';
 import { ssrFetcher } from '@/api/fetcher';
 import StoryPostForm from '@/components/story/StoryPostForm';
+import PageHeader from '@/components/ui/common/pageHeader/PageHeader';
 import { StoryImage } from '@/types/story';
 
 function EditStoryPage() {
@@ -43,7 +44,12 @@ function EditStoryPage() {
   if (loading) return <div>로딩 중...</div>;
   if (!initialData) return null;
 
-  return <StoryPostForm initialData={initialData} storyId={Number(storyId)} />;
+  return (
+    <>
+      <PageHeader title="스토리" />
+      <StoryPostForm initialData={initialData} storyId={Number(storyId)} />
+    </>
+  );
 }
 
 export default EditStoryPage;

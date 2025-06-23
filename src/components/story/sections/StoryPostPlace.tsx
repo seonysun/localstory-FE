@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { searchWrapper } from '@components/story/sections/recipe';
 import { useQuery } from '@tanstack/react-query';
 
@@ -16,8 +16,10 @@ import { Marker } from '@/types/marker';
 import { css, cx } from '@root/styled-system/css';
 
 function StoryPostPlace({
+  marker,
   setMarker,
 }: {
+  marker: number | null;
   setMarker: (id: number | null) => void;
 }) {
   const [search, setSearch] = useState('');
@@ -31,6 +33,17 @@ function StoryPostPlace({
     enabled: !!debouncedSearch,
   });
   const suggestions = data?.data;
+
+  const { data: markerDetail } = useQuery({
+    ...markerOption.getMarkerDetail(marker!),
+    enabled: marker !== null && selectedPlace === null,
+  });
+
+  useEffect(() => {
+    if (markerDetail && !selectedPlace) {
+      setSelectedPlace(markerDetail);
+    }
+  }, [markerDetail, selectedPlace]);
 
   return (
     <div>

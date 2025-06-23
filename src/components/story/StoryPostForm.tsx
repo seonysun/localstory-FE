@@ -25,25 +25,19 @@ import {
 import { css } from '@root/styled-system/css';
 
 type Props = {
-  initialData?: {
-    marker: number | null;
-    title: string;
-    content: string;
-    emoji: string;
-    storyImages?: StoryImage[];
-  };
+  initialData?: PostStoryPayload['story'];
   storyId?: number;
 };
 
 function StoryPostForm({ initialData, storyId }: Props) {
   const router = useRouter();
-  const [date, setDate] = useState(getToday());
 
   const renderedFeelings = FEELINGS.map(({ label: Icon, value }) => ({
     label: <Icon />,
     value,
   }));
 
+  const [date, setDate] = useState(getToday());
   const [marker, setMarker] = useState<number | null>(
     initialData?.marker ?? null,
   );
@@ -55,18 +49,16 @@ function StoryPostForm({ initialData, storyId }: Props) {
   // 기존에 등록된 이미지 (수정 시 미리보기 용도)
   const [originImages] = useState<StoryImage[]>(initialData?.storyImages ?? []);
 
-  // 신규 작성
   const postMutation = useMutation({
-    mutationFn: storyOption.postStory().mutationFn,
-    onSuccess: () => router.push('/story'),
+    ...storyOption.postStory(),
+    onSuccess: () => router.push(`/story/${storyId}`),
   });
-  // 수정
+
   const patchMutation = useMutation({
-    mutationFn: storyOption.patchStory().mutationFn,
-    onSuccess: () => {
-      router.push(`/story/${storyId}`);
-    },
+    ...storyOption.patchStory(),
+    onSuccess: () => router.push(`/story/${storyId}`),
   });
+
   useEffect(() => {
     if (!initialData) return;
     setMarker(initialData.marker ?? null);
@@ -85,6 +77,7 @@ function StoryPostForm({ initialData, storyId }: Props) {
       },
       images,
     };
+
     if (storyId) {
       patchMutation.mutate({ ...payload, storyId });
     } else {
@@ -96,9 +89,9 @@ function StoryPostForm({ initialData, storyId }: Props) {
     <div className={flex({ gap: 'xl', marginB: 'sm' })}>
       <div className={flex({ gap: 'lg', p: 'sm', marginB: 'sm' })}>
         <p className={modalText({ text: 'head4', align: 'left' })}>
-          {storyId ? '글 수정' : '글작성'}
+          {storyId ? '글 수정' : '글 작성'}
         </p>
-        <StoryPostPlace setMarker={setMarker} />
+        <StoryPostPlace marker={marker} setMarker={setMarker} />
         <div className={flex({ direction: 'row', gap: 'md' })}>
           <FilterDropdown
             options={getYearOptions()}
@@ -163,8 +156,8 @@ function StoryPostForm({ initialData, storyId }: Props) {
             ))}
           </div>
         )}
-        {/* 새로 업로드하는 이미지 */}
         <FileUploadButton setImages={setImages} />
+        {/* 새로 업로드하는 이미지 */}
         <div className={gridLayout({ columns: 3, p: 'xs', gap: 'sm' })}>
           {images.map((file, idx) => (
             <img

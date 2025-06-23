@@ -4,8 +4,10 @@ export type PostStoryPayload = {
     title: string;
     content: string;
     emoji: string;
+    storyImages?: StoryImage[];
   };
   images: File[];
+  storyId?: number;
 };
 
 export type Story = {

@@ -37,3 +37,12 @@ export function formatDate(date: string | Date): string {
   const day = new Date(date);
   return day.toISOString().slice(0, 10);
 }
+
+export function formatDotDate(date: string | Date): string {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+
+  return `${year}.${month}.${day}`;
+}

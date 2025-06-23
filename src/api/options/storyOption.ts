@@ -52,11 +52,7 @@ export const storyOption = {
     },
   }),
   patchStory: () => ({
-    mutationFn: async ({
-      storyId,
-      story,
-      images,
-    }: PostStoryPayload & { storyId: number }) => {
+    mutationFn: async ({ storyId, story, images }: PostStoryPayload) => {
       const storyRes = await mutationFetcher(
         'patch',
         ENDPOINTS.STORY.DETAIL(String(storyId)),
@@ -68,13 +64,21 @@ export const storyOption = {
         const formData = new FormData();
         formData.append('story_id', String(storyId));
         images.forEach(image => formData.append('image_file', image));
-        await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD(storyId), formData, {
-          headers: { 'Content-Type': undefined },
-        });
+
+        await instance.post(
+          ENDPOINTS.STORY_IMAGE.UPLOAD(storyId ?? 0),
+          formData,
+          {
+            headers: { 'Content-Type': undefined },
+          },
+        );
       }
 
       return storyRes;
     },
+  }),
+  deleteStory: (id: string) => ({
+    mutationFn: () => mutationFetcher('delete', ENDPOINTS.STORY.DETAIL(id)),
   }),
   postComment: (storyId: string) => ({
     mutationFn: ({

@@ -15,11 +15,6 @@ type MarkerListResponse = {
   };
 };
 
-type MarkerStoryResponse = {
-  data: Story[];
-  count: number;
-};
-
 export const markerOption = {
   getMarkerList: (params?: Record<string, any>) =>
     queryOptions<MarkerListResponse>({
@@ -37,13 +32,9 @@ export const markerOption = {
     };
   },
   getMarkerStory: (id: number) =>
-    queryOptions<MarkerStoryResponse>({
+    queryOptions({
       queryKey: ['marker', 'story', id],
-      queryFn: () =>
-        queryFetcher(ENDPOINTS.STORY.MARKER(id))().then(res => ({
-          data: res.results,
-          count: res.count,
-        })),
+      queryFn: queryFetcher<Story[]>(ENDPOINTS.STORY.MARKER(id)),
     }),
   postMarker: () => ({
     mutationFn: (data: any) =>

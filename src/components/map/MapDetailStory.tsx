@@ -1,8 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 
-import MapDetailStoryImages from '@/components/map/MapDetailStoryImages';
+import { markerOption } from '@/api/options/markerOption';
+import { gridLayout } from '@/components/map/map.recipe';
 import { flex, flexBetween } from '@/components/ui/common/cards/card.recipe';
 import { modalText } from '@/components/ui/common/modals/modal.recipe';
 
@@ -13,6 +16,11 @@ type MapDetailStoryProps = {
 
 function MapDetailStory({ id, title }: MapDetailStoryProps) {
   const router = useRouter();
+
+  const { data } = useQuery(markerOption.getMarkerStory(id));
+  const storyList = data ?? [];
+
+  if (!storyList.length) return <div>작성된 스토리가 없습니다</div>;
 
   return (
     <div className={flex({ gap: 'md' })}>
@@ -41,7 +49,27 @@ function MapDetailStory({ id, title }: MapDetailStoryProps) {
           더보기
         </span>
       </p>
-      <MapDetailStoryImages id={id} title={title} />
+      <div className={gridLayout({ columns: 4, gap: 'sm', p: 'xs' })}>
+        {storyList.map(story => {
+          const storyImage = story.storyImages?.[0];
+          return (
+            <Image
+              key={story.storyId}
+              src={storyImage?.imageUrl ?? '/images/default-thumbnail.png'}
+              alt={story.title}
+              width={100}
+              height={100}
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: 8,
+                cursor: 'pointer',
+              }}
+              onClick={() => router.push(`/story/${story.storyId}`)}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }

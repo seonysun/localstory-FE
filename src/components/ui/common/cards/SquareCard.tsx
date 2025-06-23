@@ -19,7 +19,7 @@ import defaultThumbnail from '@images/default-thumbnail.png';
 
 type SquareCardProps = {
   id?: number;
-  image: string;
+  image?: string | undefined;
   liked?: boolean;
   title?: string;
   location?: string;
@@ -50,7 +50,7 @@ type SquareCardProps = {
 
 function SquareCard({
   id,
-  image,
+  image = '/images/default-thumbnail.png',
   liked = false,
   title,
   location,

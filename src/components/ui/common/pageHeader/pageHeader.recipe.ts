@@ -9,6 +9,7 @@ export const Wrapper = cva({
     alignItems: 'center',
     height: '48px',
     position: 'relative',
+    mt: 2,
   },
 });
 
