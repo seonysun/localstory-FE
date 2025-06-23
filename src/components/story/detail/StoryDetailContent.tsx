@@ -74,6 +74,10 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
     if (newLiked === undefined) return;
     mutation.mutate(newLiked);
   };
+  const displayImages =
+    data?.storyImages && data?.storyImages.length > 0
+      ? data.storyImages
+      : [{ imageUrl: errorDefaultImg, imageId: 'default' }];
 
   if (isError) return <p>Error...</p>;
   if (isLoading) return <p>Loading...</p>;
@@ -88,7 +92,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
           navigation={false}
           style={{ width: '100%', height: '1000px' }}
         >
-          {data?.storyImages.map(image => (
+          {displayImages.map(image => (
             <SwiperSlide key={image.imageId}>
               <div
                 className={css({
@@ -115,6 +119,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
             </SwiperSlide>
           ))}
         </Swiper>
+
         <div>
           <p className={css({ mt: 12, mb: 1, textStyle: 'body2' })}>
             {createdAt ? formatDate(createdAt) : undefined}

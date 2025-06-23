@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { ENDPOINTS } from '@api/endpoints';
 import { ssrFetcher } from '@api/fetcher';
 import {
@@ -41,7 +42,9 @@ async function Page() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <section className={css({ mt: 12 })}>
         <StoryHeroSection />
-        <StorySearchSection />
+        <Suspense fallback={<div>로딩중...</div>}>
+          <StorySearchSection />
+        </Suspense>
         <article className={css({ mt: 24 })}>
           <h1 className={css({ textStyle: 'headline2', lineHeight: 2 })}>
             부산 여행

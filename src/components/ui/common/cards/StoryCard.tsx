@@ -1,11 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { storyOption } from '@api/options/storyOption';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { formatDate } from '@util/date';
 
 import { EyeIcons, HeartIcon } from '@/components/icons';
 import {
@@ -69,11 +67,6 @@ function StoryCard({ story }: StoryCardProps) {
     mutation.mutate(newLiked);
   };
   const defaultUserImage = '/images/default-userImage.png';
-  const [profileSrc, setProfileSrc] = useState(
-    userProfileImage && userProfileImage.trim() !== ''
-      ? userProfileImage
-      : defaultUserImage,
-  );
   const images = storyImages.map(img => img.imageUrl);
   const imageCount = images.length;
   const layout = String(Math.max(1, Math.min(imageCount, 5)));
@@ -163,15 +156,7 @@ function StoryCard({ story }: StoryCardProps) {
             overflow: 'hidden',
           })}
         >
-          <Image
-            src={profileSrc}
-            alt="프로필"
-            fill
-            onError={() => {
-              console.log('onError triggered for:', profileSrc);
-              setProfileSrc(defaultUserImage);
-            }}
-          />
+          <Image src={userProfileImage || defaultUserImage} alt="프로필" fill />
         </div>
 
         <div className={cx(css({ mt: 8, pl: '4' }))}>
@@ -181,7 +166,7 @@ function StoryCard({ story }: StoryCardProps) {
           {createdAt && (
             <span>
               <span className={subText({ color: 'default' })}>
-                {formatDate(createdAt)}
+                {new Date(createdAt).toLocaleDateString()}
               </span>
             </span>
           )}
