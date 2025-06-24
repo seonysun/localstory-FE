@@ -7,4 +7,9 @@ export const followsOption = {
       return mutationFetcher('post', ENDPOINTS.FOLLOWS.LIST, { nickname });
     },
   }),
+  deleteFollows: (id: string) => ({
+    mutationFn: () => {
+      return mutationFetcher('delete', ENDPOINTS.FOLLOWS.DETAIL(id));
+    },
+  }),
 };

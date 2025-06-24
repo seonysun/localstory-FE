@@ -5,7 +5,7 @@ export const ENDPOINTS = {
   },
   FOLLOWS: {
     LIST: '/follows/', // get, post
-    DETAIL: (id: number) => `/follows/${id}/`, // get, put, patch, delete
+    DETAIL: (id: string) => `/follows/${id}/`, // get, put, patch, delete
   },
   SUBSCRIBE: {
     LIST: '/subscribes/', // get, post
