@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import ChatBotModal from '@components/chatBot/ChatBotModal';
 import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
@@ -54,6 +55,7 @@ export default function RootLayout({
           <Footer />
           {/* </GlobalAuthGuard> */}
         </Providers>
+        <Script src="https://cdn.iamport.kr/v1/iamport.js" />
       </body>
     </html>
   );
