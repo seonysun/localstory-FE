@@ -15,7 +15,10 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import type { StoryType } from '@/types/story.types';
 
+import StoryDetailSkeleton from './StoryDetailSkeleton';
+
 import 'swiper/css';
+// eslint-disable-next-line import/order
 import { css } from '@root/styled-system/css';
 
 import 'swiper/css/pagination';
@@ -80,7 +83,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
       : [{ imageUrl: errorDefaultImg, imageId: 'default' }];
 
   if (isError) return <p>Error...</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <StoryDetailSkeleton />;
   return (
     <article>
       <div className={css({ mb: 12 })}>
@@ -90,15 +93,16 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
           modules={[Pagination]}
           pagination={{ clickable: true }}
           navigation={false}
-          style={{ width: '100%', height: '1000px' }}
+          style={{ width: '100%' }}
         >
           {displayImages.map(image => (
             <SwiperSlide key={image.imageId}>
               <div
                 className={css({
                   width: '100%',
-                  height: '1000px',
+                  aspectRatio: '4 / 5',
                   position: 'relative',
+                  background: '#f2f2f2',
                 })}
               >
                 <Image
