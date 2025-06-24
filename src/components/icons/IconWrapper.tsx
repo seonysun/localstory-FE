@@ -11,6 +11,7 @@ interface IconWrapperProps {
   strokeWidth?: number;
   className?: string;
   colorMode?: 'auto' | 'fill' | 'stroke' | 'both';
+  style?: React.CSSProperties;
 }
 
 export default function IconWrapper({
@@ -20,6 +21,7 @@ export default function IconWrapper({
   strokeWidth,
   className,
   colorMode = 'auto',
+  style,
 }: IconWrapperProps) {
   const getColorProps = () => {
     switch (colorMode) {
@@ -54,5 +56,9 @@ export default function IconWrapper({
     style: { width: `${size}px`, height: `${size}px` },
   });
 
-  return <span className={combinedClassName}>{clonedIcon}</span>;
+  return (
+    <span className={combinedClassName} style={style}>
+      {clonedIcon}
+    </span>
+  );
 }
