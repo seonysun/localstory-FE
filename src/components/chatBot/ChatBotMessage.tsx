@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { chatBotOptions } from '@api/options/chatBotOption';
-import { chatInputWrapper } from '@components/chatBot/chatBot.recipe';
 import ChatBotHeader from '@components/chatBot/ChatBotHeader';
 import ChatBotIntro from '@components/chatBot/ChatBotIntro';
 import ChatMessageList from '@components/chatBot/ChatMessageList';
@@ -20,10 +20,12 @@ type Props = {
 
 function ChatBotMessage({ openModal }: Props) {
   const [chatbotMeta] = useState({
-    title: '일로일로 챗봇 🤖',
+    title: '일로일로 챗봇🤖',
     image: '/images/story1.png',
-    desc: '여행이 궁금할 땐 언제든지 물어보세요!',
+    desc: '여행이 궁금할 땐 언제든지 물어보세요! 요약은 지도 상세 글에서만 가능해요! 요약이라고 입력해주세요!',
   });
+  const params = useParams();
+  const markerId = params.id;
   const formRef = useRef<HTMLFormElement | null>(null);
   const [value, setValue] = useState<string>('');
   const [messages, setMessages] = useState<Message[]>([]);
@@ -45,6 +47,29 @@ function ChatBotMessage({ openModal }: Props) {
       ]);
     },
   });
+
+  const summarizeMutation = useMutation({
+    ...chatBotOptions.postSummarize(),
+    onSuccess: (data, variables) => {
+      setMessages(prev => [
+        ...prev,
+        { role: 'user', content: variables.raw_text },
+        {
+          role: 'assistant',
+          content: (data.summary || data[0]?.summary) ?? '요약 결과 없음',
+        },
+      ]);
+    },
+  });
+
+  const onSummarize = () => {
+    if (!value.trim()) return;
+    summarizeMutation.mutate({
+      marker_id: Number(markerId),
+      raw_text: value.trim(),
+    });
+    setValue('');
+  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -107,35 +132,50 @@ function ChatBotMessage({ openModal }: Props) {
           image={chatbotMeta.image}
           isPending={mutation.isPending}
         />
+        {summarizeMutation.isPending && (
+          <div
+            className={css({
+              mt: 4,
+              mb: 2,
+              color: 'gray.500',
+              fontSize: 15,
+              textAlign: 'center',
+            })}
+          >
+            잠시만 기다려주세요...
+          </div>
+        )}
       </div>
-      <form ref={formRef} onSubmit={onSubmit} className={chatInputWrapper()}>
+      <form ref={formRef} onSubmit={onSubmit}>
         <Textarea
           value={value}
           rows={1}
           onKeyDown={handleKeyDown}
           onChange={onChange}
           placeholder="메시지를 입력하세요..."
-          className={css({
-            flex: 1,
-            resize: 'none',
-            minHeight: '40px',
-            maxHeight: '200px',
-            overflowY: 'auto',
-          })}
         />
-        <Button
-          type="submit"
-          size="md"
-          color="primary"
-          aria-label="전송하기"
+        <div
           className={css({
-            width: 'auto',
-            px: { base: '1rem', md: '1.5rem' },
-            flexShrink: 0,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mb: 2,
+            mt: 2,
           })}
         >
-          전송
-        </Button>
+          <Button type="submit" size="sm" color="primary" aria-label="전송하기">
+            전송
+          </Button>
+          <Button
+            type="button"
+            onClick={onSummarize}
+            size="sm"
+            color="primary"
+            aria-label="요약하기"
+          >
+            요약하기
+          </Button>
+        </div>
       </form>
     </div>
   );

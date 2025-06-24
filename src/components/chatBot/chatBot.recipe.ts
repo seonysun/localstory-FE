@@ -63,14 +63,3 @@ export const chatBotDesc = cva({
     },
   },
 });
-
-export const chatInputWrapper = cva({
-  base: {
-    display: 'flex',
-    gap: { base: '0.5rem', md: '1rem' },
-    p: { base: '0.5rem', md: '1rem' },
-    borderTop: '1px solid',
-    borderColor: 'gray.200',
-    bg: 'white',
-  },
-});
