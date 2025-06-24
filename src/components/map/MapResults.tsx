@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 
@@ -17,10 +17,34 @@ function MapResults({ query }: { query: string }) {
   const router = useRouter();
 
   const [selected, setSelected] = useState(MAP_DROPDOWN_OPTIONS[0].value);
+  const [coords, setCoords] = useState<{
+    latitude: number;
+    longitude: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (selected === 'distance' && !coords && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          setCoords({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+        },
+        error => {
+          console.warn('위치 정보를 가져올 수 없습니다:', error.message);
+        },
+      );
+    }
+  }, [selected, coords]);
 
   const { data } = useQuery(
     markerOption.getMarkerList({
       search_term: query,
+      sort: selected,
+      ...(selected === 'distance' && coords
+        ? coords
+        : { latitude: 35.179554, longitude: 129.075642 }),
     }),
   );
   const searchList = data?.data ?? [];

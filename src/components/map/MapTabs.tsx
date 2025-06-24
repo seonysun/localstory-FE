@@ -17,7 +17,11 @@ function MapTabs() {
 
   const [selectedTab, setSelectedTab] = useState('all');
 
-  const { data } = useQuery(markerOption.getMarkerList());
+  const { data } = useQuery(
+    markerOption.getMarkerList({
+      sort: selectedTab === 'all' ? 'latest' : selectedTab,
+    }),
+  );
   const locationList = data?.data ?? [];
 
   return (
