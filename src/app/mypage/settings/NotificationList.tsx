@@ -7,7 +7,6 @@ import { notificationOption } from '@api/options/notificationOption';
 import IconWrapper from '@components/icons/IconWrapper';
 import { Switches } from '@components/ui/common/toggles';
 import { useNotificationWebSocket } from '@hooks/useNotificationSocket';
-import { useAuthStore } from '@store/useAuthStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import OpenBookIcon from '@/components/icons/business/OpenBookIcon';
@@ -34,9 +33,7 @@ const NOTIFICATION_ICONS: Record<NotificationType, React.ComponentType<any>> = {
 
 export default function NotificationList() {
   const { settings, setSettings, updateSetting } = useNotificationStore();
-  const { user } = useAuthStore();
-  const userId = user?.id ? user?.id : undefined;
-  useNotificationWebSocket(String(userId));
+  useNotificationWebSocket();
   const { data, isError, isLoading } = useQuery({
     queryKey: ['notice'],
     queryFn: () =>

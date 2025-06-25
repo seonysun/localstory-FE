@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
+import { useAuthStore } from '@store/useAuthStore';
 
-export function useNotificationWebSocket(userId: string | undefined) {
+export function useNotificationWebSocket() {
+  const token =
+    useAuthStore.getState().access || localStorage.getItem('access');
   useEffect(() => {
-    if (!userId) return undefined;
-
     const ws = new WebSocket(
-      `ws://localhost:8000/ws/notifications?userId=${userId}`,
+      `ws://localhost:8000/ws/notifications/?token=${token}`,
     );
+    console.log(ws);
 
     ws.onopen = () => {
       // 연결 성공 시
@@ -33,5 +35,5 @@ export function useNotificationWebSocket(userId: string | undefined) {
     return () => {
       ws.close();
     };
-  }, [userId]);
+  }, [token]);
 }
