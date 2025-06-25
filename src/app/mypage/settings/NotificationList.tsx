@@ -35,7 +35,8 @@ const NOTIFICATION_ICONS: Record<NotificationType, React.ComponentType<any>> = {
 export default function NotificationList() {
   const { settings, setSettings, updateSetting } = useNotificationStore();
   const { user } = useAuthStore();
-  useNotificationSocket(String(user?.id));
+  const userId = user?.id ? user?.id : undefined;
+  useNotificationSocket(String(userId));
   const { data, isError, isLoading } = useQuery({
     queryKey: ['notice'],
     queryFn: () =>
@@ -44,7 +45,12 @@ export default function NotificationList() {
 
   useEffect(() => {
     if (data) {
-      setSettings(data?.results);
+      const serverSettings = data?.results || [];
+      const mergedSettings = NOTIFICATION_TYPES.map(type => {
+        const found = serverSettings.find((s: any) => s.type === type);
+        return found || { type, enabled: false };
+      });
+      setSettings(mergedSettings);
     }
   }, [data, setSettings]);
 
@@ -53,6 +59,7 @@ export default function NotificationList() {
     onSuccess: data => {
       updateSetting(data?.type, data?.enabled);
     },
+    // Todo 소켓 붙이고 에러 처리
   });
 
   const toggle = (type: string, enabled: boolean) => {
@@ -62,7 +69,6 @@ export default function NotificationList() {
   if (isLoading) return <div>로딩 중...</div>;
   if (isError) return <div>알림 설정을 불러오지 못했습니다.</div>;
 
-  console.log(settings);
   return (
     <div
       className={css({

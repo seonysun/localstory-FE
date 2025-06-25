@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-type NotificationSetting = {
-  id: number;
-  type: string;
-  enabled: boolean;
-  createdAt: string;
-  updatedAt: string;
-};
+import type { NotificationSetting } from '@/types/settings';
 
 export function useNotificationSocket(userId: string | undefined) {
   const [notifications, setNotifications] = useState<NotificationSetting[]>([]);
@@ -19,6 +13,7 @@ export function useNotificationSocket(userId: string | undefined) {
 
     socket.on('notification', notification => {
       setNotifications(prev => [notification, ...prev]);
+      // TODO: 토스트 알림이나 인앱 알림 컴포넌트로 교체
       alert('알림 옴');
     });
 
