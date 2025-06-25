@@ -17,4 +17,9 @@ export const paymentOption = {
       });
     },
   }),
+  deletePayments: () => ({
+    mutationFn: (paymentId: number) => {
+      return mutationFetcher('delete', ENDPOINTS.PAYMENT.DETAIL(paymentId));
+    },
+  }),
 };

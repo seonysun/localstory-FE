@@ -8,6 +8,7 @@ export { default as EyeIcons } from './EyeIcons';
 export { default as HeartIcon } from './HeartIcon';
 export { default as ImgIcon } from './ImgIcon';
 export { default as KakaoIcon } from './KakaoIcon';
+export { default as PaymentIcon } from './PaymentIcon';
 export { default as StarIcon } from './StarIcon';
 export { default as ThemeIcon } from './ThemeIcon';
 export { default as TossIcon } from './TossIcon';

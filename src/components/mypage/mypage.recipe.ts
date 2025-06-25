@@ -9,6 +9,7 @@ export const mypageContainer = cva({
     paddingX: '20px',
     background: 'white',
     minHeight: 'calc(100vh - 48px)',
+    mb: 24,
   },
 });
 

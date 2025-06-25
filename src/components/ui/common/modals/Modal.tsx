@@ -18,6 +18,7 @@ type ModalProps = {
   content?: ReactNode;
   type?: 'one' | 'two';
   onConfirm?: () => void;
+  onCancel?: () => void;
   children?: ReactNode;
   className?: string;
 };
@@ -50,13 +51,14 @@ function Modal({
   title,
   content,
   type = 'two',
+  onCancel,
   onConfirm,
   children,
 }: ModalProps) {
   const { close } = useModalStore();
 
   const modalRef = useRef<HTMLDivElement>(null);
-  useClickOutside(modalRef, close);
+  useClickOutside(modalRef, onCancel || close);
 
   return (
     <div className={modalWrapper()}>
@@ -75,7 +77,7 @@ function Modal({
             <div className={flex({ direction: 'row', gap: 'sm' })}>
               {type === 'two' && (
                 <Button
-                  onClick={close}
+                  onClick={onCancel || close}
                   color="outlineSoft"
                   size="md"
                   radius="md"
