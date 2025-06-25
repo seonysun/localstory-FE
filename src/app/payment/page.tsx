@@ -49,7 +49,7 @@ function Page() {
       pg: 'uplus',
       pay_method: 'card',
       merchant_uid: `payment-${crypto.randomUUID()}`,
-      amount: 1000,
+      amount: 4000,
       name: '일로일로 구독 결제',
       buyer_name: name ?? '구매자',
       buyer_email: email ?? 'no-email@example.com',
@@ -65,6 +65,7 @@ function Page() {
         alert('결제 정보가 올바르지 않습니다.');
         return;
       }
+      console.log(response?.buyer_name);
       mutation.mutate({
         imp_uid: response.imp_uid,
         merchant_uid: response?.merchant_uid ?? '',
@@ -102,11 +103,10 @@ function Page() {
             <p>스토리 + 여행 상세 정보</p>
             {/* 여기를 날짜를 받아서 변경해주세요. 아니면 현재 날짜로 1달 계산해서 */}
             <p>
-              이용기간 : {formatDotDate(new Date())} ~{' '}
-              {date.toLocaleDateString()}
+              이용기간 : {formatDotDate(new Date())} ~ {formatDotDate(date)}{' '}
               (1개월)
             </p>
-            <p>금액 (매월) : 3,900원</p>
+            <p>금액 (매월) :4,000원</p>
           </div>
           <div className={css({ borderBottom: '1px solid #484848', mt: 8 })} />
           <div>
