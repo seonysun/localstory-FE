@@ -9,7 +9,7 @@ export const ENDPOINTS = {
   },
   SUBSCRIBE: {
     LIST: '/subscribes/', // get, post
-    DETAIL: (id: number) => `/subscribes/${id}/`, // get, delete
+    DETAIL: (id: string) => `/subscribes/${id}/`, // get, delete
   },
   NOTIFICATIONS: {
     LIST: '/notifications/', // get, post

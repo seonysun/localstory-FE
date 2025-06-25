@@ -17,6 +17,14 @@ export const paymentOption = {
       });
     },
   }),
+  deleteSubscribes: () => ({
+    mutationFn: (subscribableId: string) => {
+      return mutationFetcher(
+        'delete',
+        ENDPOINTS.SUBSCRIBE.DETAIL(subscribableId),
+      );
+    },
+  }),
   deletePayments: () => ({
     mutationFn: (paymentId: number) => {
       return mutationFetcher('delete', ENDPOINTS.PAYMENT.DETAIL(paymentId));

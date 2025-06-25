@@ -13,7 +13,6 @@ import {
   VersionIcon,
 } from '@/components/icons';
 import IconWrapper from '@/components/icons/IconWrapper';
-import { useModalStore } from '@/store/useModalStore';
 
 import {
   menuButton,
@@ -32,9 +31,8 @@ interface MenuItem {
   action?: () => void;
 }
 
-export default function MypageMenuList() {
+export default function MypageMenuList({ onOpen }: { onOpen: () => void }) {
   const router = useRouter();
-  const { open } = useModalStore();
 
   const menuItems: MenuItem[] = [
     {
@@ -72,7 +70,7 @@ export default function MypageMenuList() {
       icon: LogoutIcon,
       colorMode: 'stroke',
       action: () => {
-        open();
+        onOpen();
       },
     },
   ];
