@@ -1,32 +1,68 @@
 'use client';
 
+import { useEffect } from 'react';
+import { ENDPOINTS } from '@api/endpoints';
+import { instance } from '@api/instance';
+import { notificationOption } from '@api/options/notificationOption';
+import IconWrapper from '@components/icons/IconWrapper';
+import { Switches } from '@components/ui/common/toggles';
+import { useNotificationSocket } from '@hooks/useNotificationSocket';
+import { useAuthStore } from '@store/useAuthStore';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
 import OpenBookIcon from '@/components/icons/business/OpenBookIcon';
 import UserIcon from '@/components/icons/business/UserIcon';
-import IconWrapper from '@/components/icons/IconWrapper';
 import CommentsIcon from '@/components/icons/ui/CommentsIcon';
-import { Switches } from '@/components/ui/common/toggles/Switch';
 import { useNotificationStore } from '@/store/useNotificationStore';
 
 import { css } from '@root/styled-system/css';
 
-const NOTIFICATION_TYPES = ['follower', 'post', 'comment'] as const;
+const NOTIFICATION_TYPES = ['followe', 'post', 'comment'] as const;
 type NotificationType = (typeof NOTIFICATION_TYPES)[number];
 
 const NOTIFICATION_LABELS: Record<NotificationType, string> = {
-  follower: '팔로우 알림',
+  followe: '팔로우 알림',
   post: '게시물 알림',
   comment: '댓글 알림',
 } as const;
 
 const NOTIFICATION_ICONS: Record<NotificationType, React.ComponentType<any>> = {
-  follower: UserIcon,
+  followe: UserIcon,
   post: OpenBookIcon,
   comment: CommentsIcon,
 } as const;
 
 export default function NotificationList() {
-  const { settings, updateSetting } = useNotificationStore();
+  const { settings, setSettings, updateSetting } = useNotificationStore();
+  const { user } = useAuthStore();
+  useNotificationSocket(String(user?.id));
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ['notice'],
+    queryFn: () =>
+      instance.get(ENDPOINTS.NOTIFICATIONS.LIST).then(res => res.data),
+  });
 
+  useEffect(() => {
+    if (data) {
+      setSettings(data?.results);
+    }
+  }, [data, setSettings]);
+
+  const mutation = useMutation({
+    ...notificationOption.postNotificationSetting(),
+    onSuccess: data => {
+      updateSetting(data?.type, data?.enabled);
+    },
+  });
+
+  const toggle = (type: string, enabled: boolean) => {
+    mutation.mutate({ type, enabled });
+  };
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (isError) return <div>알림 설정을 불러오지 못했습니다.</div>;
+
+  console.log(settings);
   return (
     <div
       className={css({
@@ -39,9 +75,10 @@ export default function NotificationList() {
         maxWidth: '100%',
       })}
     >
-      {settings.map((setting, idx) => {
+      {settings?.map((setting, idx) => {
         const type = setting.type as NotificationType;
         const IconComponent = NOTIFICATION_ICONS[type];
+        if (!IconComponent) return null;
         const iconOpacity = setting.enabled ? 0.8 : 0.2;
 
         return (
@@ -80,7 +117,9 @@ export default function NotificationList() {
             </div>
             <Switches
               checked={setting.enabled}
-              onChange={checked => updateSetting(setting.type, checked)}
+              onChange={checked => {
+                toggle(type, checked);
+              }}
               aria-label={NOTIFICATION_LABELS[type]}
             />
           </div>
