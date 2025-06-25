@@ -26,7 +26,6 @@ const Header = () => {
 
   const handleLogout = () => {
     clearAuth();
-    localStorage.clear();
     router.push('/login');
   };
 

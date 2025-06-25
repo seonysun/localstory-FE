@@ -7,6 +7,7 @@ import ScrollToTopButton from '@components/layouts/ScrollToTopButton';
 
 import Providers from '@/providers';
 import AuthInitializer from '@/providers/AuthInitializer';
+import ThemeInitializer from '@/providers/ThemeInitializer';
 
 // import GlobalAuthGuard from '@/providers/GlobalAuthGuard';
 import '@styles/globals.css';
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <Providers>
           <AuthInitializer />
+          <ThemeInitializer />
           {/* <GlobalAuthGuard> */}
           <Header />
           <main
