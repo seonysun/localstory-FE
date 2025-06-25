@@ -12,7 +12,7 @@ export const ENDPOINTS = {
     DETAIL: (id: number) => `/subscribes/${id}/`, // get, delete
   },
   NOTIFICATIONS: {
-    LIST: '/notifications/', // get, post
+    LIST: '/notifications/notifications/', // get, post
     DETAIL: (id: string) => `/notifications/${id}/`, // get, put, patch, delete
   },
   SEARCH: {
