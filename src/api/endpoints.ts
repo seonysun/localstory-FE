@@ -13,7 +13,7 @@ export const ENDPOINTS = {
   },
   NOTIFICATIONS: {
     LIST: '/notifications/notifications/', // get, post
-    DETAIL: (id: string) => `/notifications/${id}/`, // get, put, patch, delete
+    DETAIL: (id: string) => `/notifications/notifications/${id}/`, // get, put, patch, delete
   },
   SEARCH: {
     LIST: '/search/',

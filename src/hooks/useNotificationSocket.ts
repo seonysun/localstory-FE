@@ -1,26 +1,37 @@
-import { useEffect, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useEffect } from 'react';
 
-import type { NotificationSetting } from '@/types/settings';
-
-export function useNotificationSocket(userId: string | undefined) {
-  const [notifications, setNotifications] = useState<NotificationSetting[]>([]);
-
+export function useNotificationWebSocket(userId: string | undefined) {
   useEffect(() => {
     if (!userId) return undefined;
 
-    const socket: Socket = io('http://localhost:8000/', { query: { userId } });
+    const ws = new WebSocket(
+      `ws://localhost:8000/ws/notifications?userId=${userId}`,
+    );
 
-    socket.on('notification', notification => {
-      setNotifications(prev => [notification, ...prev]);
-      // TODO: 토스트 알림이나 인앱 알림 컴포넌트로 교체
-      alert('알림 옴');
-    });
+    ws.onopen = () => {
+      // 연결 성공 시
+      console.log('WebSocket connected');
+    };
+
+    ws.onmessage = event => {
+      try {
+        const data = JSON.parse(event.data);
+        alert(data.message || '새 알림이 도착했습니다!');
+      } catch (e) {
+        console.error('Invalid message:', event.data);
+      }
+    };
+
+    ws.onerror = error => {
+      console.error('WebSocket error:', error);
+    };
+
+    ws.onclose = () => {
+      console.log('WebSocket disconnected');
+    };
 
     return () => {
-      socket.disconnect();
+      ws.close();
     };
   }, [userId]);
-
-  return notifications;
 }

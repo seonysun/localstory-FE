@@ -6,7 +6,7 @@ import { instance } from '@api/instance';
 import { notificationOption } from '@api/options/notificationOption';
 import IconWrapper from '@components/icons/IconWrapper';
 import { Switches } from '@components/ui/common/toggles';
-import { useNotificationSocket } from '@hooks/useNotificationSocket';
+import { useNotificationWebSocket } from '@hooks/useNotificationSocket';
 import { useAuthStore } from '@store/useAuthStore';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -36,7 +36,7 @@ export default function NotificationList() {
   const { settings, setSettings, updateSetting } = useNotificationStore();
   const { user } = useAuthStore();
   const userId = user?.id ? user?.id : undefined;
-  useNotificationSocket(String(userId));
+  useNotificationWebSocket(String(userId));
   const { data, isError, isLoading } = useQuery({
     queryKey: ['notice'],
     queryFn: () =>
