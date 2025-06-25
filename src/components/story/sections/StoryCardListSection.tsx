@@ -9,6 +9,20 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { css } from '@root/styled-system/css';
 
+function StoryCardSkeleton() {
+  return (
+    <div
+      className={css({
+        width: '100%',
+        height: 500,
+        borderRadius: 8,
+        background: '#eee',
+        mb: 8,
+      })}
+    />
+  );
+}
+
 function StoryCardListSection() {
   const {
     data,
@@ -38,7 +52,23 @@ function StoryCardListSection() {
   const storyList = data?.pages.flatMap(p => p.results ?? []);
 
   if (isError) return <p>...Error</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <article
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          mt: 12,
+          width: '100%',
+          margin: '0 auto',
+        })}
+      >
+        {Array.from({ length: 5 }).map((_, idx) => (
+          <StoryCardSkeleton key={idx} />
+        ))}
+      </article>
+    );
   return (
     <article
       className={css({

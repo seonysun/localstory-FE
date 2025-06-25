@@ -41,4 +41,4 @@ function StoryHeroSection() {
   );
 }
 
-export default StoryHeroSection;
+export default React.memo(StoryHeroSection);

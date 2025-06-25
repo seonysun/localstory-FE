@@ -6,7 +6,6 @@ import { instance } from '@api/instance';
 import { notificationOption } from '@api/options/notificationOption';
 import IconWrapper from '@components/icons/IconWrapper';
 import { Switches } from '@components/ui/common/toggles';
-import { useNotificationWebSocket } from '@hooks/useNotificationSocket';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import OpenBookIcon from '@/components/icons/business/OpenBookIcon';
@@ -33,7 +32,6 @@ const NOTIFICATION_ICONS: Record<NotificationType, React.ComponentType<any>> = {
 
 export default function NotificationList() {
   const { settings, setSettings, updateSetting } = useNotificationStore();
-  useNotificationWebSocket();
   const { data, isError, isLoading } = useQuery({
     queryKey: ['notice'],
     queryFn: () =>
@@ -56,7 +54,6 @@ export default function NotificationList() {
     onSuccess: data => {
       updateSetting(data?.type, data?.enabled);
     },
-    // Todo 소켓 붙이고 에러 처리
   });
 
   const toggle = (type: string, enabled: boolean) => {
