@@ -8,4 +8,4 @@ function FaqList({ text }: Props) {
   return <li>· {text}</li>;
 }
 
-export default FaqList;
+export default React.memo(FaqList);

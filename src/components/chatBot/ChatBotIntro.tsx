@@ -59,4 +59,4 @@ function ChatBotIntro({ image }: Props) {
   );
 }
 
-export default ChatBotIntro;
+export default React.memo(ChatBotIntro);

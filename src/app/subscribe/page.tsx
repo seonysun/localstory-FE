@@ -11,6 +11,37 @@ import { FAQ } from '@/constants/subscribe';
 
 import { css } from '@root/styled-system/css';
 
+export const metadata = {
+  title: '플래너 정기구독 안내 | OZ',
+  description:
+    '지금 구독하면 인상 후에도 이 가격 그대로! 썸네일 미리보기, 북마크, 알림, SNS 등 다양한 기능을 경험하세요.',
+  openGraph: {
+    title: '플래너 정기구독 안내 | OZ',
+    description:
+      '지금 구독하면 인상 후에도 이 가격 그대로! 썸네일 미리보기, 북마크, 알림, SNS 등 다양한 기능을 경험하세요.',
+    url: 'https://www.localstorymap.com/subscribe',
+    siteName: 'OZ',
+    images: [
+      {
+        url: '/images/mainStory.png',
+        width: 1200,
+        height: 630,
+        alt: '플래너 정기구독 대표 이미지',
+      },
+    ],
+    locale: 'ko_KR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: '플래너 정기구독 안내 | OZ',
+    description:
+      '지금 구독하면 인상 후에도 이 가격 그대로! 썸네일 미리보기, 북마크, 알림, SNS 등 다양한 기능을 경험하세요.',
+    images: ['/images/mainStory.png'],
+  },
+  keywords: ['정기구독', '플래너', '여행', 'OZ', '로컬스토리맵', '구독 혜택'],
+};
+
 const CARD_DESCRIPTION = [
   { icon: <CheckIcon />, text: '썸네일 미리보기' },
   { icon: <CheckIcon />, text: '북마크 기능' },
