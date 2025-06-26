@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { markerOption } from '@/api/options/markerOption';
 import { mapOverlayWrapper } from '@/components/map/map.recipe';
@@ -59,6 +59,8 @@ function MapView() {
     enabled: !!markerId,
   });
 
+  const { mutate } = useMutation(markerOption.postMarkerLike());
+
   const markerClick = (param: string, value: string) => {
     const next = new URLSearchParams(searchParams);
     next.set(param, value);
@@ -97,15 +99,20 @@ function MapView() {
       </Map>
       {place && (
         <div className={mapOverlayWrapper({ type: 'card' })}>
-          <WideCard image={place?.image}>
+          <WideCard image={place.image}>
             <WideCardContent
-              title={place?.markerName}
-              subtitle={place?.layer}
+              title={place.markerName}
+              subtitle={place.layer}
               date={false}
               footerType="location"
-              footerText={place?.adress}
-              action={<Likes liked={place?.isLiked} />}
-              onClick={() => router.push(`/map/${place?.id}`)}
+              footerText={place.adress}
+              action={
+                <Likes
+                  liked={place.isLiked}
+                  onChange={() => mutate(place.id)}
+                />
+              }
+              onClick={() => router.push(`/map/${place.id}`)}
             />
           </WideCard>
         </div>

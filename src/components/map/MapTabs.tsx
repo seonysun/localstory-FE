@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { markerOption } from '@/api/options/markerOption';
 import { categoryTitle, gridLayout } from '@/components/map/map.recipe';
@@ -23,6 +23,8 @@ function MapTabs() {
     }),
   );
   const locationList = data?.data ?? [];
+
+  const { mutate } = useMutation(markerOption.postMarkerLike());
 
   return (
     <>
@@ -70,6 +72,7 @@ function MapTabs() {
             location={place.adress}
             liked={place.isLiked}
             onClick={() => router.push(`/map/${place.id}`)}
+            onToggle={() => mutate(place.id)}
           />
         ))}
       </div>

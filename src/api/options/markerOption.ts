@@ -40,7 +40,8 @@ export const markerOption = {
     mutationFn: (data: any) =>
       mutationFetcher('post', ENDPOINTS.MARKER.LIST, data),
   }),
-  postMarkerLike: (id: number) => ({
-    mutationFn: () => mutationFetcher('post', ENDPOINTS.MARKER.LIKE.TOGGLE(id)),
+  postMarkerLike: () => ({
+    mutationFn: (id: number) =>
+      mutationFetcher('post', ENDPOINTS.MARKER.LIKE.TOGGLE(id)),
   }),
 };

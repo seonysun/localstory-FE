@@ -26,6 +26,7 @@ type SquareCardProps = {
   custom?: boolean;
   children?: ReactNode;
   onClick?: () => void;
+  onToggle?: () => void;
 };
 
 /**
@@ -57,6 +58,7 @@ function SquareCard({
   custom = false,
   children,
   onClick,
+  onToggle,
 }: SquareCardProps) {
   return (
     <div
@@ -75,7 +77,7 @@ function SquareCard({
           className={cardImage()}
         />
         <span className={topRightAbsolute()}>
-          <Likes liked={liked} />
+          <Likes liked={liked} onChange={onToggle} />
         </span>
       </div>
       {custom ? (

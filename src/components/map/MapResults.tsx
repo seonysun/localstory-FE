@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { markerOption } from '@/api/options/markerOption';
 import { flex, flexBetween } from '@/components/ui/common/cards/card.recipe';
@@ -49,6 +49,8 @@ function MapResults({ query }: { query: string }) {
   );
   const searchList = data?.data ?? [];
 
+  const { mutate } = useMutation(markerOption.postMarkerLike());
+
   return (
     <div className={flex({ p: 'md', marginB: 'sm' })}>
       {query.trim() === '' || searchList.length < 1 ? (
@@ -77,7 +79,12 @@ function MapResults({ query }: { query: string }) {
                   date={false}
                   footerType="location"
                   footerText={place.adress}
-                  action={<Likes liked={place.isLiked} />}
+                  action={
+                    <Likes
+                      liked={place.isLiked}
+                      onChange={() => mutate(place.id)}
+                    />
+                  }
                   onClick={() => router.push(`/map/${place.id}`)}
                 />
               </WideCard>
