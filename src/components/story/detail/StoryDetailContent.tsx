@@ -8,6 +8,7 @@ import { storyOption } from '@api/options/storyOption';
 import { EyeIcons, HeartIcon } from '@components/icons';
 import CommentSection from '@components/story/detail/comment/CommentSection';
 import UserInfo from '@components/story/detail/UserInfo';
+import BookmarkToggle from '@components/ui/common/toggles/Bookmark';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { formatDate } from '@util/date';
 import { Pagination } from 'swiper/modules';
@@ -49,6 +50,7 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
     isLiked,
     likeCount,
     viewCount,
+    isBookmarked,
   } = data ?? {};
 
   const mutation = useMutation({
@@ -142,24 +144,37 @@ function StoryDetailContent({ storyId }: { storyId: string }) {
         className={css({
           display: 'flex',
           alignItems: 'center',
+          justifyContent: 'space-between',
           mt: 12,
           mb: 12,
-          gap: 2,
         })}
       >
-        <button
-          type="button"
-          className={css({ cursor: 'pointer' })}
-          onClick={() => onToggle(!isLiked)}
+        <div
+          className={css({
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+          })}
         >
-          <HeartIcon
-            fill={isLiked ? 'red' : 'none'}
-            aria-label={`좋아요  ${likeCount}개`}
-          />
-        </button>
-        <span>{likeCount}</span>
-        <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
-        <span>{viewCount ?? 0}</span>
+          <button
+            type="button"
+            className={css({ cursor: 'pointer' })}
+            onClick={() => onToggle(!isLiked)}
+          >
+            <HeartIcon
+              fill={isLiked ? 'red' : 'none'}
+              aria-label={`좋아요  ${likeCount}개`}
+            />
+          </button>
+          <span>{likeCount}</span>
+          <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
+          <span>{viewCount ?? 0}</span>
+        </div>
+
+        <BookmarkToggle
+          storyId={storyId}
+          isBookmarked={isBookmarked ?? false}
+        />
       </div>
       <CommentSection storyId={storyId} />
     </article>

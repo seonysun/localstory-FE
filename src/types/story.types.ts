@@ -4,6 +4,7 @@ type StoryImageType = {
 };
 
 export type StoryType = {
+  storyId?: string;
   createdAt: string;
   title: string;
   content: string;
@@ -13,6 +14,7 @@ export type StoryType = {
   likeCount: number;
   viewCount: number;
   storyImages: StoryImageType[];
+  isBookmarked?: boolean;
 };
 
 export type StoryCardProps = {
@@ -25,6 +27,7 @@ export type StoryCardProps = {
     likeCount?: number;
     viewCount?: number;
     isLiked?: boolean;
+    isBookmarked?: boolean;
     userNickname: string;
     createdAt: string;
   };

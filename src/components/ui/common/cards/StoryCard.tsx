@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { bookmarkOption } from '@api/options/bookmarkOption';
 import { storyOption } from '@api/options/storyOption';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -15,6 +16,7 @@ import {
   subText,
   titleText,
 } from '@/components/ui/common/cards/card.recipe';
+import BookmarkToggle from '@/components/ui/common/toggles/Bookmark';
 import type { StoryCardProps, StoryQueryData } from '@/types/story.types';
 
 import { css, cx } from '@root/styled-system/css';
@@ -26,6 +28,7 @@ function StoryCard({ story }: StoryCardProps) {
     likeCount,
     viewCount,
     isLiked,
+    isBookmarked,
     userNickname,
     createdAt,
     storyImages = [],
@@ -35,7 +38,7 @@ function StoryCard({ story }: StoryCardProps) {
   } = story;
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const likeMutation = useMutation({
     ...storyOption.postLikeStory(storyId),
     onMutate: async () => {
       queryClient.setQueryData<StoryQueryData>(['story'], old => {
@@ -63,10 +66,11 @@ function StoryCard({ story }: StoryCardProps) {
     },
   });
 
-  const onToggle = (newLiked: boolean | undefined) => {
+  const onToggleLike = (newLiked: boolean | undefined) => {
     if (newLiked === undefined) return;
-    mutation.mutate(newLiked);
+    likeMutation.mutate(newLiked);
   };
+
   const defaultUserImage = '/images/default-userImage.png';
   const images = storyImages.map(img => img.imageUrl);
   const imageCount = images.length;
@@ -194,22 +198,36 @@ function StoryCard({ story }: StoryCardProps) {
           className={css({
             display: 'flex',
             alignItems: 'center',
-            gap: '2',
+            justifyContent: 'space-between',
+            width: '100%',
           })}
         >
-          <button
-            type="button"
-            className={css({ cursor: 'pointer' })}
-            onClick={() => onToggle(!isLiked)}
+          <div
+            className={css({
+              display: 'flex',
+              alignItems: 'center',
+              gap: '2',
+            })}
           >
-            <HeartIcon
-              fill={isLiked ? 'red' : 'none'}
-              aria-label={`좋아요 ${likeCount ?? 0}개`}
-            />
-          </button>
-          <span>{likeCount ?? 0}</span>
-          <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
-          <span>{viewCount ?? 0}</span>
+            <button
+              type="button"
+              className={css({ cursor: 'pointer' })}
+              onClick={() => onToggleLike(!isLiked)}
+            >
+              <HeartIcon
+                fill={isLiked ? 'red' : 'none'}
+                aria-label={`좋아요 ${likeCount ?? 0}개`}
+              />
+            </button>
+            <span>{likeCount ?? 0}</span>
+            <EyeIcons aria-label={`조회수 ${viewCount ?? 0}개`} />
+            <span>{viewCount ?? 0}</span>
+          </div>
+
+          <BookmarkToggle
+            storyId={storyId}
+            isBookmarked={isBookmarked ?? false}
+          />
         </div>
       </div>
     </div>
