@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { routeOption } from '@/api/options/routeOption';
 import StoryPostPlace from '@/components/story/sections/StoryPostPlace';
@@ -20,10 +21,11 @@ function RouteMarkModal() {
 
   const postMutation = useMutation({
     ...routeOption.postRouteMarkers(),
-    onSuccess: res => {
+    onSuccess: () => {
       close();
-      console.log(res);
+      toast.success('장소가 성공적으로 추가되었습니다.');
     },
+    onError: () => toast.error('장소 추가에 실패했습니다!'),
   });
 
   const onMarkerChange = (index: number, value: number | null) => {
@@ -57,7 +59,7 @@ function RouteMarkModal() {
       className={css({ width: '500px', height: '360px' })}
       onConfirm={onSubmit}
     >
-      <div className={flex({ gap: 'sm', marginB: 'sm', overY: 'auto' })}>
+      <div className={flex({ gap: 'sm', marginB: 'sm' })}>
         {markers.map((marker, i) => (
           <div
             key={i}
@@ -69,14 +71,12 @@ function RouteMarkModal() {
                 setMarker={value => onMarkerChange(i, value)}
               />
             </div>
-            {markers.length > 1 && (
+            {markers.length > 1 && i === markers.length - 1 && (
               <Button
                 size="xs"
                 color="outline"
                 fullWidth={false}
-                onClick={() => {
-                  setMarkers(prev => prev.filter((_, idx) => idx !== i));
-                }}
+                onClick={() => setMarkers(prev => prev.slice(0, -1))}
               >
                 ✕
               </Button>

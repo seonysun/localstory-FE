@@ -93,6 +93,8 @@ export const flex = cva({
   },
   variants: {
     width: { full: { width: 'full' }, auto: { width: 'auto' } },
+    height: { full: { height: '100%' }, auto: { height: 'auto' } },
+    flex: { 1: { flexGrow: 1 } },
     position: {
       relative: { position: 'relative' },
       static: { position: 'static' },

@@ -12,6 +12,7 @@ import RouteList from '@/components/map/RouteList';
 import { Button } from '@/components/ui/common/buttons/Button';
 import WideCard from '@/components/ui/common/cards/WideCard';
 import WideCardContent from '@/components/ui/common/cards/WideCardContent';
+import Modal from '@/components/ui/common/modals/Modal';
 import { Likes } from '@/components/ui/common/toggles';
 import MarkerContainer from '@/components/ui/maps/MarkerContainer';
 import MarkerIcon from '@/components/ui/maps/MarkerIcon';
@@ -32,6 +33,8 @@ function MapView() {
     libraries: ['clusterer', 'drawing', 'services'],
   });
 
+  const [error, setError] = useState<string | null>(null);
+
   const [center, setCenter] = useState({ lat: 35.179554, lng: 129.075642 });
 
   const position = searchParams.get('position') === 'true';
@@ -43,7 +46,7 @@ function MapView() {
           setCenter({ lat: latitude, lng: longitude });
         },
         error => {
-          console.warn('위치 정보를 가져올 수 없습니다:', error.message);
+          setError(`위치 정보를 가져올 수 없습니다: ${error.message}`);
         },
         { timeout: 5000 },
       );
@@ -79,7 +82,7 @@ function MapView() {
   >([]);
 
   useEffect(() => {
-    if (routeId && route?.data.markers) {
+    if (!type && routeId && route?.data.markers) {
       const path = route.data.markers.map(marker => ({
         lat: Number(marker.latitude),
         lng: Number(marker.longitude),
@@ -132,6 +135,15 @@ function MapView() {
           루트 둘러보기
         </Button>
       </div>
+      {error && (
+        <Modal
+          title="에러"
+          content={error}
+          type="one"
+          onConfirm={() => setError(null)}
+          className={css({ animation: 'shake 0.5s' })}
+        />
+      )}
       {isOpen && modalType === 'content' && <RouteCreateModal />}
       {isOpen && id === 2 && <RouteMarkModal />}
       {routeOpen && <RouteList setRouteOpen={setRouteOpen} />}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { routeOption } from '@/api/options/routeOption';
 import Modal from '@/components/ui/common/modals/Modal';
@@ -31,6 +32,10 @@ function RouteCreateModal() {
       setTimeout(() => {
         open(null, res, 2);
       }, 0);
+      toast.success('루트가 정상적으로 생성되었습니다.');
+    },
+    onError: () => {
+      toast.error('루트 생성에 실패했습니다!');
     },
   });
 

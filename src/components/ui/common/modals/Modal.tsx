@@ -13,6 +13,8 @@ import {
 import useClickOutside from '@/hooks/useClickOutside';
 import { useModalStore } from '@/store/useModalStore';
 
+import { css } from '@root/styled-system/css';
+
 type ModalProps = {
   title?: string;
   content?: ReactNode;
@@ -63,17 +65,19 @@ function Modal({
   return (
     <div className={modalWrapper()}>
       <div ref={modalRef} className={`${modalContent()} ${className || ''}`}>
-        {children || (
-          <div className={flex({ align: 'center', gap: 'xl' })}>
-            <DangerIcon width={44} height={44} fill="red" />
-            <div className={flex({ gap: 'md', px: 'lg' })}>
-              <p className={modalText({ text: 'pageTitle' })}>{title}</p>
-              <p className={modalText({ text: 'body3', color: 'gray400' })}>
-                {content}
-              </p>
+        <div className={css({ flex: 1, width: '100%', overflowY: 'auto' })}>
+          {children || (
+            <div className={flex({ align: 'center', gap: 'xl' })}>
+              <DangerIcon width={44} height={44} fill="red" />
+              <div className={flex({ gap: 'md', px: 'lg' })}>
+                <p className={modalText({ text: 'pageTitle' })}>{title}</p>
+                <p className={modalText({ text: 'body3', color: 'gray400' })}>
+                  {content}
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
         <div className={flex({ direction: 'row', gap: 'sm' })}>
           {type === 'two' && (
             <Button
