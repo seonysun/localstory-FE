@@ -9,6 +9,7 @@ import ChatMessageList from '@components/chatBot/ChatMessageList';
 import { Button } from '@components/ui/common/buttons/Button';
 import { Textarea } from '@components/ui/common/textfields';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { css } from '@root/styled-system/css';
 
@@ -46,6 +47,9 @@ function ChatBotMessage({ openModal }: Props) {
         { role: 'assistant', content: data.reply },
       ]);
     },
+    onError: () => {
+      toast.error('메시지 전송에 실패했습니다. 다시 시도해 주세요.');
+    },
   });
 
   const summarizeMutation = useMutation({
@@ -59,6 +63,9 @@ function ChatBotMessage({ openModal }: Props) {
           content: (data.summary || data[0]?.summary) ?? '요약 결과 없음',
         },
       ]);
+    },
+    onError: () => {
+      toast.error('요약에 실패했습니다. 다시 시도해 주세요.');
     },
   });
 
@@ -88,10 +95,9 @@ function ChatBotMessage({ openModal }: Props) {
         messages: [...findMessage, { role: 'user', content: value.trim() }],
         userMessage: value.trim(),
       });
-
       setValue('');
     } catch (e) {
-      console.log(e);
+      toast.error('메시지 전송에 실패했습니다. 다시 시도해 주세요.');
     }
   };
 

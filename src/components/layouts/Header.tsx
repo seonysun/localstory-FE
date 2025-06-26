@@ -10,6 +10,7 @@ import {
   navMenu,
   navWrapper,
 } from '@components/layouts/header.recipe';
+import { toast } from 'sonner';
 
 import { AUTH_MENU, MenuItem, NAVIGATE_MENU } from '@/constants/headerMenu';
 import { useIsMobile } from '@/hooks/useIsMobile';
@@ -26,6 +27,7 @@ const Header = () => {
 
   const handleLogout = () => {
     clearAuth();
+    toast.success('로그아웃 되었습니다.');
     router.push('/login');
   };
 

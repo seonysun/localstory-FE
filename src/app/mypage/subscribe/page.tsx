@@ -29,7 +29,7 @@ function Page() {
       queryClient.invalidateQueries({ queryKey: ['subscription'] });
     },
     onError: () => {
-      toast.success('삭제에 성공했습니다!');
+      toast.error('삭제에 실패했습니다. 다시 시도해 주세요.');
       queryClient.invalidateQueries({ queryKey: ['subscription'] });
     },
   });
