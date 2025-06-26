@@ -51,7 +51,7 @@ function StoryPostForm({ initialData, storyId }: Props) {
 
   const postMutation = useMutation({
     ...storyOption.postStory(),
-    onSuccess: () => router.push(`/story/${storyId}`),
+    onSuccess: res => router.push(`/story/${res.storyId}`),
   });
 
   const patchMutation = useMutation({
