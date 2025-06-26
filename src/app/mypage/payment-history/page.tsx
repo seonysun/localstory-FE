@@ -6,6 +6,7 @@ import { instance } from '@api/instance';
 import { paymentOption } from '@api/options/paymentOption';
 import Modal from '@components/ui/common/modals/Modal';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import PaymentList from '@/app/mypage/payment-history/_components/PaymentList';
 import type { Payment } from '@/types/payment.types';
@@ -29,11 +30,12 @@ function MypagePaymentHistory() {
   const mutation = useMutation({
     ...paymentOption.deletePayments(),
     onSuccess: () => {
-      alert('삭제 성공');
+      toast.success('결제 내역 삭제에 성공했습니다!');
       queryClient.invalidateQueries({ queryKey: ['paymentHistory'] });
     },
     onError: () => {
-      alert('삭제 실패');
+      toast.error('결제 내역 삭제에 실패했습니다!');
+      queryClient.invalidateQueries({ queryKey: ['paymentHistory'] });
     },
   });
 

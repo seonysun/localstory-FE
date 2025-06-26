@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 import {
   loginBackground,
@@ -30,12 +31,18 @@ export default function LoginPage() {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleLogin = (provider: 'kakao' | 'google') => {
+  const handleLogin = async (provider: 'kakao' | 'google') => {
     setLoadingProvider(provider);
     if (provider === 'kakao') {
       window.location.href = KAKAO_AUTH_URL;
     } else if (provider === 'google') {
       window.location.href = GOOGLE_AUTH_URL;
+    }
+
+    try {
+      toast.success('로그인에 성공했습니다!');
+    } catch (error) {
+      toast.error('로그인에 실패했습니다. 아이디와 비밀번호를 확인해 주세요.');
     }
   };
 

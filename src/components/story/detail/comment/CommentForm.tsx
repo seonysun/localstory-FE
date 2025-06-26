@@ -5,6 +5,7 @@ import { storyOption } from '@api/options/storyOption';
 import { Button } from '@components/ui/common/buttons/Button';
 import { Input } from '@components/ui/common/textfields';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { css } from '@root/styled-system/css';
 
@@ -44,6 +45,10 @@ function CommentForm({
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ['comment', storyId] });
       if (onSuccess) onSuccess();
+      toast.success('댓글이 등록되었습니다!');
+    },
+    onError: () => {
+      toast.error('댓글 등록에 실패했습니다!');
     },
   });
 

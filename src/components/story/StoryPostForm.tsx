@@ -10,6 +10,7 @@ import FilterDropdown from '@components/ui/common/dropdowns/FilterDropdown';
 import { modalText } from '@components/ui/common/modals/modal.recipe';
 import { Textarea } from '@components/ui/common/textfields';
 import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { storyOption } from '@/api/options/storyOption';
 import Modal from '@/components/ui/common/modals/Modal';
@@ -62,7 +63,7 @@ function StoryPostForm({ initialData, storyId }: Props) {
 
   const patchMutation = useMutation({
     ...storyOption.patchStory(),
-    onSuccess: () => router.push(`/story/${storyId}`),
+    onSuccess: res => router.push(`/story/${res?.storyId}`),
     onError: (error: any) => {
       setError(error.request.responseText ?? error.message);
     },
@@ -88,9 +89,18 @@ function StoryPostForm({ initialData, storyId }: Props) {
     };
 
     if (storyId) {
-      patchMutation.mutate({ ...payload, storyId });
+      patchMutation.mutate(
+        { ...payload, storyId },
+        {
+          onSuccess: () => toast.success('스토리가 성공적으로 수정되었습니다!'),
+          onError: () =>
+            toast.error('스토리 수정에 실패했습니다. 다시 시도해 주세요.'),
+        },
+      );
     } else {
-      postMutation.mutate(payload);
+      postMutation.mutate(payload, {
+        onSuccess: () => toast.success('스토리가 성공적으로 등록되었습니다!'),
+      });
     }
   };
 

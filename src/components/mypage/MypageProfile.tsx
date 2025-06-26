@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { PenIcon } from '@/components/icons';
 import Modal from '@/components/ui/common/modals/Modal';
@@ -119,6 +120,7 @@ export default function MypageProfile() {
       if (nicknameValue && nicknameValue !== profile?.nickname) {
         try {
           setIsUpdating(true);
+          toast.success('닉네임 변경에 성공했습니다.');
           await updateUserNickname(nicknameValue);
           await refetch();
         } catch (error) {

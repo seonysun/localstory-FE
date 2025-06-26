@@ -10,6 +10,7 @@ import FAQList from '@components/ui/faq/FAQList';
 import { useAuthStore } from '@store/useAuthStore';
 import { useMutation } from '@tanstack/react-query';
 import { formatDotDate } from '@util/date';
+import { toast } from 'sonner';
 
 import { FAQ } from '@/constants/subscribe';
 import { IamportResponse } from '@/types/iamport';
@@ -30,14 +31,17 @@ function PaymentSection() {
 
   const mutation = useMutation({
     ...paymentOption.postSubscribes(),
+    onSuccess: () => {
+      toast.success('구독 생성에 성공했습니다.');
+    },
     onError: () => {
-      alert('구독 생성에 실패했습니다. 고객센터에 문의해주세요.');
+      toast.error('구독 생성에 실패했습니다. 고객센터에 문의해주세요.');
     },
   });
 
   const handlePayment = () => {
     if (!window.IMP) {
-      alert('결제 모듈을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+      toast.error('결제 모듈을 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
       return;
     }
     const { IMP } = window;
@@ -59,11 +63,11 @@ function PaymentSection() {
   };
 
   function callback(response: IamportResponse) {
-    const { success, error_msg } = response;
+    const { success } = response;
 
     if (success) {
       if (!response?.imp_uid) {
-        alert('결제 정보가 올바르지 않습니다.');
+        toast.error('결제 정보가 올바르지 않습니다.');
         return;
       }
       mutation.mutate({
@@ -72,8 +76,7 @@ function PaymentSection() {
       });
       setModalOpen(true);
     } else {
-      console.error(error_msg);
-      alert(`결제 실패: ${error_msg || '알 수 없는 오류'}`);
+      toast.error('에러가 발생했습니다.');
     }
   }
   return (
@@ -100,7 +103,6 @@ function PaymentSection() {
           >
             <h4>Planner</h4>
             <p>스토리 + 여행 상세 정보</p>
-            {/* 여기를 날짜를 받아서 변경해주세요. 아니면 현재 날짜로 1달 계산해서 */}
             <p>
               이용기간 : {formatDotDate(startDate)} ~ {formatDotDate(endDate)}
               (1개월)
@@ -119,7 +121,6 @@ function PaymentSection() {
             >
               결제수단 선택
             </h4>
-            {/* 이 쪽을 포트원과 연결해주세요 */}
             <div
               className={css({
                 display: 'flex',

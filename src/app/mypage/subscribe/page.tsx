@@ -6,6 +6,7 @@ import { instance } from '@api/instance';
 import { paymentOption } from '@api/options/paymentOption';
 import Modal from '@components/ui/common/modals/Modal';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import SubscribeList from '@/app/mypage/subscribe/_components/SubscribeList';
 import type { Subscribe } from '@/types/subscribeId.type';
@@ -24,11 +25,12 @@ function Page() {
   const mutation = useMutation({
     ...paymentOption.deleteSubscribes(),
     onSuccess: () => {
-      alert('삭제 성공');
+      toast.success('삭제에 성공했습니다!');
       queryClient.invalidateQueries({ queryKey: ['subscription'] });
     },
     onError: () => {
-      alert('삭제 실패');
+      toast.success('삭제에 성공했습니다!');
+      queryClient.invalidateQueries({ queryKey: ['subscription'] });
     },
   });
 

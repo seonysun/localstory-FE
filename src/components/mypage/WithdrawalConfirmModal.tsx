@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { withdrawUser } from '@/app/api/user/userApi';
 import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
@@ -26,6 +27,7 @@ function WithdrawalConfirmModal({ onClose }: { onClose: () => void }) {
       if (!refresh) throw new Error('로그인 정보가 없습니다.');
       await withdrawUser(refresh);
       clearAuth();
+      toast.success('회원 탈퇴가 완료되었습니다.');
       router.replace('/');
     } catch (e: unknown) {
       const errorMessage =
@@ -35,6 +37,7 @@ function WithdrawalConfirmModal({ onClose }: { onClose: () => void }) {
       setError(errorMessage);
       setShake(true);
       setTimeout(() => setShake(false), 500);
+      toast.error('회원 탈퇴에 실패했습니다. 다시 시도해 주세요.');
     } finally {
       setLoading(false);
     }

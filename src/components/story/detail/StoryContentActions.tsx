@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@components/ui/common/buttons/Button';
 import { useFollowStatus } from '@hooks/useFollowStatus';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 import { followsOption } from '@/api/options/followsOption';
 import { storyOption } from '@/api/options/storyOption';
@@ -31,6 +32,11 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
     ...followsOption.postFollows(),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['follow'] });
+      toast.success('팔로우에 성공 했습니다.');
+    },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ['follow'] });
+      toast.error('팔로우에 실패했습니다.');
     },
   });
 
@@ -38,6 +44,11 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
     ...followsOption.deleteFollows(followId ? String(followId) : ''),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['follow'] });
+      toast.success('팔로우 취소를 했습니다.');
+    },
+    onError: () => {
+      queryClient.invalidateQueries({ queryKey: ['follow'] });
+      toast.error('팔로우에 취소에 실패했습니다.');
     },
   });
 
@@ -53,10 +64,12 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
     onSuccess: () => {
       close();
       router.push('/story');
+      toast.success('게시글 삭제에 성공했습니다!');
     },
     onError: error => {
       close();
       setDelError(error.message);
+      toast.error('게시글 작성에 실패했습니다!');
     },
   });
 

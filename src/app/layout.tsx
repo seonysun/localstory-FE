@@ -4,6 +4,7 @@ import ChatBotModal from '@components/chatBot/ChatBotModal';
 import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
 import ScrollToTopButton from '@components/layouts/ScrollToTopButton';
+import { Toaster } from 'sonner';
 
 import Providers from '@/providers';
 import AuthInitializer from '@/providers/AuthInitializer';
@@ -55,6 +56,13 @@ export default function RootLayout({
           <ScrollToTopButton />
           <ChatBotModal />
           <Footer />
+          <Toaster
+            richColors
+            position="top-left"
+            toastOptions={{
+              duration: 1000,
+            }}
+          />
           {/* </GlobalAuthGuard> */}
         </Providers>
         <Script src="https://cdn.iamport.kr/v1/iamport.js" />

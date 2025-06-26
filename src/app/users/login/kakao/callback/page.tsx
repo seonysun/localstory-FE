@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { setAuthHeader } from '@/api/instance';
 import { postKakaoLoginCode } from '@/app/api/login/loginApi';
@@ -27,11 +28,11 @@ function KakaoCallbackContent() {
         localStorage.setItem('access', access);
         localStorage.setItem('refresh', refresh);
         setAuthHeader(access);
+        toast.success('로그인에 성공했습니다!');
         router.push('/');
       })
-
       .catch(err => {
-        console.error('카카오 로그인 실패:', err);
+        toast.error('카카오 로그인에 실패했습니다. 다시 시도해 주세요.');
       });
   }, [code, router, setAuth]);
 
