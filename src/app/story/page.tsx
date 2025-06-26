@@ -71,7 +71,7 @@ async function Page() {
   }
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <section className={css({ mt: 12 })}>
+      <section>
         <StoryHeroSection />
         <Suspense fallback={<div>로딩중...</div>}>
           <StorySearchSection />

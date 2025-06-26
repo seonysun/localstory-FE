@@ -9,8 +9,6 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { css } from '@root/styled-system/css';
-
 export async function generateMetadata({
   params,
 }: {
@@ -66,7 +64,7 @@ async function Page({ params }: { params: { storyId: string } }) {
   }
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <section className={css({ mt: 12 })}>
+      <section>
         <StoryDetailContent storyId={storyId} />
       </section>
     </HydrationBoundary>

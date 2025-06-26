@@ -12,6 +12,7 @@ import { Textarea } from '@components/ui/common/textfields';
 import { useMutation } from '@tanstack/react-query';
 
 import { storyOption } from '@/api/options/storyOption';
+import Modal from '@/components/ui/common/modals/Modal';
 import FileUploadButton from '@/components/ui/maps/FileUploadButton';
 import { FEELINGS } from '@/constants/story';
 import { PostStoryPayload, StoryImage } from '@/types/story';
@@ -49,14 +50,22 @@ function StoryPostForm({ initialData, storyId }: Props) {
   // 기존에 등록된 이미지 (수정 시 미리보기 용도)
   const [originImages] = useState<StoryImage[]>(initialData?.storyImages ?? []);
 
+  const [error, setError] = useState<string | null>(null);
+
   const postMutation = useMutation({
     ...storyOption.postStory(),
     onSuccess: res => router.push(`/story/${res.storyId}`),
+    onError: (error: any) => {
+      setError(error.request.responseText ?? error.message);
+    },
   });
 
   const patchMutation = useMutation({
     ...storyOption.patchStory(),
     onSuccess: () => router.push(`/story/${storyId}`),
+    onError: (error: any) => {
+      setError(error.request.responseText ?? error.message);
+    },
   });
 
   useEffect(() => {
@@ -156,7 +165,11 @@ function StoryPostForm({ initialData, storyId }: Props) {
             ))}
           </div>
         )}
-        <FileUploadButton setImages={setImages} />
+        <FileUploadButton
+          images={images}
+          setImages={setImages}
+          setError={setError}
+        />
         {/* 새로 업로드하는 이미지 */}
         <div className={gridLayout({ columns: 3, p: 'xs', gap: 'sm' })}>
           {images.map((file, idx) => (
@@ -172,6 +185,15 @@ function StoryPostForm({ initialData, storyId }: Props) {
           ))}
         </div>
       </div>
+      {error && (
+        <Modal
+          title="에러"
+          content={error}
+          type="one"
+          onConfirm={() => setError(null)}
+          className={css({ animation: 'shake 0.5s' })}
+        />
+      )}
       <Button
         onClick={onSubmit}
         color="black"

@@ -14,6 +14,7 @@ import {
   topRightAbsolute,
 } from '@/components/ui/common/cards/card.recipe';
 import SquareCard from '@/components/ui/common/cards/SquareCard';
+import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { modalText } from '@/components/ui/common/modals/modal.recipe';
 import FeelingIcon from '@/components/ui/feelings/FeelingIcon';
 import { formatDate } from '@/util/date';
@@ -27,11 +28,18 @@ function StoryPlaceList() {
   const query = searchParams.get('query')?.trim() ?? '';
   const id = searchParams.get('id') ?? 0;
 
-  const { data } = useQuery(markerOption.getMarkerStory(Number(id)));
+  const { data, isLoading } = useQuery(markerOption.getMarkerStory(Number(id)));
   const storyList = data ?? [];
 
   const place = storyList[0] ?? {};
   const { data: marker } = useQuery(markerOption.getMarkerDetail(place.marker));
+
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerMessage />
+      </div>
+    );
 
   return (
     <div className={flex({ p: 'sm', marginT: 'sm', marginB: 'sm' })}>

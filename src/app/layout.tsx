@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={css({ minWidth: '320px', mt: 5, mb: 3 })}>
+    <html lang="ko" className={css({ minWidth: '320px' })}>
       <body
         className={css({
           display: 'flex',
@@ -42,7 +42,7 @@ export default function RootLayout({
               flexGrow: 1,
               width: '100%',
               maxWidth: '1024px',
-              marginTop: '3rem',
+              marginTop: '64px',
               mx: 'auto',
               px: '16px',
               md: {

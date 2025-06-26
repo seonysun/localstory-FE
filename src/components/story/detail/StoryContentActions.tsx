@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Button } from '@components/ui/common/buttons/Button';
 import { useFollowStatus } from '@hooks/useFollowStatus';
@@ -46,11 +47,16 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
     } else if (userNickname) followMutation.mutate({ nickname: userNickname });
   };
 
+  const [delError, setDelError] = useState<string | null>(null);
   const deleteMutation = useMutation({
     ...storyOption.deleteStory(id),
     onSuccess: () => {
       close();
       router.push('/story');
+    },
+    onError: error => {
+      close();
+      setDelError(error.message);
     },
   });
 
@@ -107,6 +113,14 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
           </>
         )}
       </div>
+      {delError && (
+        <Modal
+          title="에러"
+          content={delError}
+          type="one"
+          onConfirm={() => setDelError(null)}
+        />
+      )}
       {isOpen && (
         <Modal
           title="정말 삭제하시겠어요?"
@@ -120,6 +134,7 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
           onConfirm={() => {
             deleteMutation.mutate();
           }}
+          className={css({ animation: 'shake 0.5s' })}
         />
       )}
     </>

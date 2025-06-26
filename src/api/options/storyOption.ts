@@ -28,17 +28,25 @@ export const storyOption = {
         story,
       );
 
-      const formData = new FormData();
+      if (!images || images.length === 0) return storyRes;
 
-      const { storyId } = storyRes;
-      formData.append('story_id', storyId);
-      images.forEach(image => formData.append('image_file', image));
+      await Promise.all(
+        images.map(image => {
+          const formData = new FormData();
+          formData.append('story_id', storyRes.storyId);
+          formData.append('image_file', image);
 
-      await instance.post(ENDPOINTS.STORY_IMAGE.UPLOAD(storyId), formData, {
-        headers: {
-          'Content-Type': undefined,
-        },
-      });
+          return instance.post(
+            ENDPOINTS.STORY_IMAGE.UPLOAD(storyRes.storyId),
+            formData,
+            {
+              headers: {
+                'Content-Type': undefined,
+              },
+            },
+          );
+        }),
+      );
 
       return storyRes;
     },
