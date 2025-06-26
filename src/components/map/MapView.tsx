@@ -1,18 +1,24 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Map, useKakaoLoader } from 'react-kakao-maps-sdk';
+import { Map, Polyline, useKakaoLoader } from 'react-kakao-maps-sdk';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { markerOption } from '@/api/options/markerOption';
+import { routeOption } from '@/api/options/routeOption';
 import { mapOverlayWrapper } from '@/components/map/map.recipe';
+import RouteList from '@/components/map/RouteList';
+import { Button } from '@/components/ui/common/buttons/Button';
 import WideCard from '@/components/ui/common/cards/WideCard';
 import WideCardContent from '@/components/ui/common/cards/WideCardContent';
 import { Likes } from '@/components/ui/common/toggles';
 import MarkerContainer from '@/components/ui/maps/MarkerContainer';
 import MarkerIcon from '@/components/ui/maps/MarkerIcon';
+import RouteCreateModal from '@/components/ui/maps/RouteCreateModal';
+import RouteMarkModal from '@/components/ui/maps/RouteMarkModal';
 import { CategoryValueType, MAP_CATEGORY } from '@/constants/map';
+import { useModalStore } from '@/store/useModalStore';
 import { isValidCategory } from '@/util/map';
 
 import { css } from '@root/styled-system/css';
@@ -51,7 +57,14 @@ function MapView() {
   const { data } = useQuery(
     markerOption.getMarkerList({ layer: selectedCategory }),
   );
-  const markers = data?.data ?? [];
+
+  const routeId = searchParams.get('route');
+  const { data: route } = useQuery({
+    ...routeOption.getRouteDetail(Number(routeId)),
+    enabled: !!routeId,
+  });
+
+  const markers = type ? (data?.data ?? []) : (route?.data.markers ?? []);
 
   const markerId = Number(searchParams.get('id'));
   const { data: place } = useQuery({
@@ -61,12 +74,36 @@ function MapView() {
 
   const { mutate } = useMutation(markerOption.postMarkerLike());
 
+  const [polylinePath, setPolylinePath] = useState<
+    { lat: number; lng: number }[]
+  >([]);
+
+  useEffect(() => {
+    if (routeId && route?.data.markers) {
+      const path = route.data.markers.map(marker => ({
+        lat: Number(marker.latitude),
+        lng: Number(marker.longitude),
+      }));
+      setPolylinePath(path);
+    } else {
+      setPolylinePath([]);
+    }
+  }, [routeId, route]);
+
   const markerClick = (param: string, value: string) => {
+    if (param === 'type') {
+      setPolylinePath([]);
+    }
+
     const next = new URLSearchParams(searchParams);
     next.set(param, value);
     next.set('position', 'false');
     router.push(`/map/search?${next.toString()}`);
   };
+
+  const { id, type: modalType, open, isOpen } = useModalStore();
+
+  const [routeOpen, setRouteOpen] = useState(false);
 
   return (
     <div className={css({ position: 'relative' })}>
@@ -85,17 +122,39 @@ function MapView() {
           />
         ))}
       </div>
-      <Map center={center} style={{ width: '100%', height: '600px' }} level={8}>
+      <div className={mapOverlayWrapper({ type: 'routeMaker' })}>
+        <Button size="sm" color="outline" onClick={() => open('content')}>
+          루트 만들기
+        </Button>
+      </div>
+      <div className={mapOverlayWrapper({ type: 'route' })}>
+        <Button size="sm" color="outline" onClick={() => setRouteOpen(true)}>
+          루트 둘러보기
+        </Button>
+      </div>
+      {isOpen && modalType === 'content' && <RouteCreateModal />}
+      {isOpen && id === 2 && <RouteMarkModal />}
+      {routeOpen && <RouteList setRouteOpen={setRouteOpen} />}
+      <Map center={center} style={{ width: '100%', height: '75vh' }} level={8}>
         {markers?.map(marker => (
           <MarkerContainer
             key={marker.id}
             position={{ lat: marker.latitude, lng: marker.longitude }}
-            type={selectedCategory}
+            type={type ? selectedCategory : 'current'}
             content={marker.markerName}
             onClick={() => markerClick('id', marker.id.toString())}
           />
         ))}
         {position && <MarkerContainer position={center} type="current" />}
+        {routeId && polylinePath.length > 1 && (
+          <Polyline
+            path={polylinePath}
+            strokeWeight={4}
+            strokeColor="red"
+            strokeOpacity={0.8}
+            strokeStyle="solid"
+          />
+        )}
       </Map>
       {place && (
         <div className={mapOverlayWrapper({ type: 'card' })}>
@@ -105,14 +164,14 @@ function MapView() {
               subtitle={place.layer}
               date={false}
               footerType="location"
-              footerText={place.adress}
+              footerText={place?.adress || '장소 정보 없음'}
               action={
                 <Likes
                   liked={place.isLiked}
                   onChange={() => mutate(place.id)}
                 />
               }
-              onClick={() => router.push(`/map/${place.id}`)}
+              onClick={() => router.push(`/map/${place?.id}`)}
             />
           </WideCard>
         </div>

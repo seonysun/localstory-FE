@@ -78,7 +78,7 @@ function MapResults({ query }: { query: string }) {
                   subtitle={place.layer}
                   date={false}
                   footerType="location"
-                  footerText={place.adress}
+                  footerText={place.adress || '장소 정보 없음'}
                   action={
                     <Likes
                       liked={place.isLiked}

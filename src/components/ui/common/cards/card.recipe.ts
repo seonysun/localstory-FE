@@ -129,6 +129,9 @@ export const flex = cva({
       xs: { marginBottom: 2 },
       sm: { marginBottom: 4 },
     },
+    overY: {
+      auto: { overflowY: 'auto' },
+    },
   },
   defaultVariants: {
     width: 'full',

@@ -129,6 +129,24 @@ export const mapOverlayWrapper = cva({
         left: '2.5%',
         w: '95%',
       },
+      routeMaker: {
+        top: '1',
+        right: '1',
+        textStyle: 'label1',
+      },
+      route: {
+        top: '1',
+        right: '24',
+        textStyle: 'label1',
+      },
+      routeList: {
+        left: 1,
+        top: 24,
+        height: '40vh',
+        padding: 3,
+        overflowY: 'auto',
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+      },
     },
   },
   defaultVariants: {

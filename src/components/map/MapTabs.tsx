@@ -69,7 +69,7 @@ function MapTabs() {
             id={place.id}
             image={place.image}
             title={place.markerName}
-            location={place.adress}
+            location={place.adress || '장소 정보 없음'}
             liked={place.isLiked}
             onClick={() => router.push(`/map/${place.id}`)}
             onToggle={() => mutate(place.id)}

@@ -56,7 +56,7 @@ function StoryPlaceList() {
               >
                 <LocationIcon width={20} height={20} />
                 <span className={modalText({ clamp: 1, align: 'left' })}>
-                  {marker?.adress}
+                  {marker?.adress || '장소 정보 없음'}
                 </span>
               </p>
             </div>

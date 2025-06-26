@@ -73,7 +73,11 @@ export const ENDPOINTS = {
   ROUTE: {
     LIST: '/routes/', // get, post
     DETAIL: (id: number) => `/routes/${id}/`, // get, put, delete
-    LIKE: (id: number) => `/routes/${id}/likes/`, // get, post, delete
+    LIKE: {
+      LIST: (id: number) => `/routes/${id}/likes/`,
+      STATUS: (id: number) => `/routes/${id}/likes/status/`,
+      TOGGLE: (id: number) => `/routes/${id}/likes/toggle/`,
+    },
   },
   ROUTEMARKER: {
     LIST: '/route-markers/', // get, post

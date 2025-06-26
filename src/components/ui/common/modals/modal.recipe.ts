@@ -111,3 +111,30 @@ export const modalText = cva({
     align: 'center',
   },
 });
+
+export const routeModalLabel = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 'full',
+    marginTop: 3,
+  },
+  variants: {
+    mb: {
+      sm: { marginBottom: 3 },
+    },
+  },
+});
+
+export const routeModalP = cva({
+  base: {
+    textStyle: 'body2',
+    minW: 20,
+  },
+  variants: {
+    ml: {
+      sm: { marginLeft: 2 },
+    },
+  },
+});

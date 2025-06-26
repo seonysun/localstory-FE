@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { MapMarker, MapMarkerProps, useMap } from 'react-kakao-maps-sdk';
 
-import { modalText } from '@/components/ui/common/modals/modal.recipe';
 import { CategoryValueType } from '@/constants/map';
+
+import { css } from '@root/styled-system/css';
 
 type MarkerContainerProps = {
   position: MapMarkerProps['position'];
@@ -22,12 +23,15 @@ function MarkerContainer({
   const map = useMap();
   const [isVisible, setIsVisible] = useState(false);
 
+  const defaultSize = { width: 32, height: 32 };
+  const overSize = { width: 40, height: 40 };
+
   return (
     <MapMarker
       position={position}
       image={{
         src: `/images/markers/${type}.png`,
-        size: { width: 32, height: 32 },
+        size: isVisible ? overSize : defaultSize,
       }}
       clickable
       onMouseOver={() => setIsVisible(true)}
@@ -38,7 +42,15 @@ function MarkerContainer({
       }}
     >
       {isVisible && (
-        <div className={modalText({ text: 'body3' })}>{content}</div>
+        <div
+          className={css({
+            padding: 1,
+            textStyle: 'body3',
+            background: 'white',
+          })}
+        >
+          {content}
+        </div>
       )}
     </MapMarker>
   );

@@ -64,33 +64,31 @@ function Modal({
     <div className={modalWrapper()}>
       <div ref={modalRef} className={`${modalContent()} ${className || ''}`}>
         {children || (
-          <>
-            <div className={flex({ align: 'center', gap: 'xl' })}>
-              <DangerIcon width={44} height={44} fill="red" />
-              <div className={flex({ gap: 'md', px: 'lg' })}>
-                <p className={modalText({ text: 'pageTitle' })}>{title}</p>
-                <p className={modalText({ text: 'body3', color: 'gray400' })}>
-                  {content}
-                </p>
-              </div>
+          <div className={flex({ align: 'center', gap: 'xl' })}>
+            <DangerIcon width={44} height={44} fill="red" />
+            <div className={flex({ gap: 'md', px: 'lg' })}>
+              <p className={modalText({ text: 'pageTitle' })}>{title}</p>
+              <p className={modalText({ text: 'body3', color: 'gray400' })}>
+                {content}
+              </p>
             </div>
-            <div className={flex({ direction: 'row', gap: 'sm' })}>
-              {type === 'two' && (
-                <Button
-                  onClick={onCancel || close}
-                  color="outlineSoft"
-                  size="md"
-                  radius="md"
-                >
-                  취소
-                </Button>
-              )}
-              <Button onClick={onConfirm} color="primary" size="md" radius="md">
-                확인
-              </Button>
-            </div>
-          </>
+          </div>
         )}
+        <div className={flex({ direction: 'row', gap: 'sm' })}>
+          {type === 'two' && (
+            <Button
+              onClick={onCancel || close}
+              color="outlineSoft"
+              size="md"
+              radius="md"
+            >
+              취소
+            </Button>
+          )}
+          <Button onClick={onConfirm} color="primary" size="md" radius="md">
+            확인
+          </Button>
+        </div>
       </div>
     </div>
   );

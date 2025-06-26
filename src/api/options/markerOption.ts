@@ -36,10 +36,6 @@ export const markerOption = {
       queryKey: ['marker', 'story', id],
       queryFn: queryFetcher<Story[]>(ENDPOINTS.STORY.MARKER(id)),
     }),
-  postMarker: () => ({
-    mutationFn: (data: any) =>
-      mutationFetcher('post', ENDPOINTS.MARKER.LIST, data),
-  }),
   postMarkerLike: () => ({
     mutationFn: (id: number) =>
       mutationFetcher('post', ENDPOINTS.MARKER.LIKE.TOGGLE(id)),

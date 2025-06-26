@@ -9,10 +9,8 @@ import { Button } from '@/components/ui/common/buttons/Button';
 import {
   cardImageWrapper,
   flex,
-  topRightAbsolute,
 } from '@/components/ui/common/cards/card.recipe';
 import { modalText } from '@/components/ui/common/modals/modal.recipe';
-import { Likes } from '@/components/ui/common/toggles';
 import { Marker } from '@/types/marker';
 
 async function page({ params }: { params: { id: string } }) {
@@ -25,12 +23,6 @@ async function page({ params }: { params: { id: string } }) {
     <div className={flex({ marginB: 'sm', gap: 'xl' })}>
       <div className={cardImageWrapper({ maxWidth: 'none', aspect: 'video' })}>
         <Image src={data.image} alt={data.markerName} fill />
-        <span
-          className={topRightAbsolute({ top: 3, right: 3 })}
-          style={{ zIndex: 1 }}
-        >
-          <Likes liked={data.isLiked} />
-        </span>
       </div>
       <div className={flex({ gap: 'lg' })}>
         <div className={flex({ gap: 'sm' })}>
@@ -54,7 +46,7 @@ async function page({ params }: { params: { id: string } }) {
                   clamp: 1,
                 })}
               >
-                {data.adress}
+                {data.adress || '장소 정보 없음'}
               </span>
             </p>
           </Link>
