@@ -131,45 +131,6 @@ export const editButton = cva({
   },
 });
 
-// 게시 및 팔로우 현황 섹션
-export const statsBox = cva({
-  base: {
-    display: 'flex',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingY: '16px',
-    marginBottom: '24px',
-    borderRadius: 'lg',
-    backgroundColor: 'white',
-    boxShadow: 'xs',
-  },
-});
-
-export const statItem = cva({
-  base: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '2px',
-    flex: 1,
-  },
-});
-
-export const statValue = cva({
-  base: {
-    textStyle: 'headline4',
-    fontWeight: '700',
-    color: 'primary',
-  },
-});
-
-export const statLabel = cva({
-  base: {
-    textStyle: 'body3',
-    color: 'gray.400',
-  },
-});
-
 // 메뉴 리스트
 export const menuListContainer = cva({
   base: {
