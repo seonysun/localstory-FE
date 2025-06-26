@@ -10,7 +10,7 @@ function HeroSection() {
   return (
     <article className={heroSection()}>
       <Image
-        src="/images/hero.png"
+        src="/images/hero.jpg"
         alt="hero"
         width={1200}
         height={500}
