@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import ChatBotModal from '@components/chatBot/ChatBotModal';
+import ConsoleArt from '@components/consoleArt/ConsoleArt';
 import Footer from '@components/layouts/footer';
 import Header from '@components/layouts/Header';
 import ScrollToTopButton from '@components/layouts/ScrollToTopButton';
@@ -104,6 +105,7 @@ export default function RootLayout({
               duration: 1000,
             }}
           />
+          <ConsoleArt />
           {/* </GlobalAuthGuard> */}
         </Providers>
         <Script src="https://cdn.iamport.kr/v1/iamport.js" />

@@ -36,7 +36,7 @@ function StoryContentActions({ mode, isMine, userNickname }: Props) {
     },
     onError: () => {
       queryClient.invalidateQueries({ queryKey: ['follow'] });
-      toast.error('팔로우에 실패했습니다.');
+      toast.error('팔로우에 성공 했습니다.');
     },
   });
 
