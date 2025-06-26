@@ -9,7 +9,9 @@ function layout({ children }: { children: React.ReactNode }) {
       <PageHeader>
         <SearchBar />
       </PageHeader>
-      <div className={css({ display: { base: 'none', md: 'flex' } })}>
+      <div
+        className={css({ display: { base: 'none', md: 'flex' }, marginTop: 3 })}
+      >
         <SearchBar />
       </div>
       <div className={css({ width: 'full', overflow: 'auto', marginTop: 3 })}>

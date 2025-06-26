@@ -142,6 +142,7 @@ export const mapOverlayWrapper = cva({
       routeList: {
         left: 1,
         top: 24,
+        minWidth: '180px',
         height: '40vh',
         padding: 3,
         overflowY: 'auto',

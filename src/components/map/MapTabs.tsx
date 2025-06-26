@@ -8,6 +8,7 @@ import { markerOption } from '@/api/options/markerOption';
 import { categoryTitle, gridLayout } from '@/components/map/map.recipe';
 import { flex } from '@/components/ui/common/cards/card.recipe';
 import SquareCard from '@/components/ui/common/cards/SquareCard';
+import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { MAP_VIEW_TABS } from '@/constants/map';
 
 import { css, cx } from '@root/styled-system/css';
@@ -17,7 +18,7 @@ function MapTabs() {
 
   const [selectedTab, setSelectedTab] = useState('all');
 
-  const { data } = useQuery(
+  const { data, isLoading } = useQuery(
     markerOption.getMarkerList({
       sort: selectedTab === 'all' ? 'latest' : selectedTab,
     }),
@@ -25,6 +26,13 @@ function MapTabs() {
   const locationList = data?.data ?? [];
 
   const { mutate } = useMutation(markerOption.postMarkerLike());
+
+  if (isLoading)
+    return (
+      <div>
+        <SpinnerMessage />
+      </div>
+    );
 
   return (
     <>
