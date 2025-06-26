@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { ENDPOINTS } from '@api/endpoints';
 import { instance } from '@api/instance';
 import StoryCard from '@components/ui/common/cards/StoryCard';
@@ -44,12 +44,27 @@ function StoryCardListSection() {
     },
     initialPageParam: 1,
   });
+
   const ref = useIntersectionObserver(
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
   );
-  const storyList = data?.pages.flatMap(p => p.results ?? []);
+
+  const storyList = useMemo(() => {
+    const allStories = data?.pages.flatMap(p => p.results ?? []);
+
+    if (!allStories || allStories.length === 0) return [];
+
+    const validStories = allStories.filter(story => story?.storyId);
+    const shuffled = [...validStories];
+    // eslint-disable-next-line no-plusplus
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }, [data?.pages]);
 
   if (isError) return <p>...Error</p>;
   if (isLoading)

@@ -53,7 +53,9 @@ function Page() {
             }}
           />
         )}
-        <ul>
+        <ul
+          className={css({ display: 'flex', flexDirection: 'column', gap: 4 })}
+        >
           {data && data.length > 0 ? (
             data?.map(result => (
               <SubscribeList

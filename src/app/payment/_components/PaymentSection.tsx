@@ -16,7 +16,6 @@ import { IamportResponse } from '@/types/iamport';
 
 import { css } from '@root/styled-system/css';
 
-const SUBSCRIPTION_PRICE = 4000;
 const SUBSCRIPTION_PERIOD_MONTHS = 1;
 function PaymentSection() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -103,10 +102,10 @@ function PaymentSection() {
             <p>스토리 + 여행 상세 정보</p>
             {/* 여기를 날짜를 받아서 변경해주세요. 아니면 현재 날짜로 1달 계산해서 */}
             <p>
-              이용기간 : {formatDotDate(startDate)} ~ {formatDotDate(endDate)}{' '}
+              이용기간 : {formatDotDate(startDate)} ~ {formatDotDate(endDate)}
               (1개월)
             </p>
-            <p>금액 (매월) : {SUBSCRIPTION_PRICE.toLocaleString()}원</p>
+            <p>금액 (매월) : 4,000원</p>
           </div>
           <div className={css({ borderBottom: '1px solid #484848', mt: 8 })} />
           <div>

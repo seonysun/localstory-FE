@@ -16,7 +16,7 @@ type Props = {
 };
 
 function PaymentList({ payment, handlers }: Props) {
-  const { createdAt, cardName, amount, id, merchantUid } = payment;
+  const { createdAt, cardName, id, merchantUid } = payment;
   const { setIsOpen, setPaymentId } = handlers;
   const date = new Date();
   const month = date.getMonth();
@@ -74,7 +74,7 @@ function PaymentList({ payment, handlers }: Props) {
           {formatDotDate(createdAt)} ~ {formatDotDate(date)}
         </p>
         <p>카드 : {cardName}</p>
-        <p>금액 : {amount}원</p>
+        <p>금액 : 4,000원</p>
         <p>주문 번호 : {merchantUid}</p>
       </div>
       <div

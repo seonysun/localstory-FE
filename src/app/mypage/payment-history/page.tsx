@@ -44,7 +44,14 @@ function MypagePaymentHistory() {
     <section className={css({ mt: 4, mb: 24 })}>
       <article>
         <h1 className={css({ textStyle: 'headline4', mb: 4 })}>
-          전체 내역 {paymentLength > 0 ? `${paymentLength}(개)` : ''}
+          전체 내역{' '}
+          {paymentLength > 0 ? (
+            <span className={css({ textStyle: 'body1' })}>
+              ({paymentLength}개)
+            </span>
+          ) : (
+            ''
+          )}
         </h1>
         {isOpen && (
           <Modal
