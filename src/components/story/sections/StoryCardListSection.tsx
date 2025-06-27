@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ENDPOINTS } from '@api/endpoints';
 import { instance } from '@api/instance';
 import StoryCard from '@components/ui/common/cards/StoryCard';
@@ -51,20 +51,7 @@ function StoryCardListSection() {
     isFetchingNextPage,
   );
 
-  const storyList = useMemo(() => {
-    const allStories = data?.pages.flatMap(p => p.results ?? []);
-
-    if (!allStories || allStories.length === 0) return [];
-
-    const validStories = allStories.filter(story => story?.storyId);
-    const shuffled = [...validStories];
-    // eslint-disable-next-line no-plusplus
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  }, [data?.pages]);
+  const allStories = data?.pages.flatMap(p => p.results ?? []);
 
   if (isError) return <p>...Error</p>;
   if (isLoading)
@@ -95,8 +82,8 @@ function StoryCardListSection() {
         margin: '0 auto',
       })}
     >
-      {storyList && storyList?.length > 0 ? (
-        storyList?.map(story => (
+      {allStories && allStories?.length > 0 ? (
+        allStories?.map(story => (
           <StoryCard key={story?.storyId} story={story} />
         ))
       ) : (
