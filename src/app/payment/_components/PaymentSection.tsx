@@ -12,15 +12,17 @@ import { useMutation } from '@tanstack/react-query';
 import { formatDotDate } from '@util/date';
 import { toast } from 'sonner';
 
+import { getUserInfo } from '@/app/api/user/userApi';
 import { FAQ } from '@/constants/subscribe';
 import { IamportResponse } from '@/types/iamport';
+import { apiUserToClientUser } from '@/types/user';
 
 import { css } from '@root/styled-system/css';
 
 const SUBSCRIPTION_PERIOD_MONTHS = 1;
 function PaymentSection() {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { user } = useAuthStore();
+  const { user, updateUser } = useAuthStore();
   const startDate = new Date();
   const endDate = new Date();
   endDate.setMonth(endDate.getMonth() + SUBSCRIPTION_PERIOD_MONTHS);
@@ -31,8 +33,15 @@ function PaymentSection() {
 
   const mutation = useMutation({
     ...paymentOption.postSubscribes(),
-    onSuccess: () => {
-      toast.success('구독 생성에 성공했습니다.');
+    onSuccess: async () => {
+      try {
+        const apiUser = await getUserInfo();
+        const clientUser = apiUserToClientUser(apiUser);
+        updateUser(clientUser);
+        toast.success('구독 생성에 성공했습니다.');
+      } catch (e) {
+        toast.error('유저 정보 갱신에 실패했습니다.');
+      }
     },
     onError: () => {
       toast.error('구독 생성에 실패했습니다. 고객센터에 문의해주세요.');

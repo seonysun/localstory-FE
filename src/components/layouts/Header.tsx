@@ -12,7 +12,7 @@ import {
 } from '@components/layouts/header.recipe';
 import { toast } from 'sonner';
 
-import { AUTH_MENU, MenuItem, NAVIGATE_MENU } from '@/constants/headerMenu';
+import { MenuItem, NAVIGATE_MENU } from '@/constants/headerMenu';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { useAuthStore } from '@/store/useAuthStore';
 
@@ -24,6 +24,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isLoggedIn = !!user;
+  const isPaidUser = user?.is_paid_user;
 
   const handleLogout = () => {
     clearAuth();
@@ -36,7 +37,22 @@ const Header = () => {
     if (isMobile) setIsMenuOpen(false);
   };
 
-  const authMenu = AUTH_MENU(isMobile, isLoggedIn, handleLogout);
+  const filteredNavigateMenu = isPaidUser
+    ? NAVIGATE_MENU.filter(menu => menu.title !== '구독')
+    : NAVIGATE_MENU;
+
+  const authMenu = (() => {
+    const login = { title: '로그인', path: '/login' };
+    const logout = { title: '로그아웃', path: '/login', onClick: handleLogout };
+    if (isMobile) return [isLoggedIn ? logout : login];
+    return isLoggedIn
+      ? [
+          ...filteredNavigateMenu,
+          { title: '마이페이지', path: '/mypage' },
+          logout,
+        ]
+      : [...filteredNavigateMenu, login];
+  })();
 
   return (
     <>
@@ -92,7 +108,7 @@ const Header = () => {
           {isMobile && (
             <ul className={navMenu({ isOpen: isMenuOpen })}>
               {[
-                ...NAVIGATE_MENU,
+                ...filteredNavigateMenu,
                 ...(isLoggedIn
                   ? [{ title: '마이페이지', path: '/mypage' }]
                   : []),
