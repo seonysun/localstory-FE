@@ -4,7 +4,7 @@ import {
   getUserInfo,
   updateUserNickname as updateNickname,
   updateUserProfileImage,
-} from '@/app/api/user/userApi';
+} from '@/api/options/userApi';
 import { useAuthStore } from '@/store/useAuthStore';
 import {
   apiUserToClientUser,

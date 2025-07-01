@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { setAuthHeader } from '@/api/instance';
-import { postKakaoLoginCode } from '@/app/api/login/loginApi';
+import { postKakaoLoginCode } from '@/api/options/loginApi';
 import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { useAuthStore } from '@/store/useAuthStore';
 import { ApiUser, apiUserToClientUser } from '@/types/user';

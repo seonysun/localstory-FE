@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import { getMyStories } from '@/app/api/story/storyApi';
+import { getMyStories } from '@/api/options/storyApi';
 import { Button } from '@/components/ui/common/buttons/Button';
 import WideCard from '@/components/ui/common/cards/WideCard';
 import WideCardContent from '@/components/ui/common/cards/WideCardContent';

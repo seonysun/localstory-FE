@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
-import { withdrawUser } from '@/app/api/user/userApi';
+import { withdrawUser } from '@/api/options/userApi';
 import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import Modal from '@/components/ui/common/modals/Modal';
 import { useAuthStore } from '@/store/useAuthStore';

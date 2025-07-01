@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 import { setAuthHeader } from '@/api/instance';
-import { postGoogleLoginCode } from '@/app/api/login/loginApi';
+import { postGoogleLoginCode } from '@/api/options/loginApi';
 import { SpinnerMessage } from '@/components/ui/common/loading/SpinnerMessage';
 import { useAuthStore } from '@/store/useAuthStore';
 import { ApiUser, apiUserToClientUser } from '@/types/user';

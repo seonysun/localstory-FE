@@ -12,7 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 import { formatDotDate } from '@util/date';
 import { toast } from 'sonner';
 
-import { getUserInfo } from '@/app/api/user/userApi';
+import { getUserInfo } from '@/api/options/userApi';
 import { FAQ } from '@/constants/subscribe';
 import { IamportResponse } from '@/types/iamport';
 import { apiUserToClientUser } from '@/types/user';
