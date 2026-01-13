@@ -6,7 +6,7 @@ import {
   chatBotWrapper,
 } from '@components/chatBot/chatBot.recipe';
 import ChatBotMessage from '@components/chatBot/ChatBotMessage';
-import useClickOutside from '@hooks/useClickOutside';
+import { useClickOutside } from '@seonysun/click-outside';
 
 import { ChatBotIcon } from '@/components/icons';
 
@@ -17,7 +17,7 @@ function ChatBotModal() {
   const chatbotRef = useRef<HTMLElement | null>(null);
   const openModal = useCallback(() => setIsModalOpen(prev => !prev), []);
   const onClose = useCallback(() => setIsModalOpen(false), []);
-  useClickOutside(chatbotRef, onClose);
+  useClickOutside({ ref: chatbotRef, onClickOutside: onClose });
 
   return (
     <section ref={chatbotRef}>

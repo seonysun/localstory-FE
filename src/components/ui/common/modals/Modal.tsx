@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode, useRef } from 'react';
+import { useClickOutside } from '@seonysun/click-outside';
 
 import { DangerIcon } from '@/components/icons';
 import { Button } from '@/components/ui/common/buttons/Button';
@@ -10,7 +11,6 @@ import {
   modalText,
   modalWrapper,
 } from '@/components/ui/common/modals/modal.recipe';
-import useClickOutside from '@/hooks/useClickOutside';
 import { useModalStore } from '@/store/useModalStore';
 
 import { css } from '@root/styled-system/css';
@@ -60,7 +60,7 @@ function Modal({
   const { close } = useModalStore();
 
   const modalRef = useRef<HTMLDivElement>(null);
-  useClickOutside(modalRef, onCancel || close);
+  useClickOutside({ ref: modalRef, onClickOutside: onCancel || close });
 
   return (
     <div className={modalWrapper()}>

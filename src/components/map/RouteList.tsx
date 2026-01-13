@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { useClickOutside } from '@seonysun/click-outside';
 import { useQuery } from '@tanstack/react-query';
 
 import { routeOption } from '@/api/options/routeOption';
@@ -10,7 +11,6 @@ import { mapOverlayWrapper } from '@/components/map/map.recipe';
 import { flex } from '@/components/ui/common/cards/card.recipe';
 import { Spinner } from '@/components/ui/common/loading/Spinner';
 import { modalText } from '@/components/ui/common/modals/modal.recipe';
-import useClickOutside from '@/hooks/useClickOutside';
 
 import { css } from '@root/styled-system/css';
 
@@ -22,7 +22,7 @@ function RouteList({
   const router = useRouter();
 
   const divRef = useRef<HTMLDivElement>(null);
-  useClickOutside(divRef, () => setRouteOpen(false));
+  useClickOutside({ ref: divRef, onClickOutside: () => setRouteOpen(false) });
 
   const { data, isLoading } = useQuery(routeOption.getRouteList());
   const routeList = data?.data ?? [];

@@ -1,11 +1,11 @@
 import { ReactNode, useRef, useState } from 'react';
+import { useClickOutside } from '@seonysun/click-outside';
 
 import {
   dropdownButton,
   dropdownItem,
   dropdownList,
 } from '@/components/ui/common/dropdowns/dropdown.recipe';
-import useClickOutside from '@/hooks/useClickOutside';
 
 type Option = {
   label: ReactNode;
@@ -33,7 +33,7 @@ function FilterDropdown({
   )?.label;
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-  useClickOutside(dropdownRef, () => setIsOpen(false));
+  useClickOutside({ ref: dropdownRef, onClickOutside: () => setIsOpen(false) });
 
   return (
     <div ref={dropdownRef} style={{ position: 'relative' }}>
