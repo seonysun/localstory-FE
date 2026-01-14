@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 
 import MapResults from '@/components/map/MapResults';
-import MapView from '@/components/map/MapView';
+import MapViewContainer from '@/components/map/MapViewContainer';
 
 function MapSearch() {
   const searchParams = useSearchParams();
@@ -13,7 +13,7 @@ function MapSearch() {
     return <MapResults query={query} />;
   }
 
-  return <MapView />;
+  return <MapViewContainer />;
 }
 
 export default MapSearch;

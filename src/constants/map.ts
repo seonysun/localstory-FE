@@ -26,3 +26,6 @@ export const MAP_DROPDOWN_OPTIONS = [
   { label: '인기순', value: 'popular' },
   { label: '거리순', value: 'distance' },
 ];
+
+export type MapDropdownValueType =
+  (typeof MAP_DROPDOWN_OPTIONS)[number]['value'];
