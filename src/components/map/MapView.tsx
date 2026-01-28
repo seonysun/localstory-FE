@@ -101,6 +101,9 @@ function MapView({
         center={center}
         style={{ width: '100%', height: '75vh' }}
         level={8}
+        onCreate={map => {
+          boundsChange?.(map);
+        }}
         onDragEnd={boundsChange}
         onZoomChanged={boundsChange}
       >
